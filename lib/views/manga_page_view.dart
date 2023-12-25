@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class MangaPageView extends StatefulWidget {
-  const MangaPageView({super.key});
+  final String title;
+
+  const MangaPageView({
+    super.key,
+    required this.title,
+  });
 
   @override
   State<MangaPageView> createState() => _MangaPageViewState();
@@ -25,8 +30,7 @@ class _MangaPageViewState extends State<MangaPageView> {
             children: [
               IconButton(
                 onPressed: () {
-                  // Navigator.pop(context);
-                  print('Back Clicked');
+                  Navigator.pop(context);
                 },
                 icon: const Icon(
                   Icons.arrow_back_ios,
@@ -37,25 +41,6 @@ class _MangaPageViewState extends State<MangaPageView> {
             ],
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10, top: 10),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    print('Ava Clicked');
-                  },
-                  child: const CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.black,
-                    foregroundImage: AssetImage('assets/images/attack.jpg'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
       body: SlidingUpPanel(
         maxHeight: MediaQuery.of(context).size.height * .7,
@@ -73,11 +58,11 @@ class _MangaPageViewState extends State<MangaPageView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Container(
+                  SizedBox(
                     width: MediaQuery.of(context).size.width * .75,
-                    child: const Text(
-                      'Attack On Titan',
-                      style: TextStyle(
+                    child: Text(
+                      widget.title,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 40,
                         fontWeight: FontWeight.bold,
@@ -88,9 +73,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                     radius: 25,
                     backgroundColor: Colors.white,
                     child: IconButton(
-                      onPressed: () {
-                        print('Read Clicked');
-                      },
+                      onPressed: () {},
                       icon: const Icon(
                         Icons.read_more_outlined,
                         color: Colors.black,
@@ -103,7 +86,7 @@ class _MangaPageViewState extends State<MangaPageView> {
               const SizedBox(
                 height: 25,
               ),
-              Container(
+              SizedBox(
                 child: Text(
                   'It is set in a world where humanity is forced to live in cities surrounded by three enormous walls that protect them from gigantic man-eating humanoids referred to as Titans.',
                   style: TextStyle(
@@ -143,9 +126,7 @@ class _MangaPageViewState extends State<MangaPageView> {
 
               // chapter block
               GestureDetector(
-                onTap: () {
-                  print('Chapter selected');
-                },
+                onTap: () {},
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:manga_reading/views/blocks/category_result_block.dart';
+import 'package:manga_reading/views/blocks/user_section_block.dart';
 
-class CategoryPageView extends StatefulWidget {
-  final String categoryTitle;
-  const CategoryPageView({super.key, required this.categoryTitle});
+class UserSectionView extends StatefulWidget {
+  final String sectionName;
+  const UserSectionView({super.key, required this.sectionName});
 
   @override
-  State<CategoryPageView> createState() => _CategoryPageViewState();
+  State<UserSectionView> createState() => _UserSectionViewState();
 }
 
-class _CategoryPageViewState extends State<CategoryPageView> {
+class _UserSectionViewState extends State<UserSectionView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +19,7 @@ class _CategoryPageViewState extends State<CategoryPageView> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        leadingWidth: 250,
+        leadingWidth: 270,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),
           child: Row(
@@ -37,7 +37,7 @@ class _CategoryPageViewState extends State<CategoryPageView> {
                 ),
               ),
               Text(
-                widget.categoryTitle.toUpperCase(),
+                widget.sectionName.toUpperCase(),
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -66,10 +66,13 @@ class _CategoryPageViewState extends State<CategoryPageView> {
                   child: ListView(
                     scrollDirection: Axis.vertical,
                     children: [
-                      CategoryResultBlock(
+                      UserSectionBlock(
                         title: 'Attack On Titan',
-                        chapters: 154,
-                        status: 'lol',
+                        addDateTime: DateTime.now().add(
+                          const Duration(hours: 3),
+                        ),
+                        chapters: 162,
+                        status: 'Finished',
                         author: 'Hajime Isayama',
                         image: 'assets/images/attack.jpg',
                       ),
