@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:manga_reading/views/blocks/category_result_block.dart';
+import 'package:manga_reading/views/blocks/search_result_block.dart';
 
 class SearchResultsView extends StatefulWidget {
   const SearchResultsView({super.key});
@@ -102,11 +102,11 @@ class _SearchResultsViewState extends State<SearchResultsView> {
                 child: ListView(
                   scrollDirection: Axis.vertical,
                   children: [
-                    CategoryResultBlock(
+                    SearchResultBlock(
                       title: 'Attack On Titan',
                       chapters: 165,
                       status: 'Ongoing',
-                      author: 'Loh',
+                      author: 'L2oh',
                       image: 'assets/images/attack.jpg',
                     ),
                   ],
