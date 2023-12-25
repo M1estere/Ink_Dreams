@@ -25,12 +25,8 @@ class _SearchResultsViewState extends State<SearchResultsView> {
             children: [
               IconButton(
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pop(
                     context,
-                    PageTransition(
-                      type: PageTransitionType.leftToRightWithFade,
-                      child: const SearchIntroPageView(),
-                    ),
                   );
                 },
                 icon: const Icon(

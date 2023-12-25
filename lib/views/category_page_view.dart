@@ -25,7 +25,7 @@ class _CategoryPageViewState extends State<CategoryPageView> {
             children: [
               IconButton(
                 onPressed: () {
-                  // Navigator.pop(context);
+                  Navigator.pop(context);
                   print('Back Clicked');
                 },
                 icon: const Icon(

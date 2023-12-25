@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:manga_reading/views/account_page_view.dart';
 import 'package:manga_reading/views/category_page_view.dart';
 import 'package:manga_reading/views/explore_view.dart';
 import 'package:manga_reading/views/manga_page_view.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF23202B),
         useMaterial3: true,
       ),
-      home: const SearchResultsView(),
+      home: const AccountPageView(),
     );
   }
 }
