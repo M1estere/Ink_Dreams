@@ -1,7 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:manga_reading/firebase_options.dart';
 import 'package:manga_reading/views/main_app_wrapper.dart';
+import 'package:manga_reading/views/reader_view.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
@@ -20,7 +25,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF23202B),
         useMaterial3: true,
       ),
-      home: const MainWrapper(),
+      home: const ReaderView(filePath: 'assets/test.pdf'),
     );
   }
 }
