@@ -1,5 +1,26 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
+
+class Category {
+  String? name;
+  String? link;
+
+  Category({this.name, this.link});
+}
+
+class CategoryBlock {
+  String? name;
+  String? link;
+
+  CategoryBlock({this.name, this.link});
+
+  CategoryBlock.fromJson(Map<dynamic, dynamic> json) {
+    name = json['name'];
+    link = json['link'];
+  }
+}
 
 class ReaderView extends StatefulWidget {
   final String filePath;
@@ -12,6 +33,18 @@ class ReaderView extends StatefulWidget {
 
 class _ReaderViewState extends State<ReaderView> {
   int startPage = 0;
+  List<Category> categories = [];
+
+  DatabaseReference ref =
+      FirebaseDatabase.instance.ref().child('categories_titles');
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    retrieveData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,51 +83,6 @@ class _ReaderViewState extends State<ReaderView> {
             ],
           ),
         ),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {
-        //       if (currentPageIndex > 1) {
-        //         currentPageIndex--;
-        //         controller!.ready?.goToPage(pageNumber: currentPageIndex);
-        //       } else {
-        //         controller!.ready?.goToPage(pageNumber: 1);
-        //       }
-        //       print(currentPageIndex);
-        //     },
-        //     icon: const Icon(
-        //       Icons.arrow_back_ios,
-        //       color: Colors.white,
-        //       size: 30,
-        //     ),
-        //   ),
-        //   IconButton(
-        //     onPressed: () {
-        //       if (currentPageIndex < controller!.pageCount) {
-        //         currentPageIndex++;
-        //         controller!.ready?.goToPage(pageNumber: currentPageIndex);
-        //       } else {
-        //         controller!.ready?.goToPage(pageNumber: controller!.pageCount);
-        //       }
-        //       print(currentPageIndex);
-        //     },
-        //     icon: const Icon(
-        //       Icons.arrow_forward_ios,
-        //       color: Colors.white,
-        //       size: 30,
-        //     ),
-        //   ),
-        //   const SizedBox(
-        //     width: 10,
-        //   ),
-        //   IconButton(
-        //     onPressed: () {},
-        //     icon: const Icon(
-        //       Icons.skip_next,
-        //       color: Colors.white,
-        //       size: 40,
-        //     ),
-        //   ),
-        // ],
       ),
       body: Center(
         child: GestureDetector(
@@ -118,6 +106,19 @@ class _ReaderViewState extends State<ReaderView> {
           ),
         ),
       ),
+    );
+  }
+
+  void retrieveData() {
+    ref.onChildAdded.listen(
+      (value) {
+        CategoryBlock block =
+            CategoryBlock.fromJson(value.snapshot.value as Map);
+        Category category = Category(name: block.name, link: block.link);
+
+        categories.add(category);
+        print(categories);
+      },
     );
   }
 }
