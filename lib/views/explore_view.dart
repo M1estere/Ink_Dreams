@@ -1,7 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:manga_reading/views/blocks/category_block.dart';
 import 'package:manga_reading/views/manga_page_view.dart';
 import 'package:page_transition/page_transition.dart';
+
+class Category {
+  String? name;
+  String? link;
+
+  Category({this.name, this.link});
+}
+
+class CategoryBlockT {
+  String? name;
+  String? link;
+
+  CategoryBlockT({this.name, this.link});
+
+  CategoryBlockT.fromJson(Map<dynamic, dynamic> json) {
+    name = json['name'];
+    link = json['image_link'];
+  }
+}
 
 class ExploreView extends StatefulWidget {
   const ExploreView({super.key});
@@ -17,6 +38,19 @@ class _ExploreView extends State<ExploreView> {
   final PageController _mangaPagesController =
       PageController(viewportFraction: .95);
   int _currentSectionIndex = 0;
+
+  List<Category> categories = [];
+
+  DatabaseReference ref =
+      FirebaseDatabase.instance.ref().child('categories_titles');
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    retrieveData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,19 +119,16 @@ class _ExploreView extends State<ExploreView> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: SizedBox(
-            height: MediaQuery.of(context).size.height * .65,
-            child: ListView(
+            height: MediaQuery.of(context).size.height * .75,
+            child: ListView.builder(
+              itemCount: categories.length,
+              itemBuilder: (context, index) {
+                return CategoryBlock(
+                  image: categories[index].link!,
+                  title: categories[index].name!,
+                );
+              },
               scrollDirection: Axis.vertical,
-              children: [
-                CategoryBlock(
-                  image: 'assets/images/attack.jpg',
-                  title: 'shonen',
-                ),
-                CategoryBlock(
-                  image: 'assets/images/attack.jpg',
-                  title: 'seinen',
-                ),
-              ],
             ),
           ),
         ),
@@ -213,6 +244,22 @@ class _ExploreView extends State<ExploreView> {
           ),
         ),
       ),
+    );
+  }
+
+  void retrieveData() {
+    categories.clear();
+    ref.onChildAdded.listen(
+      (value) {
+        CategoryBlockT block =
+            CategoryBlockT.fromJson(value.snapshot.value as Map);
+        Category category = Category(name: block.name, link: block.link);
+        print(category.name);
+        print(category.link);
+
+        categories.add(category);
+        print(categories);
+      },
     );
   }
 }

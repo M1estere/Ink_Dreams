@@ -110,7 +110,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF23202B),
         useMaterial3: true,
       ),
-      home: ReaderView(filePath: 'assets/test.pdf'),
+      home: MainWrapper(),
       //home: Temp(),
     );
   }
