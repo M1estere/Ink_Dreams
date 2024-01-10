@@ -1,4 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:manga_reading/support/get_by_category.dart';
 import 'package:manga_reading/views/blocks/category_result_block.dart';
 
 class CategoryPageView extends StatefulWidget {
@@ -63,18 +65,57 @@ class _CategoryPageViewState extends State<CategoryPageView> {
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   margin: const EdgeInsets.only(bottom: 20),
                   height: MediaQuery.of(context).size.height * .7,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      CategoryResultBlock(
-                        title: 'Attack On Titan',
-                        chapters: 154,
-                        status: 'lol',
-                        author: 'Hajime Isayama',
-                        image: 'assets/images/attack.jpg',
-                      ),
-                    ],
+                  child: FutureBuilder(
+                    future: get_by_cat(widget.categoryTitle),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      Widget displayWidget;
+                      if (snapshot.hasData) {
+                        displayWidget = ListView.builder(
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            return CategoryResultBlock(
+                              title: snapshot.data[index].title!,
+                              chapters: snapshot.data[index].chapters!,
+                              status: snapshot.data[index].status!,
+                              author: snapshot.data[index].author!,
+                              image: snapshot.data[index].image!,
+                            );
+                          },
+                        );
+                      } else if (snapshot.hasError) {
+                        displayWidget = Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: Text(
+                            'Error: ${snapshot.error}',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        );
+                      } else {
+                        displayWidget = Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text('Awaiting result...'),
+                        );
+                      }
+                      return Center(
+                        child: displayWidget,
+                      );
+                    },
                   ),
+
+                  //   child: ListView.builder(
+                  //     itemCount: manga_books.length,
+                  //     itemBuilder: (context, index) {
+                  //       return CategoryResultBlock(
+                  //         title: manga_books[index].title!,
+                  //         chapters: manga_books[index].chapters!,
+                  //         status: manga_books[index].status!,
+                  //         author: manga_books[index].author!,
+                  //         image: manga_books[index].image!,
+                  //       );
+                  //     },
+                  //     scrollDirection: Axis.vertical,
+                  //   ),
+                  // ),
                 ),
               ],
             ),

@@ -42,7 +42,7 @@ class CategoryResultBlock extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Image(
-                  image: AssetImage(image),
+                  image: NetworkImage(image),
                 ),
               ),
             ),

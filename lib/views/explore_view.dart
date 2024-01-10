@@ -46,7 +46,6 @@ class _ExploreView extends State<ExploreView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     retrieveData();
@@ -247,19 +246,20 @@ class _ExploreView extends State<ExploreView> {
     );
   }
 
-  void retrieveData() {
+  void retrieveData() async {
     categories.clear();
-    ref.onChildAdded.listen(
-      (value) {
-        CategoryBlockT block =
-            CategoryBlockT.fromJson(value.snapshot.value as Map);
+
+    final snapshot = await ref.get();
+    if (snapshot.exists) {
+      List data = snapshot.value as List;
+      for (var i = 0; i < data.length; i++) {
+        CategoryBlockT block = CategoryBlockT.fromJson(data[i] as Map);
         Category category = Category(name: block.name, link: block.link);
-        print(category.name);
-        print(category.link);
 
         categories.add(category);
-        print(categories);
-      },
-    );
+      }
+    } else {
+      print('No data available.');
+    }
   }
 }
