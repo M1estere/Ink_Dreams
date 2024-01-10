@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_reading/support/get_by_category.dart';
 import 'package:manga_reading/views/blocks/category_result_block.dart';
+import 'package:manga_reading/views/support/fetching_circle.dart';
 
 class CategoryPageView extends StatefulWidget {
   final String categoryTitle;
@@ -12,6 +13,25 @@ class CategoryPageView extends StatefulWidget {
 }
 
 class _CategoryPageViewState extends State<CategoryPageView> {
+  List<MangaBook> mangaBooks = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    get_by_cat(widget.categoryTitle).then(
+      (value) {
+        setState(
+          () {
+            mangaBooks = value;
+            isLoading = false;
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,57 +85,21 @@ class _CategoryPageViewState extends State<CategoryPageView> {
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   margin: const EdgeInsets.only(bottom: 20),
                   height: MediaQuery.of(context).size.height * .7,
-                  child: FutureBuilder(
-                    future: get_by_cat(widget.categoryTitle),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      Widget displayWidget;
-                      if (snapshot.hasData) {
-                        displayWidget = ListView.builder(
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            return CategoryResultBlock(
-                              title: snapshot.data[index].title!,
-                              chapters: snapshot.data[index].chapters!,
-                              status: snapshot.data[index].status!,
-                              author: snapshot.data[index].author!,
-                              image: snapshot.data[index].image!,
+                  child: ListView.builder(
+                    itemCount: mangaBooks.length,
+                    itemBuilder: (context, index) {
+                      return isLoading
+                          ? FetchingCircle()
+                          : CategoryResultBlock(
+                              title: mangaBooks[index].title!,
+                              chapters: mangaBooks[index].chapters!,
+                              status: mangaBooks[index].status!,
+                              author: mangaBooks[index].author!,
+                              image: mangaBooks[index].image!,
                             );
-                          },
-                        );
-                      } else if (snapshot.hasError) {
-                        displayWidget = Padding(
-                          padding: const EdgeInsets.only(top: 16),
-                          child: Text(
-                            'Error: ${snapshot.error}',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        );
-                      } else {
-                        displayWidget = Padding(
-                          padding: EdgeInsets.only(top: 16),
-                          child: Text('Awaiting result...'),
-                        );
-                      }
-                      return Center(
-                        child: displayWidget,
-                      );
                     },
+                    scrollDirection: Axis.vertical,
                   ),
-
-                  //   child: ListView.builder(
-                  //     itemCount: manga_books.length,
-                  //     itemBuilder: (context, index) {
-                  //       return CategoryResultBlock(
-                  //         title: manga_books[index].title!,
-                  //         chapters: manga_books[index].chapters!,
-                  //         status: manga_books[index].status!,
-                  //         author: manga_books[index].author!,
-                  //         image: manga_books[index].image!,
-                  //       );
-                  //     },
-                  //     scrollDirection: Axis.vertical,
-                  //   ),
-                  // ),
                 ),
               ],
             ),

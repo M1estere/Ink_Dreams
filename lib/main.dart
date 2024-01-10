@@ -111,7 +111,6 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: MainWrapper(),
-      //home: Temp(),
     );
   }
 }

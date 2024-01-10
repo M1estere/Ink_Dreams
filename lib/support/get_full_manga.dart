@@ -1,52 +1,80 @@
 import 'package:firebase_database/firebase_database.dart';
 
-class MangaBook {
+class MangaPageFull {
   String? title;
   String? status;
-  int? chapters;
+  List<Map?>? chapters;
   String? author;
   String? image;
   String? categories;
+  String? year;
+  String? desc;
 
-  MangaBook({
+  MangaPageFull({
     this.title,
     this.status,
     this.author,
     this.chapters,
     this.image,
     this.categories,
+    this.year,
+    this.desc,
   });
 }
 
-class MangaBookT {
+class MangaPageFullT {
   String? title;
   String? status;
-  int? chapters;
+  List<Map?>? chapters;
   String? author;
   String? image;
   String? categories;
+  String? year;
+  String? desc;
 
-  MangaBookT({
+  MangaPageFullT({
     this.title,
     this.status,
     this.author,
     this.chapters,
     this.image,
     this.categories,
+    this.year,
+    this.desc,
   });
 
-  MangaBookT.fromJson(Map<dynamic, dynamic> json) {
+  MangaPageFullT.fromJson(Map<dynamic, dynamic> json) {
     image = json['cover'];
+
     title = json['Name'];
     categories = json['category'];
-    chapters = json['chapters'].length;
+
+    chapters = get_chapters(json['chapters']);
+
     status = json['status'];
     author = json['author'];
+
+    year = json['year'].toString();
+    desc = json['description'];
   }
 }
 
-Future<List<MangaBook>> get_by_cat(String search_category) async {
-  List<MangaBook> result = [];
+List<Map> get_chapters(List json) {
+  List<Map> result = [];
+
+  for (var i = 0; i < json.length; i++) {
+    Map temp = {};
+    temp[json[i]['name']] = json[i]['name'];
+    temp[json[i]['link']] = json[i]['link'];
+
+    result.add(temp);
+  }
+
+  return result;
+}
+
+Future<MangaPageFull> get_manga_by_name(String name) async {
+  MangaPageFull result = MangaPageFull();
 
   DatabaseReference ref = FirebaseDatabase.instance.ref().child('manga_books');
 
@@ -54,18 +82,22 @@ Future<List<MangaBook>> get_by_cat(String search_category) async {
   if (snapshot.exists) {
     List data = snapshot.value as List;
     for (var i = 0; i < data.length; i++) {
-      MangaBookT block = MangaBookT.fromJson(data[i] as Map);
+      MangaPageFullT block = MangaPageFullT.fromJson(data[i] as Map);
 
-      if (block.categories!.toLowerCase().contains(search_category)) {
-        MangaBook book = MangaBook(
+      if (block.title == name) {
+        MangaPageFull book = MangaPageFull(
           title: block.title,
           author: block.author,
           categories: block.categories,
           chapters: block.chapters,
           image: block.image,
           status: block.status,
+          year: block.year,
+          desc: block.desc,
         );
-        result.add(book);
+
+        result = book;
+        break;
       }
     }
   } else {

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:manga_reading/support/get_categories.dart';
 import 'package:manga_reading/views/blocks/category_block.dart';
+import 'package:manga_reading/views/blocks/explore_start_block.dart';
 import 'package:manga_reading/views/manga_page_view.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -48,7 +50,15 @@ class _ExploreView extends State<ExploreView> {
   void initState() {
     super.initState();
 
-    retrieveData();
+    get_categories().then(
+      (value) {
+        setState(
+          () {
+            categories = value;
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -82,7 +92,8 @@ class _ExploreView extends State<ExploreView> {
                               1 - (_mangaPagesController.page! - index).abs();
                         }
 
-                        return _buildItem(context, factor);
+                        return ExploreStartBlock(
+                            title: _currentTitle, factor: factor);
                       },
                     );
                   },
@@ -214,52 +225,5 @@ class _ExploreView extends State<ExploreView> {
         ),
       ),
     );
-  }
-
-  Widget _buildItem(BuildContext context, double factor) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          PageTransition(
-            type: PageTransitionType.rightToLeftWithFade,
-            child: MangaPageView(title: _currentTitle),
-          ),
-        );
-      },
-      child: Center(
-        child: SizedBox(
-          height: 500 + (factor * 75),
-          width: 400,
-          child: Container(
-            margin: const EdgeInsets.only(right: 20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              image: const DecorationImage(
-                image: AssetImage('assets/images/attack.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  void retrieveData() async {
-    categories.clear();
-
-    final snapshot = await ref.get();
-    if (snapshot.exists) {
-      List data = snapshot.value as List;
-      for (var i = 0; i < data.length; i++) {
-        CategoryBlockT block = CategoryBlockT.fromJson(data[i] as Map);
-        Category category = Category(name: block.name, link: block.link);
-
-        categories.add(category);
-      }
-    } else {
-      print('No data available.');
-    }
   }
 }
