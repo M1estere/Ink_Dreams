@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:manga_reading/support/get_by_category.dart';
 import 'package:manga_reading/support/get_categories.dart';
+import 'package:manga_reading/support/get_search_intro_page.dart';
 import 'package:manga_reading/views/blocks/category_block.dart';
 import 'package:manga_reading/views/blocks/explore_start_block.dart';
 import 'package:manga_reading/views/manga_page_view.dart';
+import 'package:manga_reading/views/support/fetching_circle.dart';
 import 'package:page_transition/page_transition.dart';
 
 class Category {
@@ -34,8 +37,11 @@ class ExploreView extends StatefulWidget {
 }
 
 class _ExploreView extends State<ExploreView> {
-  String _currentTitle = 'Attack On Titan';
-  String _currentAuthor = 'Hajime Isayama';
+  bool isLoading = true;
+  List<MangaBook> mangaBooks = [];
+
+  String currentTitle = 'test';
+  String currentAuthor = 'test';
 
   final PageController _mangaPagesController =
       PageController(viewportFraction: .95);
@@ -59,6 +65,14 @@ class _ExploreView extends State<ExploreView> {
         );
       },
     );
+
+    getRandomManga(3).then((value) {
+      setState(() {
+        isLoading = false;
+
+        mangaBooks = value;
+      });
+    });
   }
 
   @override
@@ -67,64 +81,75 @@ class _ExploreView extends State<ExploreView> {
       index: _currentSectionIndex,
       children: [
         // main section
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: SizedBox(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height * .6,
-                child: PageView.builder(
-                  padEnds: false,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
-                  controller: _mangaPagesController,
-                  itemBuilder: (context, index) {
-                    return ListenableBuilder(
-                      listenable: _mangaPagesController,
-                      builder: (context, child) {
-                        double factor = 1;
-                        if (_mangaPagesController
-                            .position.hasContentDimensions) {
-                          factor =
-                              1 - (_mangaPagesController.page! - index).abs();
-                        }
+        !isLoading
+            ? Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height * .6,
+                      child: PageView.builder(
+                        onPageChanged: (value) {
+                          setState(() {
+                            currentTitle = mangaBooks[value].title!;
+                            currentAuthor = mangaBooks[value].author!;
+                          });
+                        },
+                        padEnds: false,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 3,
+                        controller: _mangaPagesController,
+                        itemBuilder: (context, index) {
+                          return ListenableBuilder(
+                            listenable: _mangaPagesController,
+                            builder: (context, child) {
+                              double factor = 1;
+                              if (_mangaPagesController
+                                  .position.hasContentDimensions) {
+                                factor = 1 -
+                                    (_mangaPagesController.page! - index).abs();
+                              }
 
-                        return ExploreStartBlock(
-                            title: _currentTitle, factor: factor);
-                      },
-                    );
-                  },
-                ),
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _currentTitle,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2.5,
+                              return ExploreStartBlock(
+                                title: mangaBooks[index].title!,
+                                factor: factor,
+                                image: mangaBooks[index].image!,
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ),
                   ),
-                ),
-                Text(
-                  _currentAuthor,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 2.5,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        currentTitle,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2.5,
+                        ),
+                      ),
+                      Text(
+                        currentAuthor,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 2.5,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
+                ],
+              )
+            : const FetchingCircle(),
         // categories section
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),

@@ -7,6 +7,7 @@ class MangaBook {
   String? author;
   String? image;
   String? categories;
+  String? year;
 
   MangaBook({
     this.title,
@@ -15,6 +16,7 @@ class MangaBook {
     this.chapters,
     this.image,
     this.categories,
+    this.year,
   });
 }
 
@@ -25,6 +27,7 @@ class MangaBookT {
   String? author;
   String? image;
   String? categories;
+  String? year;
 
   MangaBookT({
     this.title,
@@ -33,15 +36,17 @@ class MangaBookT {
     this.chapters,
     this.image,
     this.categories,
+    this.year,
   });
 
   MangaBookT.fromJson(Map<dynamic, dynamic> json) {
     image = json['cover'];
     title = json['title'];
     categories = json['category'];
-    chapters = json['chapters'].length; // TO-DO: Change
+    chapters = json['chapters'].length;
     status = json['status'];
     author = json['author'];
+    year = json['year'].toString();
   }
 }
 

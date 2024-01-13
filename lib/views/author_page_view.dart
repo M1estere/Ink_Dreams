@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:manga_reading/support/get_author_manga.dart';
 import 'package:manga_reading/views/blocks/author_manga_block.dart';
+import 'package:manga_reading/views/support/fetching_circle.dart';
 
 class AuthorPageView extends StatefulWidget {
   final String authorName;
@@ -14,6 +16,21 @@ class AuthorPageView extends StatefulWidget {
 }
 
 class _AuthorPageViewState extends State<AuthorPageView> {
+  bool isLoading = true;
+  List<AuthorManga> mangaBooks = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    getAuthorManga(widget.authorName).then((value) {
+      setState(() {
+        isLoading = false;
+        mangaBooks = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,18 +84,22 @@ class _AuthorPageViewState extends State<AuthorPageView> {
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   margin: const EdgeInsets.only(bottom: 20),
                   height: MediaQuery.of(context).size.height * .7,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: [
-                      AuthorMangaBlock(
-                        title: 'Attack On Titan',
-                        chapters: 154,
-                        status: 'lol',
-                        author: 'Hajime Isayama',
-                        image: 'assets/images/attack.jpg',
-                      ),
-                    ],
-                  ),
+                  child: !isLoading
+                      ? ListView.builder(
+                          itemCount: mangaBooks.length,
+                          itemBuilder: (context, index) {
+                            return AuthorMangaBlock(
+                              title: mangaBooks[index].title!,
+                              chapters: mangaBooks[index].chaptersAmount!,
+                              status: mangaBooks[index].status!,
+                              author: widget.authorName,
+                              image: mangaBooks[index].image!,
+                              genres: mangaBooks[index].genres!,
+                            );
+                          },
+                          scrollDirection: Axis.vertical,
+                        )
+                      : const FetchingCircle(),
                 ),
               ],
             ),

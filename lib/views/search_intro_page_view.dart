@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:manga_reading/support/get_random_manga.dart';
+import 'package:manga_reading/support/get_by_category.dart';
+import 'package:manga_reading/support/get_search_intro_page.dart';
 import 'package:manga_reading/views/blocks/search_author_block.dart';
 import 'package:manga_reading/views/blocks/search_manga_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
@@ -18,9 +19,9 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
   bool isLoadingHottest = true;
   bool isLoadingAuthors = true;
 
-  List<MangaSearchIntro> popularManga = [];
-  List<MangaSearchIntro> hottestManga = [];
-  List<AuthorSearchIntro> authors = [];
+  List<MangaBook> popularManga = [];
+  List<MangaBook> hottestManga = [];
+  List<AuthorBlock> authors = [];
 
   @override
   void initState() {

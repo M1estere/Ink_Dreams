@@ -4,10 +4,15 @@ import 'package:page_transition/page_transition.dart';
 
 class ExploreStartBlock extends StatefulWidget {
   final String title;
+  final String image;
   final double factor;
 
-  const ExploreStartBlock(
-      {super.key, required this.title, required this.factor});
+  const ExploreStartBlock({
+    super.key,
+    required this.title,
+    required this.factor,
+    required this.image,
+  });
 
   @override
   State<ExploreStartBlock> createState() => _ExploreStartBlockState();
@@ -34,9 +39,25 @@ class _ExploreStartBlockState extends State<ExploreStartBlock> {
             margin: const EdgeInsets.only(right: 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              image: const DecorationImage(
-                image: AssetImage('assets/images/attack.jpg'),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
                 fit: BoxFit.cover,
+                widget.image,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  } else {
+                    return const Center(
+                      child: SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                },
               ),
             ),
           ),

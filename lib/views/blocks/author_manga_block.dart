@@ -6,6 +6,7 @@ class AuthorMangaBlock extends StatelessWidget {
   final int chapters;
   final String author;
   final String image;
+  final String genres;
 
   const AuthorMangaBlock({
     super.key,
@@ -14,6 +15,7 @@ class AuthorMangaBlock extends StatelessWidget {
     required this.status,
     required this.author,
     required this.image,
+    required this.genres,
   });
 
   @override
@@ -41,8 +43,22 @@ class AuthorMangaBlock extends StatelessWidget {
               height: 170,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image(
-                  image: AssetImage(image),
+                child: Image.network(
+                  fit: BoxFit.cover,
+                  image,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                      return const Center(
+                        child: SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             ),
@@ -127,7 +143,7 @@ class AuthorMangaBlock extends StatelessWidget {
                         ),
                         children: <TextSpan>[
                           TextSpan(
-                            text: 'Shenen, Action, Lol, Test Genre',
+                            text: genres,
                             style: const TextStyle(
                                 color: Color(0xFF9D1515),
                                 letterSpacing: 1,
