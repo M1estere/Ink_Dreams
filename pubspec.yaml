@@ -43,6 +43,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   pdf_render: ^1.4.5
   flutter_pdfview: ^1.0.4
+  googleapis: ^5.0.0
+  googleapis_auth: ^1.4.1
+  http: ^0.13.3
+  advance_pdf_viewer: ^2.0.0
 
 dev_dependencies:
   flutter_test:

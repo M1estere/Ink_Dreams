@@ -46,10 +46,10 @@ class MangaPageFullT {
   MangaPageFullT.fromJson(Map<dynamic, dynamic> json) {
     image = json['cover'];
 
-    title = json['Name'];
+    title = json['title'];
     categories = json['category'];
 
-    chapters = get_chapters(json['chapters']);
+    chapters = getChapters(json['chapters']);
 
     status = json['status'];
     author = json['author'];
@@ -59,13 +59,14 @@ class MangaPageFullT {
   }
 }
 
-List<Map> get_chapters(List json) {
+List<Map> getChapters(List json) {
   List<Map> result = [];
 
   for (var i = 0; i < json.length; i++) {
     Map temp = {};
-    temp[json[i]['name']] = json[i]['name'];
-    temp[json[i]['link']] = json[i]['link'];
+    temp['name'] = json[i]['name'];
+    temp['link'] = json[i]['link'];
+    temp['pages'] = json[i]['pages'];
 
     result.add(temp);
   }
@@ -73,7 +74,7 @@ List<Map> get_chapters(List json) {
   return result;
 }
 
-Future<MangaPageFull> get_manga_by_name(String name) async {
+Future<MangaPageFull> getMangaByName(String name) async {
   MangaPageFull result = MangaPageFull();
 
   DatabaseReference ref = FirebaseDatabase.instance.ref().child('manga_books');

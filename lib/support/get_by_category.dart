@@ -37,15 +37,15 @@ class MangaBookT {
 
   MangaBookT.fromJson(Map<dynamic, dynamic> json) {
     image = json['cover'];
-    title = json['Name'];
+    title = json['title'];
     categories = json['category'];
-    chapters = json['chapters'].length;
+    chapters = json['chapters'].length; // TO-DO: Change
     status = json['status'];
     author = json['author'];
   }
 }
 
-Future<List<MangaBook>> get_by_cat(String search_category) async {
+Future<List<MangaBook>> getByCat(String searchCategory) async {
   List<MangaBook> result = [];
 
   DatabaseReference ref = FirebaseDatabase.instance.ref().child('manga_books');
@@ -56,7 +56,7 @@ Future<List<MangaBook>> get_by_cat(String search_category) async {
     for (var i = 0; i < data.length; i++) {
       MangaBookT block = MangaBookT.fromJson(data[i] as Map);
 
-      if (block.categories!.toLowerCase().contains(search_category)) {
+      if (block.categories!.toLowerCase().contains(searchCategory)) {
         MangaBook book = MangaBook(
           title: block.title,
           author: block.author,

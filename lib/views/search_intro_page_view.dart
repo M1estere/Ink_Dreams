@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:manga_reading/support/get_random_manga.dart';
 import 'package:manga_reading/views/blocks/search_author_block.dart';
 import 'package:manga_reading/views/blocks/search_manga_block.dart';
+import 'package:manga_reading/views/support/fetching_circle.dart';
 
 class SearchIntroPageView extends StatefulWidget {
   const SearchIntroPageView({super.key});
@@ -10,6 +14,40 @@ class SearchIntroPageView extends StatefulWidget {
 }
 
 class _SearchIntroPageViewState extends State<SearchIntroPageView> {
+  bool isLoadingPopular = true;
+  bool isLoadingHottest = true;
+  bool isLoadingAuthors = true;
+
+  List<MangaSearchIntro> popularManga = [];
+  List<MangaSearchIntro> hottestManga = [];
+  List<AuthorSearchIntro> authors = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    getRandomManga(Random().nextInt(4) + 2).then((value) {
+      setState(() {
+        isLoadingPopular = false;
+        popularManga = value;
+      });
+    });
+
+    getRandomManga(Random().nextInt(4) + 2).then((value) {
+      setState(() {
+        isLoadingHottest = false;
+        hottestManga = value;
+      });
+    });
+
+    getRandomAuthor(1).then((value) {
+      setState(() {
+        isLoadingAuthors = false;
+        authors = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,26 +68,19 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
               height: 360,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  SearchMangaBlock(
-                    title: 'Attack On Titan',
-                    releaseYear: '2023',
-                    image: 'assets/images/attack.jpg',
-                  ),
-                  SearchMangaBlock(
-                    title: 'Attack 2 Titan',
-                    releaseYear: '2023',
-                    image: 'assets/images/attack.jpg',
-                  ),
-                  SearchMangaBlock(
-                    title: 'Attack On Titan',
-                    releaseYear: '2023',
-                    image: 'assets/images/attack.jpg',
-                  ),
-                ],
-              ),
+              child: !isLoadingPopular
+                  ? ListView.builder(
+                      itemBuilder: (context, index) {
+                        return SearchMangaBlock(
+                          title: popularManga[index].title!,
+                          releaseYear: popularManga[index].year!,
+                          image: popularManga[index].image!,
+                        );
+                      },
+                      scrollDirection: Axis.horizontal,
+                      itemCount: popularManga.length,
+                    )
+                  : const FetchingCircle(),
             ),
             const SizedBox(
               height: 10,
@@ -65,26 +96,19 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
               height: 360,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  SearchMangaBlock(
-                    title: 'Attack On Titan',
-                    releaseYear: '2023',
-                    image: 'assets/images/attack.jpg',
-                  ),
-                  SearchMangaBlock(
-                    title: 'Attack On Titan',
-                    releaseYear: '2023',
-                    image: 'assets/images/attack.jpg',
-                  ),
-                  SearchMangaBlock(
-                    title: 'Attack On Titan',
-                    releaseYear: '2023',
-                    image: 'assets/images/attack.jpg',
-                  ),
-                ],
-              ),
+              child: !isLoadingHottest
+                  ? ListView.builder(
+                      itemCount: hottestManga.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return SearchMangaBlock(
+                          title: hottestManga[index].title!,
+                          releaseYear: hottestManga[index].year!,
+                          image: hottestManga[index].image!,
+                        );
+                      },
+                    )
+                  : const FetchingCircle(),
             ),
             const SizedBox(
               height: 10,
@@ -100,23 +124,18 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
               height: 250,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  SearchAuthorBlock(
-                    author: 'Hidetaka Babadzaki',
-                    image: 'assets/images/attack.jpg',
-                  ),
-                  SearchAuthorBlock(
-                    author: 'Hidetaka Babadzaki 2',
-                    image: 'assets/images/attack.jpg',
-                  ),
-                  SearchAuthorBlock(
-                    author: 'Hidetaka Babadzaki 3',
-                    image: 'assets/images/attack.jpg',
-                  ),
-                ],
-              ),
+              child: !isLoadingAuthors
+                  ? ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: authors.length,
+                      itemBuilder: (context, index) {
+                        return SearchAuthorBlock(
+                          author: authors[index].name!,
+                          image: authors[index].image!,
+                        );
+                      },
+                    )
+                  : const FetchingCircle(),
             ),
           ],
         ),

@@ -34,18 +34,33 @@ class SearchMangaBlock extends StatelessWidget {
             Container(
               height: 280,
               margin: const EdgeInsets.only(right: 20),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(image),
-                  fit: BoxFit.cover,
-                ),
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  fit: BoxFit.cover,
+                  image,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                      return const Center(
+                        child: SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                  },
+                ),
               ),
             ),
             Text(
               title,
+              maxLines: 1,
               style: const TextStyle(
                 color: Colors.white,
+                overflow: TextOverflow.ellipsis,
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 1.5,

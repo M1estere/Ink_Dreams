@@ -39,9 +39,27 @@ class SearchAuthorBlock extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 75,
                   backgroundColor: Colors.white,
-                  child: CircleAvatar(
-                    foregroundImage: AssetImage(image),
-                    radius: 65,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(360),
+                    child: Image.network(
+                      width: 135,
+                      height: 135,
+                      fit: BoxFit.cover,
+                      image,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        } else {
+                          return const Center(
+                            child: SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ),
               ),

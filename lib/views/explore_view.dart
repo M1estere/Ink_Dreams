@@ -75,7 +75,7 @@ class _ExploreView extends State<ExploreView> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: SizedBox(
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height * .65,
+                height: MediaQuery.of(context).size.height * .6,
                 child: PageView.builder(
                   padEnds: false,
                   scrollDirection: Axis.horizontal,
@@ -148,9 +148,7 @@ class _ExploreView extends State<ExploreView> {
     return SafeArea(
       child: Container(
         width: double.infinity,
-        decoration: const BoxDecoration(
-          color: Colors.transparent,
-        ),
+        decoration: const BoxDecoration(),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           child: Column(
@@ -217,7 +215,7 @@ class _ExploreView extends State<ExploreView> {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * .75,
+                height: MediaQuery.of(context).size.height * .7,
                 child: pageSections,
               ),
             ],
