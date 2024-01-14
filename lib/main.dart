@@ -1,11 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_reading/firebase_options.dart';
-import 'package:manga_reading/test.dart';
 import 'package:manga_reading/views/main_app_wrapper.dart';
-import 'package:manga_reading/views/reader_view.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 
 void main() async {
@@ -14,7 +10,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    MyApp(),
+    const MyApp(),
   );
 }
 
@@ -26,21 +22,6 @@ class Temp extends StatefulWidget {
 }
 
 class _TempState extends State<Temp> {
-  DatabaseReference ref =
-      FirebaseDatabase.instance.ref().child('categories_titles');
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    ref.onChildAdded.listen(
-      (value) {
-        print(value);
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,7 +92,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFF23202B),
         useMaterial3: true,
       ),
-      home: MainWrapper(),
+      home: const MainWrapper(),
     );
   }
 }

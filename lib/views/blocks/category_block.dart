@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:manga_reading/string_extension.dart';
+import 'package:manga_reading/extensions/string_extension.dart';
 import 'package:manga_reading/views/category_page_view.dart';
 import 'package:page_transition/page_transition.dart';
 

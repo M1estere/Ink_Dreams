@@ -1,56 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:manga_reading/support/classes/manga_book.dart';
 
-class MangaBook {
-  String? title;
-  String? status;
-  int? chapters;
-  String? author;
-  String? image;
-  String? categories;
-  String? year;
-
-  MangaBook({
-    this.title,
-    this.status,
-    this.author,
-    this.chapters,
-    this.image,
-    this.categories,
-    this.year,
-  });
-}
-
-class MangaBookT {
-  String? title;
-  String? status;
-  int? chapters;
-  String? author;
-  String? image;
-  String? categories;
-  String? year;
-
-  MangaBookT({
-    this.title,
-    this.status,
-    this.author,
-    this.chapters,
-    this.image,
-    this.categories,
-    this.year,
-  });
-
-  MangaBookT.fromJson(Map<dynamic, dynamic> json) {
-    image = json['cover'];
-    title = json['title'];
-    categories = json['category'];
-    chapters = json['chapters'].length;
-    status = json['status'];
-    author = json['author'];
-    year = json['year'].toString();
-  }
-}
-
-Future<List<MangaBook>> getByCat(String searchCategory) async {
+Future<List<MangaBook>> getByCategory(String searchCategory) async {
   List<MangaBook> result = [];
 
   DatabaseReference ref = FirebaseDatabase.instance.ref().child('manga_books');

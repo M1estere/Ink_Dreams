@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:manga_reading/views/explore_view.dart';
 
-Future<List<Category>> get_categories() async {
+Future<List<Category>> getCategories() async {
   List<Category> result = [];
 
   DatabaseReference ref =

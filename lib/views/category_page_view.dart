@@ -1,5 +1,5 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/support/get_by_category.dart';
 import 'package:manga_reading/views/blocks/category_result_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
@@ -20,7 +20,7 @@ class _CategoryPageViewState extends State<CategoryPageView> {
   void initState() {
     super.initState();
 
-    getByCat(widget.categoryTitle).then(
+    getByCategory(widget.categoryTitle).then(
       (value) {
         setState(
           () {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:manga_reading/support/classes/manga_page.dart';
 import 'package:manga_reading/support/get_full_manga.dart';
 import 'package:manga_reading/views/reader_view.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';

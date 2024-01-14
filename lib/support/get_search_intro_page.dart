@@ -1,26 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:manga_reading/support/classes/author_block.dart';
 import 'dart:math';
 
-import 'package:manga_reading/support/get_by_category.dart';
-
-class AuthorBlock {
-  String? name;
-  String? image;
-
-  AuthorBlock({required this.name, required this.image});
-}
-
-class AuthorBlockT {
-  String? name;
-  String? image;
-
-  AuthorBlockT({required this.name, required this.image});
-
-  AuthorBlockT.fromJson(Map<dynamic, dynamic> json) {
-    name = json['name'];
-    image = json['image'];
-  }
-}
+import 'package:manga_reading/support/classes/manga_book.dart';
 
 Future<List<MangaBook>> getRandomManga(int amount) async {
   List<MangaBook> result = [];

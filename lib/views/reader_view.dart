@@ -82,11 +82,11 @@ class _ReaderViewState extends State<ReaderView> {
                   color: Colors.white,
                 ),
               ),
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width * .65,
                 child: SizedBox(
                   child: Text(
-                    '${widget.title}'.toUpperCase(),
+                    widget.title.toUpperCase(),
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -108,8 +108,6 @@ class _ReaderViewState extends State<ReaderView> {
                   ),
                   iconSize: 25,
                   onPressed: () {
-                    print('Previous chapter selected');
-
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -136,11 +134,9 @@ class _ReaderViewState extends State<ReaderView> {
           hasNext
               ? IconButton(
                   visualDensity:
-                      VisualDensity(horizontal: -4.0, vertical: -4.0),
+                      const VisualDensity(horizontal: -4.0, vertical: -4.0),
                   iconSize: 25,
                   onPressed: () {
-                    print('Next chapter selected');
-
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -200,11 +196,11 @@ class _ReaderViewState extends State<ReaderView> {
                     ),
                   ),
                 )
-              : FetchingCircle(),
+              : const FetchingCircle(),
         ),
       ),
     );
   }
 
-  final _controller = Completer<PDFViewController>();
+  final controller = Completer<PDFViewController>();
 }

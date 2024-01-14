@@ -64,6 +64,5 @@ class _ExploreStartBlockState extends State<ExploreStartBlock> {
         ),
       ),
     );
-    ;
   }
 }

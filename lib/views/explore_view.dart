@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:manga_reading/support/get_by_category.dart';
+import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/support/get_categories.dart';
 import 'package:manga_reading/support/get_search_intro_page.dart';
 import 'package:manga_reading/views/blocks/category_block.dart';
 import 'package:manga_reading/views/blocks/explore_start_block.dart';
-import 'package:manga_reading/views/manga_page_view.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
-import 'package:page_transition/page_transition.dart';
 
 class Category {
   String? name;
@@ -56,7 +53,7 @@ class _ExploreView extends State<ExploreView> {
   void initState() {
     super.initState();
 
-    get_categories().then(
+    getCategories().then(
       (value) {
         setState(
           () {
