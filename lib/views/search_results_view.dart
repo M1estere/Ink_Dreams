@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/views/blocks/search_result_block.dart';
+import 'package:manga_reading/support/get_by_search.dart';
 
 class SearchResultsView extends StatefulWidget {
   const SearchResultsView({super.key});
@@ -9,6 +11,9 @@ class SearchResultsView extends StatefulWidget {
 }
 
 class _SearchResultsViewState extends State<SearchResultsView> {
+  List<MangaBook> searchResults = [];
+  bool canDisplay = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +77,7 @@ class _SearchResultsViewState extends State<SearchResultsView> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      hintText: 'Enter a search term...',
+                      hintText: 'Search anything...',
                       hintStyle: const TextStyle(
                         color: Color.fromARGB(255, 70, 70, 70),
                         fontSize: 25,
@@ -80,38 +85,91 @@ class _SearchResultsViewState extends State<SearchResultsView> {
                         letterSpacing: 1,
                       ),
                     ),
+                    onChanged: (value) {
+                      getSearchResult(value).then((res) {
+                        if (value.isEmpty) {
+                          print('empty');
+                          setState(() {
+                            canDisplay = false;
+                          });
+                        } else {
+                          setState(() {
+                            searchResults = res;
+                            canDisplay = true;
+                          });
+                        }
+                      });
+                    },
                   ),
                 ),
               ),
               const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                'Results',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    letterSpacing: 1.5,
-                    fontWeight: FontWeight.w400),
-              ),
-              const SizedBox(
                 height: 20,
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .7,
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  children: [
-                    SearchResultBlock(
-                      title: 'Attack On Titan',
-                      chapters: 165,
-                      status: 'Ongoing',
-                      author: 'L2oh',
-                      image: 'assets/images/attack.jpg',
+              canDisplay
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Results',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              letterSpacing: 1.5,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * .7,
+                          child: ListView.builder(
+                            itemCount: searchResults.length,
+                            scrollDirection: Axis.vertical,
+                            itemBuilder: (context, index) {
+                              return SearchResultBlock(
+                                title: searchResults[index].title!,
+                                chapters: searchResults[index].chapters!,
+                                status: searchResults[index].status!,
+                                author: searchResults[index].author!,
+                                image: searchResults[index].image!,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    )
+                  : SizedBox(
+                      height: MediaQuery.of(context).size.height * .75,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.article_outlined,
+                              color: Colors.green,
+                              size: 80,
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * .7,
+                              child: const Text(
+                                textAlign: TextAlign.center,
+                                'Type something to find!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
