@@ -40,8 +40,8 @@ class _ExploreView extends State<ExploreView> {
   bool isLoading = true;
   List<MangaBook> mangaBooks = [];
 
-  String currentTitle = 'test';
-  String currentAuthor = 'test';
+  String currentTitle = '';
+  String currentAuthor = '';
 
   final PageController _mangaPagesController =
       PageController(viewportFraction: .95);
@@ -71,6 +71,9 @@ class _ExploreView extends State<ExploreView> {
         isLoading = false;
 
         mangaBooks = value;
+
+        currentTitle = mangaBooks[0].title!;
+        currentAuthor = mangaBooks[0].author!;
       });
     });
   }

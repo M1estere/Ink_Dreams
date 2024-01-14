@@ -89,7 +89,7 @@ class _CategoryPageViewState extends State<CategoryPageView> {
                     itemCount: mangaBooks.length,
                     itemBuilder: (context, index) {
                       return isLoading
-                          ? FetchingCircle()
+                          ? const FetchingCircle()
                           : CategoryResultBlock(
                               title: mangaBooks[index].title!,
                               chapters: mangaBooks[index].chapters!,

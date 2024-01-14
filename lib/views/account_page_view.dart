@@ -100,6 +100,65 @@ class _AccountPageViewState extends State<AccountPageView> {
                           },
                           child: const SizedBox(
                             height: 135,
+                            width: 140,
+                            child: Padding(
+                              padding: EdgeInsets.all(10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Icon(
+                                        Icons.list,
+                                        color: Colors.white,
+                                        size: 50,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Reading',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 2,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(right: 20),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.black.withOpacity(.65),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(15),
+                          splashColor: const Color.fromARGB(255, 34, 34, 34),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.rightToLeftWithFade,
+                                child: UserSectionView(
+                                  sectionName: 'favourites',
+                                ),
+                              ),
+                            );
+                          },
+                          child: const SizedBox(
+                            height: 135,
                             width: 160,
                             child: Padding(
                               padding: EdgeInsets.all(10),
@@ -170,7 +229,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Icon(
-                                        Icons.list,
+                                        Icons.save,
                                         color: Colors.white,
                                         size: 50,
                                       ),

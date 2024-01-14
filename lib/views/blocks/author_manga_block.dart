@@ -41,6 +41,7 @@ class AuthorMangaBlock extends StatelessWidget {
           children: [
             SizedBox(
               height: 170,
+              width: 120,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: Image.network(

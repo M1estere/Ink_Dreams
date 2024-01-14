@@ -27,14 +27,14 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
   void initState() {
     super.initState();
 
-    getRandomManga(Random().nextInt(4) + 2).then((value) {
+    getRandomManga(Random().nextInt(4) + 3).then((value) {
       setState(() {
         isLoadingPopular = false;
         popularManga = value;
       });
     });
 
-    getRandomManga(Random().nextInt(4) + 2).then((value) {
+    getRandomManga(Random().nextInt(4) + 3).then((value) {
       setState(() {
         isLoadingHottest = false;
         hottestManga = value;
