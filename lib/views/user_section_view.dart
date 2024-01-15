@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:manga_reading/support/auth_provider.dart';
+import 'package:manga_reading/support/classes/manga_book_timed.dart';
+import 'package:manga_reading/support/user_actions.dart';
 import 'package:manga_reading/views/blocks/user_section_block.dart';
+import 'package:manga_reading/views/support/fetching_circle.dart';
 
 class UserSectionView extends StatefulWidget {
   final String sectionName;
@@ -10,6 +14,37 @@ class UserSectionView extends StatefulWidget {
 }
 
 class _UserSectionViewState extends State<UserSectionView> {
+  List<MangaBookTimed> mangaBooks = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      isLoading = true;
+    });
+
+    getMangaByUserSection(currentUser!.id, widget.sectionName).then((value) {
+      setState(() {
+        mangaBooks = value;
+        isLoading = false;
+      });
+    });
+  }
+
+  refresh() {
+    setState(() {
+      isLoading = true;
+    });
+    getMangaByUserSection(currentUser!.id, widget.sectionName).then((value) {
+      setState(() {
+        mangaBooks = value;
+        isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,31 +91,37 @@ class _UserSectionViewState extends State<UserSectionView> {
             color: Color(0xFF23202B),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  margin: const EdgeInsets.only(bottom: 20),
-                  height: MediaQuery.of(context).size.height * .7,
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 10,
+            ),
+            child: !isLoading
+                ? Column(
                     children: [
-                      UserSectionBlock(
-                        title: 'Attack On Titan',
-                        addDateTime: DateTime.now().add(
-                          const Duration(hours: 3),
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          margin: const EdgeInsets.only(bottom: 20),
+                          child: ListView.builder(
+                            itemCount: mangaBooks.length,
+                            itemBuilder: (context, index) {
+                              return UserSectionBlock(
+                                title: mangaBooks[index].title!,
+                                addDateTime: mangaBooks[index].addTime!,
+                                chapters: mangaBooks[index].chapters!,
+                                status: mangaBooks[index].status!,
+                                author: mangaBooks[index].author!,
+                                updateParent: refresh,
+                                image: mangaBooks[index].image!,
+                              );
+                            },
+                            scrollDirection: Axis.vertical,
+                          ),
                         ),
-                        chapters: 162,
-                        status: 'Finished',
-                        author: 'Hajime Isayama',
-                        image: 'assets/images/attack.jpg',
                       ),
                     ],
-                  ),
-                ),
-              ],
-            ),
+                  )
+                : const FetchingCircle(),
           ),
         ),
       ),

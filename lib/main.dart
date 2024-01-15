@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_reading/firebase_options.dart';
 import 'package:manga_reading/views/auth_page_view.dart';
-import 'package:manga_reading/views/main_app_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

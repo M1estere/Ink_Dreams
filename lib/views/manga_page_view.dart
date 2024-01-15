@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manga_reading/support/classes/manga_page.dart';
 import 'package:manga_reading/support/get_full_manga.dart';
+import 'package:manga_reading/support/user_actions.dart';
 import 'package:manga_reading/views/reader_view.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
 import 'package:manga_reading/views/support/no_book.dart';
@@ -104,7 +105,9 @@ class _MangaPageViewState extends State<MangaPageView> {
                               radius: 25,
                               backgroundColor: Colors.white,
                               child: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  addToSection('favourites', widget.title);
+                                },
                                 icon: const Icon(
                                   Icons.read_more_outlined,
                                   color: Colors.black,
