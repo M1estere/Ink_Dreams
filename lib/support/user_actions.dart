@@ -114,3 +114,29 @@ Future<List<MangaBookTimed>> _getMangaByName(List titles) async {
   }
   return result;
 }
+
+Future<bool> mangaInSection(String sectionName, String mangaTitle) async {
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('id', isEqualTo: currentUser!.id)
+      .get();
+
+  List currentTitles = [];
+
+  snapshot.docs.forEach((element) {
+    if (element.exists) {
+      var data = element.data() as Map<String, dynamic>;
+      if (data.containsKey(sectionName)) {
+        currentTitles = data[sectionName];
+      }
+    }
+  });
+
+  for (Map title in currentTitles) {
+    if (title['name'].toString().toLowerCase() == mangaTitle.toLowerCase()) {
+      return true;
+    }
+  }
+
+  return false;
+}

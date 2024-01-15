@@ -98,3 +98,16 @@ Future<int> signOut() async {
     return 1;
   }
 }
+
+bool userLogged() {
+  bool checker = true;
+  FirebaseAuth.instance.authStateChanges().listen((event) {
+    if (event == null) {
+      checker = false;
+    } else {
+      checker = true;
+    }
+  });
+
+  return checker;
+}

@@ -25,6 +25,9 @@ class _MangaPageViewState extends State<MangaPageView> {
   bool isLoading = true;
   bool nullState = false;
 
+  bool inFavourites = false;
+  bool inPlanned = false;
+
   @override
   void initState() {
     super.initState();
@@ -33,14 +36,30 @@ class _MangaPageViewState extends State<MangaPageView> {
       (value) {
         setState(() {
           manga = value;
-          isLoading = false;
+        });
 
-          if (manga.title == null) {
-            nullState = true;
-          }
+        mangaInSection('favourites', widget.title).then((value) {
+          setState(() {
+            inFavourites = value;
+
+            isLoading = false;
+            if (manga.title == null) {
+              nullState = true;
+            }
+          });
         });
       },
     );
+  }
+
+  updateMangaSectionStatus(String sectionName) {
+    setState(() {
+      if (sectionName.toLowerCase() == 'favourites') {
+        inFavourites = !inFavourites;
+      } else if (sectionName.toLowerCase() == 'later') {
+        inPlanned = !inPlanned;
+      }
+    });
   }
 
   @override
@@ -91,7 +110,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * .75,
+                              width: MediaQuery.of(context).size.width * .55,
                               child: Text(
                                 manga.title!,
                                 style: const TextStyle(
@@ -101,19 +120,64 @@ class _MangaPageViewState extends State<MangaPageView> {
                                 ),
                               ),
                             ),
-                            CircleAvatar(
-                              radius: 25,
-                              backgroundColor: Colors.white,
-                              child: IconButton(
-                                onPressed: () {
-                                  addToSection('favourites', widget.title);
-                                },
-                                icon: const Icon(
-                                  Icons.read_more_outlined,
-                                  color: Colors.black,
-                                  size: 30,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                ClipOval(
+                                  child: Material(
+                                    color: Colors.white, // Button color
+                                    child: InkWell(
+                                      splashColor: Colors.grey, // Splash color
+                                      onTap: () {
+                                        addToSection(
+                                            'favourites', widget.title);
+                                        updateMangaSectionStatus('favourites');
+                                      },
+                                      child: SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: Icon(
+                                          !inFavourites
+                                              ? Icons.favorite_border_outlined
+                                              : Icons.favorite,
+                                          color: !inFavourites
+                                              ? Colors.black
+                                              : const Color(0xFF8E1617),
+                                          size: 35,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                const SizedBox(
+                                  width: 15,
+                                ),
+                                ClipOval(
+                                  child: Material(
+                                    color: Colors.white, // Button color
+                                    child: InkWell(
+                                      splashColor: Colors.grey, // Splash color
+                                      onTap: () {
+                                        addToSection('later', widget.title);
+                                        updateMangaSectionStatus('later');
+                                      },
+                                      child: SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: Icon(
+                                          !inPlanned
+                                              ? Icons.access_time_outlined
+                                              : Icons.access_time_filled,
+                                          color: !inPlanned
+                                              ? Colors.black
+                                              : const Color(0xFF8E1617),
+                                          size: 35,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ],
                         ),
@@ -183,8 +247,8 @@ class _MangaPageViewState extends State<MangaPageView> {
                       ],
                     ),
                   ),
-                  body: Container(
-                    child: Stack(children: [
+                  body: Stack(
+                    children: [
                       Image.network(
                         height: double.infinity,
                         manga.image!,
@@ -201,7 +265,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                           ),
                         ),
                       ),
-                    ]),
+                    ],
                   ),
                 )
               : const NoBookAnnounce(),
@@ -236,7 +300,8 @@ class _MangaPageViewState extends State<MangaPageView> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
-            padding: EdgeInsets.only(top: 5, right: 10, left: 5, bottom: 5),
+            padding:
+                const EdgeInsets.only(top: 5, right: 10, left: 5, bottom: 5),
             child: Row(
               children: [
                 const Icon(
