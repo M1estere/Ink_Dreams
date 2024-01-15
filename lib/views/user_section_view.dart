@@ -4,6 +4,7 @@ import 'package:manga_reading/support/classes/manga_book_timed.dart';
 import 'package:manga_reading/support/user_actions.dart';
 import 'package:manga_reading/views/blocks/user_section_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
+import 'package:manga_reading/views/support/no_books_by_reques.dart';
 
 class UserSectionView extends StatefulWidget {
   final String sectionName;
@@ -54,7 +55,7 @@ class _UserSectionViewState extends State<UserSectionView> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        leadingWidth: 270,
+        leadingWidth: 370,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),
           child: Row(
@@ -96,31 +97,33 @@ class _UserSectionViewState extends State<UserSectionView> {
               vertical: 10,
             ),
             child: !isLoading
-                ? Column(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          margin: const EdgeInsets.only(bottom: 20),
-                          child: ListView.builder(
-                            itemCount: mangaBooks.length,
-                            itemBuilder: (context, index) {
-                              return UserSectionBlock(
-                                title: mangaBooks[index].title!,
-                                addDateTime: mangaBooks[index].addTime!,
-                                chapters: mangaBooks[index].chapters!,
-                                status: mangaBooks[index].status!,
-                                author: mangaBooks[index].author!,
-                                updateParent: refresh,
-                                image: mangaBooks[index].image!,
-                              );
-                            },
-                            scrollDirection: Axis.vertical,
+                ? mangaBooks.isNotEmpty
+                    ? Column(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              margin: const EdgeInsets.only(bottom: 20),
+                              child: ListView.builder(
+                                itemCount: mangaBooks.length,
+                                itemBuilder: (context, index) {
+                                  return UserSectionBlock(
+                                    title: mangaBooks[index].title!,
+                                    addDateTime: mangaBooks[index].addTime!,
+                                    chapters: mangaBooks[index].chapters!,
+                                    status: mangaBooks[index].status!,
+                                    author: mangaBooks[index].author!,
+                                    updateParent: refresh,
+                                    image: mangaBooks[index].image!,
+                                  );
+                                },
+                                scrollDirection: Axis.vertical,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ],
-                  )
+                        ],
+                      )
+                    : const NoBooksByRequest()
                 : const FetchingCircle(),
           ),
         ),

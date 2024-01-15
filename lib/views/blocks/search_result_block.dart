@@ -47,11 +47,11 @@ class SearchResultBlock extends StatelessWidget {
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
                 height: 170,
-                width: 120,
+                width: MediaQuery.of(context).size.width * .3,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.network(
@@ -73,89 +73,76 @@ class SearchResultBlock extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: SizedBox(
-                  width: 150,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        author,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: 'Chapters: ',
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: SizedBox(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          title,
                           style: const TextStyle(
                             fontSize: 18,
-                            letterSpacing: 1,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          author,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: chapters.toString(),
-                              style: const TextStyle(
-                                color: Color(0xFF9D1515),
-                                fontWeight: FontWeight.w500,
-                              ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            text: 'Chapters: ',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              letterSpacing: 1,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey,
                             ),
-                          ],
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: 'Status: ',
-                          style: const TextStyle(
-                            fontSize: 18,
-                            letterSpacing: 1,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: status,
-                              style: const TextStyle(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: chapters.toString(),
+                                style: const TextStyle(
                                   color: Color(0xFF9D1515),
-                                  letterSpacing: 1,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 170,
-                width: 80,
-                child: Column(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.favorite),
-                      iconSize: 40,
-                      color: Colors.white,
+                        RichText(
+                          text: TextSpan(
+                            text: 'Status: ',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              letterSpacing: 1,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: status,
+                                style: const TextStyle(
+                                    color: Color(0xFF9D1515),
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ],

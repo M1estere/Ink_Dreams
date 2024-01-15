@@ -47,11 +47,11 @@ class CategoryResultBlock extends StatelessWidget {
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
                 height: 170,
-                width: 120,
+                width: MediaQuery.of(context).size.width * .3,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.network(
@@ -84,7 +84,7 @@ class CategoryResultBlock extends StatelessWidget {
                       Text(
                         title,
                         style: const TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -92,7 +92,7 @@ class CategoryResultBlock extends StatelessWidget {
                       Text(
                         author,
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
                         ),
@@ -104,7 +104,7 @@ class CategoryResultBlock extends StatelessWidget {
                         text: TextSpan(
                           text: 'Chapters: ',
                           style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             letterSpacing: 1,
                             fontWeight: FontWeight.w500,
                             color: Colors.grey,
@@ -124,7 +124,7 @@ class CategoryResultBlock extends StatelessWidget {
                         text: TextSpan(
                           text: 'Status: ',
                           style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             letterSpacing: 1,
                             fontWeight: FontWeight.w500,
                             color: Colors.grey,
@@ -143,21 +143,7 @@ class CategoryResultBlock extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 170,
-                width: 80,
-                child: Column(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.favorite),
-                      iconSize: 40,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-              ),
+              )
             ],
           ),
         ),

@@ -36,7 +36,6 @@ class UserSectionBlock extends StatelessWidget {
             child: MangaPageView(title: title),
           ),
         ).then((value) {
-          print('called');
           updateParent();
         });
       },
@@ -61,7 +60,7 @@ class UserSectionBlock extends StatelessWidget {
             children: [
               SizedBox(
                 height: 170,
-                width: 120,
+                width: MediaQuery.of(context).size.width * .3,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.network(
@@ -83,95 +82,96 @@ class UserSectionBlock extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: SizedBox(
-                  width: 200,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: SizedBox(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      Text(
-                        author,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          text: 'Chapters: ',
+                        Text(
+                          author,
                           style: const TextStyle(
                             fontSize: 18,
-                            letterSpacing: 1,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.bold,
                             color: Colors.grey,
                           ),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: chapters.toString(),
-                              style: const TextStyle(
-                                color: Color(0xFF9D1515),
-                                fontWeight: FontWeight.w500,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            text: 'Chapters: ',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              letterSpacing: 1,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.grey,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: chapters.toString(),
+                                style: const TextStyle(
+                                  color: Color(0xFF9D1515),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.timer,
+                              size: 22,
+                              color: Color(0xFF9D1515),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                text: DateFormat('d MMM y')
+                                    .format(addDateTime.toDate()),
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  letterSpacing: 1,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.grey,
+                                ),
+                                children: <TextSpan>[
+                                  const TextSpan(
+                                    text: ' at ',
+                                    style: TextStyle(
+                                      color: Color(0xFF9D1515),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: DateFormat('HH:mm')
+                                        .format(addDateTime.toDate()),
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.timer,
-                            size: 22,
-                            color: Color(0xFF9D1515),
-                          ),
-                          RichText(
-                            text: TextSpan(
-                              text: DateFormat('d MMM y')
-                                  .format(addDateTime.toDate()),
-                              style: const TextStyle(
-                                fontSize: 16,
-                                letterSpacing: 1,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey,
-                              ),
-                              children: <TextSpan>[
-                                const TextSpan(
-                                  text: ' at ',
-                                  style: TextStyle(
-                                    color: Color(0xFF9D1515),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: DateFormat('HH:mm')
-                                      .format(addDateTime.toDate()),
-                                  style: const TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

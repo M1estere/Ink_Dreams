@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:manga_reading/support/auth_provider.dart';
+import 'package:manga_reading/views/auth_page_view.dart';
 import 'package:manga_reading/views/user_section_view.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -93,7 +95,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                               PageTransition(
                                 type: PageTransitionType.rightToLeftWithFade,
                                 child: UserSectionView(
-                                  sectionName: 'favourites',
+                                  sectionName: 'reading',
                                 ),
                               ),
                             );
@@ -159,7 +161,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                           },
                           child: const SizedBox(
                             height: 135,
-                            width: 160,
+                            width: 180,
                             child: Padding(
                               padding: EdgeInsets.all(10),
                               child: Column(
@@ -211,14 +213,14 @@ class _AccountPageViewState extends State<AccountPageView> {
                               PageTransition(
                                 type: PageTransitionType.rightToLeftWithFade,
                                 child: UserSectionView(
-                                  sectionName: 'saved',
+                                  sectionName: 'planned',
                                 ),
                               ),
                             );
                           },
                           child: const SizedBox(
                             height: 135,
-                            width: 135,
+                            width: 145,
                             child: Padding(
                               padding: EdgeInsets.all(10),
                               child: Column(
@@ -239,7 +241,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Saved',
+                                        'Planned',
                                         style: TextStyle(
                                           color: Colors.grey,
                                           fontSize: 25,
@@ -367,7 +369,22 @@ class _AccountPageViewState extends State<AccountPageView> {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(7),
                             splashColor: const Color.fromARGB(255, 34, 34, 34),
-                            onTap: () {},
+                            onTap: () {
+                              signOut().then((value) {
+                                if (value == 0) {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: ((context) {
+                                        return const AuthPageView();
+                                      }),
+                                    ),
+                                  );
+                                } else {
+                                  print('No user');
+                                }
+                              });
+                            },
                             child: const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

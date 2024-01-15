@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/views/blocks/search_result_block.dart';
 import 'package:manga_reading/support/get_by_search.dart';
+import 'package:manga_reading/views/support/no_books_by_reques.dart';
 
 class SearchResultsView extends StatefulWidget {
   const SearchResultsView({super.key});
@@ -11,8 +12,17 @@ class SearchResultsView extends StatefulWidget {
 }
 
 class _SearchResultsViewState extends State<SearchResultsView> {
+  TextEditingController searchController = TextEditingController();
+
   List<MangaBook> searchResults = [];
   bool canDisplay = false;
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    searchController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +68,7 @@ class _SearchResultsViewState extends State<SearchResultsView> {
                 child: SizedBox(
                   height: 65,
                   child: TextField(
+                    controller: searchController,
                     textAlignVertical: TextAlignVertical.center,
                     style: const TextStyle(
                       color: Colors.black,
@@ -107,38 +118,41 @@ class _SearchResultsViewState extends State<SearchResultsView> {
                 height: 20,
               ),
               canDisplay
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Results',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              letterSpacing: 1.5,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * .7,
-                          child: ListView.builder(
-                            itemCount: searchResults.length,
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (context, index) {
-                              return SearchResultBlock(
-                                title: searchResults[index].title!,
-                                chapters: searchResults[index].chapters!,
-                                status: searchResults[index].status!,
-                                author: searchResults[index].author!,
-                                image: searchResults[index].image!,
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    )
+                  ? (searchResults.isNotEmpty &&
+                          searchController.text.isNotEmpty)
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Results',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  letterSpacing: 1.5,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * .7,
+                              child: ListView.builder(
+                                itemCount: searchResults.length,
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (context, index) {
+                                  return SearchResultBlock(
+                                    title: searchResults[index].title!,
+                                    chapters: searchResults[index].chapters!,
+                                    status: searchResults[index].status!,
+                                    author: searchResults[index].author!,
+                                    image: searchResults[index].image!,
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        )
+                      : const NoBooksByRequest()
                   : SizedBox(
                       height: MediaQuery.of(context).size.height * .75,
                       child: Center(

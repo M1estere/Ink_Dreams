@@ -83,7 +83,7 @@ class _ReaderViewState extends State<ReaderView> {
                 ),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * .65,
+                width: MediaQuery.of(context).size.width * .63,
                 child: SizedBox(
                   child: Text(
                     widget.title.toUpperCase(),

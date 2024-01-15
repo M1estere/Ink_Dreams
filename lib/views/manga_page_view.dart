@@ -56,7 +56,7 @@ class _MangaPageViewState extends State<MangaPageView> {
     setState(() {
       if (sectionName.toLowerCase() == 'favourites') {
         inFavourites = !inFavourites;
-      } else if (sectionName.toLowerCase() == 'later') {
+      } else if (sectionName.toLowerCase() == 'planned') {
         inPlanned = !inPlanned;
       }
     });
@@ -115,7 +115,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                                 manga.title!,
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 40,
+                                  fontSize: 35,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -158,8 +158,8 @@ class _MangaPageViewState extends State<MangaPageView> {
                                     child: InkWell(
                                       splashColor: Colors.grey, // Splash color
                                       onTap: () {
-                                        addToSection('later', widget.title);
-                                        updateMangaSectionStatus('later');
+                                        addToSection('planned', widget.title);
+                                        updateMangaSectionStatus('planned');
                                       },
                                       child: SizedBox(
                                         width: 50,
@@ -182,7 +182,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                           ],
                         ),
                         const SizedBox(
-                          height: 25,
+                          height: 15,
                         ),
                         SizedBox(
                           child: Text(

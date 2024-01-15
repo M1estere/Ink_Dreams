@@ -84,7 +84,7 @@ class _CategoryPageViewState extends State<CategoryPageView> {
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   margin: const EdgeInsets.only(bottom: 20),
-                  height: MediaQuery.of(context).size.height * .85,
+                  height: MediaQuery.of(context).size.height * .84,
                   child: ListView.builder(
                     itemCount: mangaBooks.length,
                     itemBuilder: (context, index) {

@@ -92,7 +92,7 @@ Future<int> signIn(String email, String password) async {
 Future<int> signOut() async {
   final user = FirebaseAuth.instance.currentUser;
   if (user != null) {
-    FirebaseAuth.instance.signOut();
+    await FirebaseAuth.instance.signOut();
     return 0;
   } else {
     return 1;
@@ -100,14 +100,9 @@ Future<int> signOut() async {
 }
 
 bool userLogged() {
-  bool checker = true;
-  FirebaseAuth.instance.authStateChanges().listen((event) {
-    if (event == null) {
-      checker = false;
-    } else {
-      checker = true;
-    }
-  });
-
-  return checker;
+  if (FirebaseAuth.instance.currentUser == null) {
+    return false;
+  } else {
+    return true;
+  }
 }

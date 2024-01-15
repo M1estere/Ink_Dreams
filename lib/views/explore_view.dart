@@ -90,7 +90,7 @@ class _ExploreView extends State<ExploreView> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: SizedBox(
                       width: double.infinity,
-                      height: MediaQuery.of(context).size.height * .6,
+                      height: MediaQuery.of(context).size.height * .59,
                       child: PageView.builder(
                         onPageChanged: (value) {
                           setState(() {
@@ -127,22 +127,28 @@ class _ExploreView extends State<ExploreView> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        currentTitle,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 2.5,
+                      FittedBox(
+                        child: Text(
+                          currentTitle,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 2.5,
+                          ),
                         ),
                       ),
-                      Text(
-                        currentAuthor,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 2.5,
+                      FittedBox(
+                        child: Text(
+                          currentAuthor,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 2.5,
+                          ),
                         ),
                       ),
                     ],
@@ -222,7 +228,7 @@ class _ExploreView extends State<ExploreView> {
                           bottom: BorderSide(
                             width: 2,
                             color: _currentSectionIndex == 1
-                                ? Color(0xFF9D1515)
+                                ? const Color(0xFF9D1515)
                                 : Colors.transparent,
                           ),
                         ),
@@ -240,7 +246,7 @@ class _ExploreView extends State<ExploreView> {
                 ],
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * .7,
+                height: MediaQuery.of(context).size.height * .72,
                 child: pageSections,
               ),
             ],
