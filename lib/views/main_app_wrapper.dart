@@ -166,10 +166,10 @@ class _MainWrapperState extends State<MainWrapper> {
 
     final bodies = IndexedStack(
       index: _currentPageIndex,
-      children: [
+      children: const [
         ExploreView(),
         SearchIntroPageView(),
-        AccountPageView(id: currentUser!.id),
+        AccountPageView(),
       ],
     );
 

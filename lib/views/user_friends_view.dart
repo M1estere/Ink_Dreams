@@ -7,7 +7,9 @@ import 'package:manga_reading/views/support/no_books_by_request.dart';
 import 'package:page_transition/page_transition.dart';
 
 class UserFriendsView extends StatefulWidget {
-  const UserFriendsView({super.key});
+  const UserFriendsView({
+    super.key,
+  });
 
   @override
   State<UserFriendsView> createState() => _UserFriendsViewState();
@@ -121,6 +123,7 @@ class _UserFriendsViewState extends State<UserFriendsView> {
                                 itemCount: friends.length,
                                 itemBuilder: (context, index) {
                                   return UserFriendBlock(
+                                    id: friends[index].id,
                                     addDate: friends[index].addDate,
                                     finished:
                                         friends[index].finishedManga.length,

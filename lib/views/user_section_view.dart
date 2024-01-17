@@ -8,7 +8,13 @@ import 'package:manga_reading/views/support/no_books_by_request.dart';
 
 class UserSectionView extends StatefulWidget {
   final String sectionName;
-  const UserSectionView({super.key, required this.sectionName});
+  final String userName;
+  final String id;
+  const UserSectionView(
+      {super.key,
+      required this.id,
+      required this.sectionName,
+      required this.userName});
 
   @override
   State<UserSectionView> createState() => _UserSectionViewState();
@@ -22,11 +28,7 @@ class _UserSectionViewState extends State<UserSectionView> {
   void initState() {
     super.initState();
 
-    setState(() {
-      isLoading = true;
-    });
-
-    getMangaByUserSection(currentUser!.id, widget.sectionName).then((value) {
+    getMangaByUserSection(widget.id, widget.sectionName).then((value) {
       setState(() {
         mangaBooks = value;
         isLoading = false;
@@ -39,7 +41,7 @@ class _UserSectionViewState extends State<UserSectionView> {
       isLoading = true;
     });
 
-    getMangaByUserSection(currentUser!.id, widget.sectionName).then((value) {
+    getMangaByUserSection(widget.id, widget.sectionName).then((value) {
       setState(() {
         mangaBooks = value;
         isLoading = false;
@@ -56,7 +58,7 @@ class _UserSectionViewState extends State<UserSectionView> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        leadingWidth: 370,
+        leadingWidth: MediaQuery.of(context).size.width * .9,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),
           child: Row(
@@ -73,13 +75,17 @@ class _UserSectionViewState extends State<UserSectionView> {
                   color: Colors.white,
                 ),
               ),
-              Text(
-                widget.sectionName.toUpperCase(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  letterSpacing: 2,
+              Expanded(
+                child: FittedBox(
+                  child: Text(
+                    '${widget.sectionName} [${widget.userName}]'.toUpperCase(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                      letterSpacing: 2,
+                    ),
+                  ),
                 ),
               ),
             ],

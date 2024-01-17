@@ -9,10 +9,8 @@ import 'package:manga_reading/views/user_section_view.dart';
 import 'package:page_transition/page_transition.dart';
 
 class AccountPageView extends StatefulWidget {
-  final String id;
   const AccountPageView({
     super.key,
-    required this.id,
   });
 
   @override
@@ -33,7 +31,7 @@ class _AccountPageViewState extends State<AccountPageView> {
   void initState() {
     super.initState();
 
-    getFullUserInfo(widget.id).then((value) {
+    getFullUserInfo(currentUser!.id).then((value) {
       setState(() {
         pageUser = value;
         isLoading = false;
@@ -46,7 +44,7 @@ class _AccountPageViewState extends State<AccountPageView> {
       isLoading = true;
     });
 
-    getFullUserInfo(widget.id).then((value) {
+    getFullUserInfo(currentUser!.id).then((value) {
       setState(() {
         pageUser = value;
         isLoading = false;
@@ -119,7 +117,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                       ),
                     ),
                     SizedBox(
-                      height: 135,
+                      height: MediaQuery.of(context).size.height * .15,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: [
@@ -200,6 +198,8 @@ class _AccountPageViewState extends State<AccountPageView> {
                                       type: PageTransitionType
                                           .rightToLeftWithFade,
                                       child: UserSectionView(
+                                        id: currentUser!.id,
+                                        userName: pageUser.nickname,
                                         sectionName: 'reading',
                                       ),
                                     ),
@@ -263,6 +263,8 @@ class _AccountPageViewState extends State<AccountPageView> {
                                       type: PageTransitionType
                                           .rightToLeftWithFade,
                                       child: UserSectionView(
+                                        id: currentUser!.id,
+                                        userName: pageUser.nickname,
                                         sectionName: 'favourites',
                                       ),
                                     ),
@@ -326,6 +328,8 @@ class _AccountPageViewState extends State<AccountPageView> {
                                       type: PageTransitionType
                                           .rightToLeftWithFade,
                                       child: UserSectionView(
+                                        id: currentUser!.id,
+                                        userName: pageUser.nickname,
                                         sectionName: 'planned',
                                       ),
                                     ),
@@ -388,6 +392,8 @@ class _AccountPageViewState extends State<AccountPageView> {
                                       type: PageTransitionType
                                           .rightToLeftWithFade,
                                       child: UserSectionView(
+                                        id: currentUser!.id,
+                                        userName: pageUser.nickname,
                                         sectionName: 'finished',
                                       ),
                                     ),
