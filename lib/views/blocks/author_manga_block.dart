@@ -37,7 +37,7 @@ class AuthorMangaBlock extends StatelessWidget {
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
               height: 170,
@@ -77,14 +77,16 @@ class AuthorMangaBlock extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
+                        height: 1.2,
                       ),
                     ),
                     Text(
                       author,
                       style: const TextStyle(
-                        fontSize: 18,
+                        fontSize: 17,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
+                        letterSpacing: 1.2,
                       ),
                     ),
                     const SizedBox(
@@ -94,7 +96,7 @@ class AuthorMangaBlock extends StatelessWidget {
                       text: TextSpan(
                         text: 'Chapters: ',
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           letterSpacing: 1,
                           fontWeight: FontWeight.w500,
                           color: Colors.grey,
@@ -114,7 +116,7 @@ class AuthorMangaBlock extends StatelessWidget {
                       text: TextSpan(
                         text: 'Status: ',
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           letterSpacing: 1,
                           fontWeight: FontWeight.w500,
                           color: Colors.grey,
@@ -130,14 +132,11 @@ class AuthorMangaBlock extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 5,
-                    ),
                     RichText(
                       text: TextSpan(
                         text: 'Genres: ',
                         style: const TextStyle(
-                          fontSize: 15,
+                          fontSize: 16,
                           letterSpacing: 1,
                           fontWeight: FontWeight.w500,
                           color: Colors.grey,
@@ -155,20 +154,6 @@ class AuthorMangaBlock extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-            ),
-            SizedBox(
-              height: 170,
-              width: 80,
-              child: Column(
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.favorite),
-                    iconSize: 40,
-                    color: Colors.white,
-                  ),
-                ],
               ),
             ),
           ],

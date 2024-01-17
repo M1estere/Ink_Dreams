@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:manga_reading/support/auth_provider.dart';
 import 'package:manga_reading/support/classes/manga_book_timed.dart';
 import 'package:manga_reading/support/user_actions.dart';
 import 'package:manga_reading/views/blocks/user_section_block.dart';

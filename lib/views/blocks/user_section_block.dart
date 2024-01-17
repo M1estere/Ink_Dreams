@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:manga_reading/views/manga_page_view.dart';
-import 'package:manga_reading/views/user_section_view.dart';
 import 'package:page_transition/page_transition.dart';
 
 class UserSectionBlock extends StatelessWidget {

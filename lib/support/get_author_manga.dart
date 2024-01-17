@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:manga_reading/support/classes/author_manga.dart';
 
-Future<List<AuthorManga>> getAuthorManga(String authorName) async {
+Future<List<AuthorManga>> getMangaByAuthor(String authorName) async {
   List<AuthorManga> result = [];
 
   DatabaseReference ref = FirebaseDatabase.instance.ref().child('manga_books');

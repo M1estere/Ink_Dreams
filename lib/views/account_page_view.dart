@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:manga_reading/support/auth_provider.dart';
+import 'package:manga_reading/support/classes/user_full.dart';
 import 'package:manga_reading/views/auth_page_view.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
 import 'package:manga_reading/views/user_friends_view.dart';

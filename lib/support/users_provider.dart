@@ -1,20 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:manga_reading/support/auth_provider.dart';
+import 'package:manga_reading/support/classes/find_user.dart';
+import 'package:manga_reading/support/classes/friend_user.dart';
 
-class FindUser {
-  String id;
-  String nickname;
-  String email;
-  Timestamp regDate;
-  List finishedManga;
+Future<List<FindUser>> getAllUsers() async {
+  List<FindUser> result = [];
 
-  FindUser({
-    required this.id,
-    required this.nickname,
-    required this.email,
-    required this.finishedManga,
-    required this.regDate,
-  });
+  QuerySnapshot snapshot =
+      await FirebaseFirestore.instance.collection('users').get();
+
+  for (var element in snapshot.docs) {
+    if (element['id'] == currentUser!.id) continue;
+    FindUser user = await _getUser(element['id'], '');
+
+    if (user.id.isNotEmpty) {
+      result.add(user);
+    }
+  }
+
+  return result;
 }
 
 Future<List<FindUser>> getUsersBySearch(String query) async {
@@ -35,19 +39,25 @@ Future<List<FindUser>> getUsersBySearch(String query) async {
   return result;
 }
 
-Future<List<FindUser>> getAllUsers() async {
-  List<FindUser> result = [];
+Future<List<FriendUser>> getFriends() async {
+  List<FriendUser> result = [];
 
-  QuerySnapshot snapshot =
-      await FirebaseFirestore.instance.collection('users').get();
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('id', isEqualTo: currentUser!.id)
+      .get();
 
+  List friends = [];
   for (var element in snapshot.docs) {
-    if (element['id'] == currentUser!.id) continue;
-    FindUser user = await _getUser(element['id'], '');
-
-    if (user.id.isNotEmpty) {
-      result.add(user);
+    if ((element.data() as Map).containsKey('friends')) {
+      friends = element['friends'];
     }
+  }
+
+  for (var element in friends) {
+    result.add(
+      await _getFriend(element['id'], element['add_time']),
+    );
   }
 
   return result;
@@ -101,46 +111,6 @@ Future<FindUser> _getUser(String id, String seqToCheck) async {
       email: '',
       finishedManga: List.empty(),
       regDate: regDate);
-}
-
-class FriendUser {
-  String id;
-  String nickname;
-  Timestamp regDate;
-  Timestamp addDate;
-  List finishedManga;
-
-  FriendUser({
-    required this.id,
-    required this.nickname,
-    required this.finishedManga,
-    required this.regDate,
-    required this.addDate,
-  });
-}
-
-Future<List<FriendUser>> getFriends() async {
-  List<FriendUser> result = [];
-
-  QuerySnapshot snapshot = await FirebaseFirestore.instance
-      .collection('users')
-      .where('id', isEqualTo: currentUser!.id)
-      .get();
-
-  List friends = [];
-  for (var element in snapshot.docs) {
-    if ((element.data() as Map).containsKey('friends')) {
-      friends = element['friends'];
-    }
-  }
-
-  for (var element in friends) {
-    result.add(
-      await _getFriend(element['id'], element['add_time']),
-    );
-  }
-
-  return result;
 }
 
 Future<FriendUser> _getFriend(String id, Timestamp addDate) async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:manga_reading/support/classes/find_user.dart';
 import 'package:manga_reading/support/users_provider.dart';
 import 'package:manga_reading/views/blocks/user_list_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';

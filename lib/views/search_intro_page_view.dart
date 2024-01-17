@@ -16,9 +16,7 @@ class SearchIntroPageView extends StatefulWidget {
 }
 
 class _SearchIntroPageViewState extends State<SearchIntroPageView> {
-  bool isLoadingPopular = true;
-  bool isLoadingHottest = true;
-  bool isLoadingAuthors = true;
+  bool isLoading = true;
 
   List<MangaBook> popularManga = [];
   List<MangaBook> hottestManga = [];
@@ -28,73 +26,63 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
   void initState() {
     super.initState();
 
-    getRandomManga(Random().nextInt(4) + 3).then((value) {
-      setState(() {
-        isLoadingPopular = false;
-        popularManga = value;
-      });
-
-      getRandomManga(Random().nextInt(4) + 3).then((value) {
+    getRandomManga(Random().nextInt(8) + 8).then(
+      (value) {
         setState(() {
-          isLoadingHottest = false;
-          hottestManga = value;
-        });
-
-        getRandomAuthor(1).then((value) {
-          setState(() {
-            isLoadingAuthors = false;
-            authors = value;
+          popularManga = value.sublist(0, (value.length / 2).round());
+          hottestManga =
+              value.sublist((value.length / 2).round(), value.length);
+          getRandomAuthor(1).then((value) {
+            setState(() {
+              authors = value;
+              isLoading = false;
+            });
           });
         });
-      });
-    });
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        getRandomManga(Random().nextInt(4) + 3).then((value) {
-          setState(() {
-            isLoadingPopular = false;
-            popularManga = value;
-          });
-
-          getRandomManga(Random().nextInt(4) + 3).then((value) {
+        getRandomManga(Random().nextInt(8) + 8).then(
+          (value) {
             setState(() {
-              isLoadingHottest = false;
-              hottestManga = value;
-            });
-
-            getRandomAuthor(1).then((value) {
-              setState(() {
-                isLoadingAuthors = false;
-                authors = value;
+              popularManga = value.sublist(0, (value.length / 2).round());
+              hottestManga =
+                  value.sublist((value.length / 2).round(), value.length);
+              getRandomAuthor(1).then((value) {
+                setState(() {
+                  authors = value;
+                  isLoading = false;
+                });
               });
             });
-          });
-        });
+          },
+        );
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Text(
-                'Popular',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    letterSpacing: 1.5,
-                    fontWeight: FontWeight.w400),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                height: 360,
-                child: !isLoadingPopular
-                    ? ListView.builder(
+          child: !isLoading
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Popular',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          letterSpacing: 1.5,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      height: 360,
+                      child: ListView.builder(
                         itemBuilder: (context, index) {
                           return SearchMangaBlock(
                             title: popularManga[index].title!,
@@ -104,25 +92,23 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                         },
                         scrollDirection: Axis.horizontal,
                         itemCount: popularManga.length,
-                      )
-                    : const FetchingCircle(),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                'Hottest',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    letterSpacing: 1.5,
-                    fontWeight: FontWeight.w400),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                height: 360,
-                child: !isLoadingHottest
-                    ? ListView.builder(
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'Hottest',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          letterSpacing: 1.5,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      height: 360,
+                      child: ListView.builder(
                         itemCount: hottestManga.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
@@ -132,25 +118,23 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                             image: hottestManga[index].image!,
                           );
                         },
-                      )
-                    : const FetchingCircle(),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                'Best Authors',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    letterSpacing: 1.5,
-                    fontWeight: FontWeight.w400),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                height: 250,
-                child: !isLoadingAuthors
-                    ? ListView.builder(
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'Best Authors',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          letterSpacing: 1.5,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      height: 250,
+                      child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: authors.length,
                         itemBuilder: (context, index) {
@@ -159,11 +143,11 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                             image: authors[index].image!,
                           );
                         },
-                      )
-                    : const FetchingCircle(),
-              ),
-            ],
-          ),
+                      ),
+                    ),
+                  ],
+                )
+              : const FetchingCircle(),
         ),
       ),
     );

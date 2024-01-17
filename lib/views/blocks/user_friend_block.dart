@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:manga_reading/views/account_page_view.dart';
 import 'package:manga_reading/views/user_account_page_view.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -52,7 +51,7 @@ class UserFriendBlock extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width * .22,
+                width: MediaQuery.of(context).size.width * .2,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,7 +81,7 @@ class UserFriendBlock extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * .05,
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * .4,
+                width: MediaQuery.of(context).size.width * .38,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,

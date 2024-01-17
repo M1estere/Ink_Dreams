@@ -1,76 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:manga_reading/support/classes/auth_user.dart';
+import 'package:manga_reading/support/classes/user_full.dart';
 
-class AuthUser {
-  final String id;
-  final String email;
-
-  const AuthUser({
-    required this.id,
-    required this.email,
-  });
-
-  factory AuthUser.fromFirebase(User user) => AuthUser(
-        id: user.uid,
-        email: user.email!,
-      );
-}
-
-class UserFull {
-  final String id;
-  final String email;
-  final String nickname;
-  final Timestamp registerDate;
-  final int friends;
-
-  const UserFull({
-    required this.id,
-    required this.email,
-    required this.nickname,
-    required this.registerDate,
-    required this.friends,
-  });
-}
-
-Future<UserFull> getFullUserInfo(String id) async {
-  UserFull result;
-
-  String nickname = '';
-  String email = '';
-  Timestamp regDate = Timestamp.fromDate(DateTime.now());
-  int friendsAmount = 0;
-  QuerySnapshot snapshot = await FirebaseFirestore.instance
-      .collection('users')
-      .where('id', isEqualTo: id)
-      .get();
-
-  snapshot.docs.forEach((element) {
-    if (element.exists) {
-      var data = element.data() as Map<String, dynamic>;
-      if (data.containsKey('nickname')) {
-        nickname = data['nickname'];
-      }
-      if (data.containsKey('email')) {
-        email = data['email'];
-      }
-      if (data.containsKey('reg_date')) {
-        regDate = data['reg_date'];
-      }
-      if (data.containsKey('friends')) {
-        friendsAmount = data['friends'].length;
-      }
-    }
-  });
-
-  result = UserFull(
-    id: id,
-    email: email,
-    nickname: nickname,
-    registerDate: regDate,
-    friends: friendsAmount,
-  );
-
-  return result;
+AuthUser? get currentUser {
+  final user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    return AuthUser.fromFirebase(user);
+  } else {
+    return null;
+  }
 }
 
 Future<int> registerUser(String email, String password, String nickname) async {
@@ -110,15 +49,6 @@ Future<int> registerUser(String email, String password, String nickname) async {
   }
 }
 
-AuthUser? get currentUser {
-  final user = FirebaseAuth.instance.currentUser;
-  if (user != null) {
-    return AuthUser.fromFirebase(user);
-  } else {
-    return null;
-  }
-}
-
 Future<int> signIn(String email, String password) async {
   try {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -155,6 +85,47 @@ Future<int> signOut() async {
   } else {
     return 1;
   }
+}
+
+Future<UserFull> getFullUserInfo(String id) async {
+  UserFull result;
+
+  String nickname = '';
+  String email = '';
+  Timestamp regDate = Timestamp.fromDate(DateTime.now());
+  int friendsAmount = 0;
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('id', isEqualTo: id)
+      .get();
+
+  for (var element in snapshot.docs) {
+    if (element.exists) {
+      var data = element.data() as Map<String, dynamic>;
+      if (data.containsKey('nickname')) {
+        nickname = data['nickname'];
+      }
+      if (data.containsKey('email')) {
+        email = data['email'];
+      }
+      if (data.containsKey('reg_date')) {
+        regDate = data['reg_date'];
+      }
+      if (data.containsKey('friends')) {
+        friendsAmount = data['friends'].length;
+      }
+    }
+  }
+
+  result = UserFull(
+    id: id,
+    email: email,
+    nickname: nickname,
+    registerDate: regDate,
+    friends: friendsAmount,
+  );
+
+  return result;
 }
 
 bool userLogged() {

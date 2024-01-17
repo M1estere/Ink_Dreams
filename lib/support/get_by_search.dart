@@ -1,9 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:manga_reading/support/auth_provider.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
-import 'package:manga_reading/support/users_provider.dart';
 
-Future<List<MangaBook>> getSearchResult(String query) async {
+Future<List<MangaBook>> getMangaBySearch(String query) async {
   query = query.toLowerCase();
 
   List<MangaBook> result = [];

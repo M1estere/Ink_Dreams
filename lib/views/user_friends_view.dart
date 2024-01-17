@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:manga_reading/support/classes/friend_user.dart';
 import 'package:manga_reading/support/users_provider.dart';
 import 'package:manga_reading/views/blocks/user_friend_block.dart';
 import 'package:manga_reading/views/find_friend_view.dart';

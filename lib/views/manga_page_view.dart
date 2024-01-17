@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:manga_reading/support/classes/manga_page.dart';
 import 'package:manga_reading/support/get_full_manga.dart';
@@ -250,10 +251,16 @@ class _MangaPageViewState extends State<MangaPageView> {
                   ),
                   body: Stack(
                     children: [
-                      Image.network(
-                        height: double.infinity,
-                        manga.image!,
-                        fit: BoxFit.cover,
+                      ImageFiltered(
+                        imageFilter: ImageFilter.blur(
+                          sigmaX: 2,
+                          sigmaY: 2,
+                        ),
+                        child: Image.network(
+                          height: double.infinity,
+                          manga.image!,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       Container(
                         decoration: BoxDecoration(

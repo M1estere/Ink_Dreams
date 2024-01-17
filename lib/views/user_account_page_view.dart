@@ -2,15 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:manga_reading/support/auth_provider.dart';
-import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/support/classes/manga_book_timed.dart';
+import 'package:manga_reading/support/classes/user_full.dart';
 import 'package:manga_reading/support/user_actions.dart';
-import 'package:manga_reading/views/auth_page_view.dart';
-import 'package:manga_reading/views/blocks/category_block.dart';
 import 'package:manga_reading/views/blocks/category_result_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
 import 'package:manga_reading/views/support/no_books_by_request.dart';
-import 'package:manga_reading/views/user_friends_view.dart';
 import 'package:manga_reading/views/user_section_view.dart';
 import 'package:page_transition/page_transition.dart';
 

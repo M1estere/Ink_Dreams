@@ -69,7 +69,7 @@ class _UserListBlockState extends State<UserListBlock> {
         margin: const EdgeInsets.only(
           bottom: 20,
         ),
-        height: 130,
+        height: 132,
         decoration: BoxDecoration(
           color: Colors.black,
           borderRadius: BorderRadius.circular(15),
@@ -86,7 +86,7 @@ class _UserListBlockState extends State<UserListBlock> {
               Row(
                 children: [
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * .22,
+                    width: MediaQuery.of(context).size.width * .2,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -116,7 +116,7 @@ class _UserListBlockState extends State<UserListBlock> {
                     width: MediaQuery.of(context).size.width * .05,
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * .4,
+                    width: MediaQuery.of(context).size.width * .38,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +180,7 @@ class _UserListBlockState extends State<UserListBlock> {
                       },
                       icon: Icon(
                         !isInFriendList ? Icons.add : Icons.check,
-                        size: 55,
+                        size: 50,
                         color: Colors.white,
                       ),
                     )

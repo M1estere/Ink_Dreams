@@ -20,7 +20,7 @@ class _CategoryPageViewState extends State<CategoryPageView> {
   void initState() {
     super.initState();
 
-    getByCategory(widget.categoryTitle).then(
+    getMangaByCategory(widget.categoryTitle).then(
       (value) {
         setState(
           () {
