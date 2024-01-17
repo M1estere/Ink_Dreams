@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:manga_reading/support/auth_provider.dart';
 import 'package:manga_reading/views/auth_page_view.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
+import 'package:manga_reading/views/user_friends_view.dart';
 import 'package:manga_reading/views/user_section_view.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -20,6 +21,7 @@ class _AccountPageViewState extends State<AccountPageView> {
     email: '',
     nickname: '',
     registerDate: Timestamp.fromDate(DateTime.now()),
+    friends: 0,
   );
   bool isLoading = true;
 
@@ -87,7 +89,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                             ),
                           ),
                           Text(
-                            'Since: ${DateFormat('dd/mm/yyyy').format(pageUser.registerDate.toDate())}',
+                            'Since: ${DateFormat('dd/MM/yyyy').format(pageUser.registerDate.toDate())}',
                             style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 18,
@@ -119,22 +121,20 @@ class _AccountPageViewState extends State<AccountPageView> {
                                     PageTransition(
                                       type: PageTransitionType
                                           .rightToLeftWithFade,
-                                      child: UserSectionView(
-                                        sectionName: 'friends',
-                                      ),
+                                      child: UserFriendsView(),
                                     ),
                                   );
                                 },
-                                child: const SizedBox(
+                                child: SizedBox(
                                   height: 135,
                                   width: 160,
                                   child: Padding(
-                                    padding: EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(10),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Row(
+                                        const Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
                                           children: [
@@ -150,8 +150,8 @@ class _AccountPageViewState extends State<AccountPageView> {
                                               MainAxisAlignment.start,
                                           children: [
                                             Text(
-                                              '2 Friends',
-                                              style: TextStyle(
+                                              '${pageUser.friends} Friends',
+                                              style: const TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 25,
                                                 fontWeight: FontWeight.w500,

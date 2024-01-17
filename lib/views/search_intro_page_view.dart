@@ -33,19 +33,19 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
         isLoadingPopular = false;
         popularManga = value;
       });
-    });
 
-    getRandomManga(Random().nextInt(4) + 3).then((value) {
-      setState(() {
-        isLoadingHottest = false;
-        hottestManga = value;
-      });
-    });
+      getRandomManga(Random().nextInt(4) + 3).then((value) {
+        setState(() {
+          isLoadingHottest = false;
+          hottestManga = value;
+        });
 
-    getRandomAuthor(1).then((value) {
-      setState(() {
-        isLoadingAuthors = false;
-        authors = value;
+        getRandomAuthor(1).then((value) {
+          setState(() {
+            isLoadingAuthors = false;
+            authors = value;
+          });
+        });
       });
     });
   }
@@ -59,19 +59,19 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
             isLoadingPopular = false;
             popularManga = value;
           });
-        });
 
-        getRandomManga(Random().nextInt(4) + 3).then((value) {
-          setState(() {
-            isLoadingHottest = false;
-            hottestManga = value;
-          });
-        });
+          getRandomManga(Random().nextInt(4) + 3).then((value) {
+            setState(() {
+              isLoadingHottest = false;
+              hottestManga = value;
+            });
 
-        getRandomAuthor(1).then((value) {
-          setState(() {
-            isLoadingAuthors = false;
-            authors = value;
+            getRandomAuthor(1).then((value) {
+              setState(() {
+                isLoadingAuthors = false;
+                authors = value;
+              });
+            });
           });
         });
       },
