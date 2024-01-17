@@ -4,8 +4,34 @@ import 'package:manga_reading/extensions/string_extension.dart';
 import 'package:manga_reading/support/auth_provider.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/support/classes/manga_book_timed.dart';
+import 'package:manga_reading/support/classes/manga_page.dart';
+import 'package:manga_reading/support/get_full_manga.dart';
 
 // manga interaction
+Future addRating(String title, int rating) async {
+  MangaPageFull manga = await getMangaByName(title);
+
+  DatabaseReference ref = FirebaseDatabase.instance.ref().child('manga_books');
+
+  final snapshot = await ref.get();
+  if (snapshot.exists) {
+    List data = snapshot.value as List;
+
+    int index = -1;
+    for (int i = 0; i < data.length; i++) {
+      if (data[i]['title'].toLowerCase() == title.toLowerCase()) {
+        index = i;
+      }
+    }
+
+    if (index != -1) {
+      ref.child(index.toString()).update(
+        {'rates': 1, 'rating': 1},
+      );
+    }
+  }
+}
+
 Future addToSection(String sectionName, String title) async {
   QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('users')
@@ -39,7 +65,7 @@ Future addToSection(String sectionName, String title) async {
   }
 
   await FirebaseFirestore.instance.collection('users').doc(currentUser!.id).set(
-    {'favourites': resultTitles},
+    {sectionName: resultTitles},
     SetOptions(
       merge: true,
     ),

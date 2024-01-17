@@ -28,6 +28,9 @@ class _MangaPageViewState extends State<MangaPageView> {
 
   bool inFavourites = false;
   bool inPlanned = false;
+  bool inFinished = false;
+
+  int totalRating = 0;
 
   @override
   void initState() {
@@ -42,11 +45,26 @@ class _MangaPageViewState extends State<MangaPageView> {
         mangaInSection('favourites', widget.title).then((value) {
           setState(() {
             inFavourites = value;
+          });
 
-            isLoading = false;
-            if (manga.title == null) {
-              nullState = true;
-            }
+          mangaInSection('planned', widget.title).then((value) {
+            setState(() {
+              inPlanned = value;
+
+              mangaInSection('finished', widget.title).then((value) {
+                setState(() {
+                  inFinished = value;
+
+                  isLoading = false;
+                  if (manga.title == null) {
+                    nullState = true;
+                  }
+                  if ((manga.rates != 0 && manga.rating != 0)) {
+                    totalRating = (manga.rating! / manga.rates!).round();
+                  }
+                });
+              });
+            });
           });
         });
       },
@@ -59,9 +77,88 @@ class _MangaPageViewState extends State<MangaPageView> {
         inFavourites = !inFavourites;
       } else if (sectionName.toLowerCase() == 'planned') {
         inPlanned = !inPlanned;
+      } else if (sectionName.toLowerCase() == 'finished') {
+        inFinished = !inFinished;
       }
     });
   }
+
+  placeRating(int amount) {
+    addRating(widget.title, 1).then((value) {
+      getMangaByName(widget.title).then((value) {
+        setState(() {
+          manga = value;
+
+          if ((manga.rates != 0 && manga.rating != 0)) {
+            totalRating = (manga.rating! / manga.rates!).round();
+          }
+        });
+      });
+    });
+  }
+
+  Future openDialog() => showDialog(
+        context: context,
+        builder: (context) => Dialog(
+          alignment: Alignment.bottomCenter,
+          backgroundColor: Colors.transparent,
+          insetPadding: const EdgeInsets.all(10),
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 15,
+                ),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * .13,
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(117, 117, 117, 1), // Colors.white
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Leave your rating!",
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * .06,
+                      width: double.infinity,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 5,
+                        itemBuilder: (context2, index) {
+                          return IconButton(
+                            padding: const EdgeInsets.all(0),
+                            onPressed: () {
+                              placeRating(index + 1);
+
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(
+                              Icons.star_border,
+                              color: Colors.yellow,
+                              size: 50,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -111,12 +208,12 @@ class _MangaPageViewState extends State<MangaPageView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             SizedBox(
-                              width: MediaQuery.of(context).size.width * .55,
+                              width: MediaQuery.of(context).size.width * .45,
                               child: Text(
-                                manga.title!,
+                                widget.title,
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 35,
+                                  fontSize: 30,
                                   fontWeight: FontWeight.bold,
                                   height: 1.2,
                                 ),
@@ -152,7 +249,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                                   ),
                                 ),
                                 const SizedBox(
-                                  width: 15,
+                                  width: 10,
                                 ),
                                 ClipOval(
                                   child: Material(
@@ -178,6 +275,36 @@ class _MangaPageViewState extends State<MangaPageView> {
                                       ),
                                     ),
                                   ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                ClipOval(
+                                  child: Material(
+                                    color: Colors.white, // Button color
+                                    child: InkWell(
+                                      splashColor: Colors.grey, // Splash color
+                                      onTap: () {
+                                        //addToSection('finished', widget.title);
+                                        //updateMangaSectionStatus('finished');
+
+                                        openDialog();
+                                      },
+                                      child: SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: Icon(
+                                          !inFinished
+                                              ? Icons.check_circle_outline
+                                              : Icons.check_circle,
+                                          color: !inFinished
+                                              ? Colors.black
+                                              : const Color(0xFF8E1617),
+                                          size: 35,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 )
                               ],
                             ),
@@ -194,6 +321,39 @@ class _MangaPageViewState extends State<MangaPageView> {
                               fontWeight: FontWeight.w300,
                               fontSize: 18,
                             ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                          width: MediaQuery.of(context).size.width * .35,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * .25,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: 5,
+                                  itemBuilder: (context, index) {
+                                    return Icon(
+                                      index < totalRating
+                                          ? Icons.star
+                                          : Icons.star_border,
+                                      color: Colors.yellow,
+                                      size: 20,
+                                    );
+                                  },
+                                ),
+                              ),
+                              Text(
+                                '(${manga.rates.toString()})',
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(
@@ -253,8 +413,8 @@ class _MangaPageViewState extends State<MangaPageView> {
                     children: [
                       ImageFiltered(
                         imageFilter: ImageFilter.blur(
-                          sigmaX: 2,
-                          sigmaY: 2,
+                          sigmaX: 2.5,
+                          sigmaY: 2.5,
                         ),
                         child: Image.network(
                           height: double.infinity,

@@ -33,7 +33,7 @@ class _ExploreStartBlockState extends State<ExploreStartBlock> {
       },
       child: Center(
         child: SizedBox(
-          height: 500 + (widget.factor * 75),
+          height: 500 + (widget.factor * 85),
           width: 400,
           child: Container(
             margin: const EdgeInsets.only(right: 20),

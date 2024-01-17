@@ -27,7 +27,7 @@ Future<MangaPageFull> getMangaByName(String name) async {
     for (var i = 0; i < data.length; i++) {
       MangaPageFullT block = MangaPageFullT.fromJson(data[i] as Map);
 
-      if (block.title == name) {
+      if (block.title!.toLowerCase() == name.toLowerCase()) {
         MangaPageFull book = MangaPageFull(
           title: block.title,
           author: block.author,
@@ -37,6 +37,8 @@ Future<MangaPageFull> getMangaByName(String name) async {
           status: block.status,
           year: block.year,
           desc: block.desc,
+          rates: block.rates,
+          rating: block.rating,
         );
 
         result = book;

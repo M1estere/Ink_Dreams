@@ -9,6 +9,8 @@ class MangaPageFull {
   String? categories;
   String? year;
   String? desc;
+  int? rating;
+  int? rates;
 
   MangaPageFull({
     this.title,
@@ -19,6 +21,8 @@ class MangaPageFull {
     this.categories,
     this.year,
     this.desc,
+    this.rating,
+    this.rates,
   });
 }
 
@@ -31,6 +35,8 @@ class MangaPageFullT {
   String? categories;
   String? year;
   String? desc;
+  int? rating;
+  int? rates;
 
   MangaPageFullT({
     this.title,
@@ -41,6 +47,8 @@ class MangaPageFullT {
     this.categories,
     this.year,
     this.desc,
+    this.rating,
+    this.rates,
   });
 
   MangaPageFullT.fromJson(Map<dynamic, dynamic> json) {
@@ -56,5 +64,8 @@ class MangaPageFullT {
 
     year = json['year'].toString();
     desc = json['description'];
+
+    rating = json['rating'];
+    rates = json['rates'];
   }
 }

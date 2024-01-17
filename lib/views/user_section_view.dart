@@ -9,11 +9,12 @@ class UserSectionView extends StatefulWidget {
   final String sectionName;
   final String userName;
   final String id;
-  const UserSectionView(
-      {super.key,
-      required this.id,
-      required this.sectionName,
-      required this.userName});
+  const UserSectionView({
+    super.key,
+    required this.id,
+    required this.sectionName,
+    required this.userName,
+  });
 
   @override
   State<UserSectionView> createState() => _UserSectionViewState();
