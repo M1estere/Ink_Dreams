@@ -9,7 +9,11 @@ import 'package:manga_reading/views/user_section_view.dart';
 import 'package:page_transition/page_transition.dart';
 
 class AccountPageView extends StatefulWidget {
-  const AccountPageView({super.key});
+  final String id;
+  const AccountPageView({
+    super.key,
+    required this.id,
+  });
 
   @override
   State<AccountPageView> createState() => _AccountPageViewState();
@@ -29,7 +33,20 @@ class _AccountPageViewState extends State<AccountPageView> {
   void initState() {
     super.initState();
 
-    getFullUserInfo(currentUser!.id).then((value) {
+    getFullUserInfo(widget.id).then((value) {
+      setState(() {
+        pageUser = value;
+        isLoading = false;
+      });
+    });
+  }
+
+  refresh() {
+    setState(() {
+      isLoading = true;
+    });
+
+    getFullUserInfo(widget.id).then((value) {
       setState(() {
         pageUser = value;
         isLoading = false;
@@ -123,7 +140,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                           .rightToLeftWithFade,
                                       child: UserFriendsView(),
                                     ),
-                                  );
+                                  ).then((value) => refresh());
                                 },
                                 child: SizedBox(
                                   height: 135,

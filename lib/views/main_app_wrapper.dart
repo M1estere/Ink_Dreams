@@ -6,6 +6,7 @@ import 'package:manga_reading/views/explore_view.dart';
 import 'package:manga_reading/views/search_intro_page_view.dart';
 import 'package:manga_reading/views/search_results_view.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:manga_reading/support/auth_provider.dart';
 
 class MainWrapper extends StatefulWidget {
   const MainWrapper({super.key});
@@ -165,10 +166,10 @@ class _MainWrapperState extends State<MainWrapper> {
 
     final bodies = IndexedStack(
       index: _currentPageIndex,
-      children: const [
+      children: [
         ExploreView(),
         SearchIntroPageView(),
-        AccountPageView(),
+        AccountPageView(id: currentUser!.id),
       ],
     );
 

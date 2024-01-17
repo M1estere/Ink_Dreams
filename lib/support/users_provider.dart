@@ -17,6 +17,24 @@ class FindUser {
   });
 }
 
+Future<List<FindUser>> getUsersBySearch(String query) async {
+  List<FindUser> result = [];
+
+  QuerySnapshot snapshot =
+      await FirebaseFirestore.instance.collection('users').get();
+
+  for (var element in snapshot.docs) {
+    if (element['id'] == currentUser!.id) continue;
+    FindUser user = await _getUser(element['id'], query);
+
+    if (user.id.isNotEmpty) {
+      result.add(user);
+    }
+  }
+
+  return result;
+}
+
 Future<List<FindUser>> getAllUsers() async {
   List<FindUser> result = [];
 
@@ -25,13 +43,17 @@ Future<List<FindUser>> getAllUsers() async {
 
   for (var element in snapshot.docs) {
     if (element['id'] == currentUser!.id) continue;
-    result.add(await _getUser(element['id']));
+    FindUser user = await _getUser(element['id'], '');
+
+    if (user.id.isNotEmpty) {
+      result.add(user);
+    }
   }
 
   return result;
 }
 
-Future<FindUser> _getUser(String id) async {
+Future<FindUser> _getUser(String id, String seqToCheck) async {
   FindUser result;
 
   String nickname = '';
@@ -61,15 +83,24 @@ Future<FindUser> _getUser(String id) async {
     }
   });
 
-  result = FindUser(
-    id: id,
-    email: email,
-    nickname: nickname,
-    regDate: regDate,
-    finishedManga: finished,
-  );
+  if (nickname.toLowerCase().contains(seqToCheck)) {
+    result = FindUser(
+      id: id,
+      email: email,
+      nickname: nickname,
+      regDate: regDate,
+      finishedManga: finished,
+    );
 
-  return result;
+    return result;
+  }
+
+  return FindUser(
+      id: '',
+      nickname: '',
+      email: '',
+      finishedManga: List.empty(),
+      regDate: regDate);
 }
 
 class FriendUser {
@@ -98,11 +129,14 @@ Future<List<FriendUser>> getFriends() async {
 
   List friends = [];
   for (var element in snapshot.docs) {
-    friends = element['friends'];
+    if ((element.data() as Map).containsKey('friends')) {
+      friends = element['friends'];
+    }
   }
+
   for (var element in friends) {
     result.add(
-      await _getFriend(element['id'], element['add_date']),
+      await _getFriend(element['id'], element['add_time']),
     );
   }
 

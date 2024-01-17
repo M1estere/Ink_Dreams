@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:manga_reading/support/users_provider.dart';
-import 'package:manga_reading/views/blocks/user_friend_block.dart';
 import 'package:manga_reading/views/blocks/user_list_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
+import 'package:manga_reading/views/support/no_books_by_request.dart';
 
 class FindFriendView extends StatefulWidget {
   const FindFriendView({super.key});
@@ -12,6 +12,8 @@ class FindFriendView extends StatefulWidget {
 }
 
 class _FindFriendViewState extends State<FindFriendView> {
+  TextEditingController searchController = TextEditingController();
+
   List<FindUser> users = [];
   bool isLoading = true;
 
@@ -25,6 +27,13 @@ class _FindFriendViewState extends State<FindFriendView> {
         users = value;
       });
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    searchController.dispose();
   }
 
   @override
@@ -87,6 +96,7 @@ class _FindFriendViewState extends State<FindFriendView> {
                   child: SizedBox(
                     height: 65,
                     child: TextField(
+                      controller: searchController,
                       textAlignVertical: TextAlignVertical.center,
                       style: const TextStyle(
                         color: Colors.black,
@@ -114,7 +124,16 @@ class _FindFriendViewState extends State<FindFriendView> {
                           letterSpacing: 1,
                         ),
                       ),
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        getUsersBySearch(
+                                searchController.text.trim().toLowerCase())
+                            .then((value) {
+                          setState(() {
+                            users.clear();
+                            users = value;
+                          });
+                        });
+                      },
                     ),
                   ),
                 ),
@@ -123,22 +142,24 @@ class _FindFriendViewState extends State<FindFriendView> {
                 ),
                 Expanded(
                   child: !isLoading
-                      ? Container(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          margin: const EdgeInsets.only(bottom: 20),
-                          child: ListView.builder(
-                            itemCount: users.length,
-                            itemBuilder: (context, index) {
-                              return UserListBlock(
-                                isInFriendList: false,
-                                finished: users[index].finishedManga.length,
-                                nickname: users[index].nickname,
-                                regDate: users[index].regDate,
-                              );
-                            },
-                            scrollDirection: Axis.vertical,
-                          ),
-                        )
+                      ? users.isNotEmpty
+                          ? Container(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              margin: const EdgeInsets.only(bottom: 20),
+                              child: ListView.builder(
+                                itemCount: users.length,
+                                itemBuilder: (context, index) {
+                                  return UserListBlock(
+                                    id: users[index].id,
+                                    finished: users[index].finishedManga.length,
+                                    nickname: users[index].nickname,
+                                    regDate: users[index].regDate,
+                                  );
+                                },
+                                scrollDirection: Axis.vertical,
+                              ),
+                            )
+                          : const NoBooksByRequest()
                       : const FetchingCircle(),
                 ),
               ],

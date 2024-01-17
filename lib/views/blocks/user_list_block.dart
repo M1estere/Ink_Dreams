@@ -1,20 +1,54 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:manga_reading/support/user_actions.dart';
 
-class UserListBlock extends StatelessWidget {
-  final bool isInFriendList;
+class UserListBlock extends StatefulWidget {
+  final String id;
   final String nickname;
   final int finished;
   final Timestamp regDate;
 
   const UserListBlock({
     super.key,
-    required this.isInFriendList,
+    required this.id,
     required this.nickname,
     required this.finished,
     required this.regDate,
   });
+
+  @override
+  State<UserListBlock> createState() => _UserListBlockState();
+}
+
+class _UserListBlockState extends State<UserListBlock> {
+  bool isInFriendList = false;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    idIsFriend(widget.id).then((value) {
+      setState(() {
+        isLoading = false;
+        isInFriendList = value;
+      });
+    });
+  }
+
+  refresh() {
+    setState(() {
+      isLoading = true;
+    });
+
+    idIsFriend(widget.id).then((value) {
+      setState(() {
+        isLoading = false;
+        isInFriendList = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +101,7 @@ class UserListBlock extends StatelessWidget {
                         ),
                         FittedBox(
                           child: Text(
-                            nickname,
+                            widget.nickname,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -99,7 +133,7 @@ class UserListBlock extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              '$finished finished',
+                              '${widget.finished} finished',
                               style: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 17,
@@ -120,7 +154,8 @@ class UserListBlock extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              DateFormat('dd/MM/yyyy').format(regDate.toDate()),
+                              DateFormat('dd/MM/yyyy')
+                                  .format(widget.regDate.toDate()),
                               style: const TextStyle(
                                 color: Colors.grey,
                                 fontSize: 17,
@@ -134,14 +169,22 @@ class UserListBlock extends StatelessWidget {
                   ),
                 ],
               ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  !isInFriendList ? Icons.add : Icons.check,
-                  size: 55,
-                  color: Colors.white,
-                ),
-              ),
+              !isLoading
+                  ? IconButton(
+                      onPressed: () {
+                        addToFriends(widget.id).then((value) {
+                          setState(() {
+                            refresh();
+                          });
+                        });
+                      },
+                      icon: Icon(
+                        !isInFriendList ? Icons.add : Icons.check,
+                        size: 55,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const CircularProgressIndicator(),
             ],
           ),
         ),

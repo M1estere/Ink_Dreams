@@ -45,6 +45,56 @@ Future addToSection(String sectionName, String title) async {
   );
 }
 
+Future addToFriends(String id) async {
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('id', isEqualTo: currentUser!.id)
+      .get();
+  List currentFriends = [];
+
+  snapshot.docs.forEach((element) {
+    if (element.exists) {
+      var data = element.data() as Map<String, dynamic>;
+      if (data.containsKey('friends')) {
+        currentFriends = data['friends'];
+      }
+    }
+  });
+
+  List resultFriends = [];
+  resultFriends.addAll(currentFriends);
+  (bool, int) valuesSet = hasFriend(resultFriends, id);
+  if (valuesSet.$1) {
+    resultFriends.removeAt(valuesSet.$2);
+  } else {
+    resultFriends.add(
+      {
+        'id': id,
+        'add_time': DateTime.now().add(
+          const Duration(hours: 3),
+        ),
+      },
+    );
+  }
+
+  await FirebaseFirestore.instance.collection('users').doc(currentUser!.id).set(
+    {'friends': resultFriends},
+    SetOptions(
+      merge: true,
+    ),
+  );
+}
+
+(bool, int) hasFriend(List list, String id) {
+  for (int i = 0; i < list.length; i++) {
+    if (list[i]['id'].toString() == id) {
+      return (true, i);
+    }
+  }
+
+  return (false, 0);
+}
+
 (bool, int) isInList(List list, String title) {
   for (int i = 0; i < list.length; i++) {
     if (list[i]['name'].toString().toLowerCase() == title.toLowerCase()) {
@@ -134,6 +184,32 @@ Future<bool> mangaInSection(String sectionName, String mangaTitle) async {
 
   for (Map title in currentTitles) {
     if (title['name'].toString().toLowerCase() == mangaTitle.toLowerCase()) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+Future<bool> idIsFriend(String id) async {
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('id', isEqualTo: currentUser!.id)
+      .get();
+
+  List currentFriends = [];
+
+  snapshot.docs.forEach((element) {
+    if (element.exists) {
+      var data = element.data() as Map<String, dynamic>;
+      if (data.containsKey('friends')) {
+        currentFriends = data['friends'];
+      }
+    }
+  });
+
+  for (Map title in currentFriends) {
+    if (title['id'].toString() == id) {
       return true;
     }
   }
