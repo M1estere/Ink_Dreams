@@ -16,6 +16,56 @@ class AuthUser {
       );
 }
 
+class UserFull {
+  final String id;
+  final String email;
+  final String nickname;
+  final Timestamp registerDate;
+
+  const UserFull({
+    required this.id,
+    required this.email,
+    required this.nickname,
+    required this.registerDate,
+  });
+}
+
+Future<UserFull> getFullUserInfo(String id) async {
+  UserFull result;
+
+  String nickname = '';
+  String email = '';
+  Timestamp regDate = Timestamp.fromDate(DateTime.now());
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('id', isEqualTo: currentUser!.id)
+      .get();
+
+  snapshot.docs.forEach((element) {
+    if (element.exists) {
+      var data = element.data() as Map<String, dynamic>;
+      if (data.containsKey('nickname')) {
+        nickname = data['nickname'];
+      }
+      if (data.containsKey('email')) {
+        email = data['email'];
+      }
+      if (data.containsKey('reg_date')) {
+        regDate = data['reg_date'];
+      }
+    }
+  });
+
+  result = UserFull(
+    id: id,
+    email: email,
+    nickname: nickname,
+    registerDate: regDate,
+  );
+
+  return result;
+}
+
 Future<int> registerUser(String email, String password, String nickname) async {
   try {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -30,6 +80,7 @@ Future<int> registerUser(String email, String password, String nickname) async {
           'id': user.id,
           'email': user.email,
           'nickname': nickname,
+          'reg_date': DateTime.now(),
         },
       );
 

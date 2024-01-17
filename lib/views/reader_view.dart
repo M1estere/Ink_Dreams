@@ -29,8 +29,6 @@ class ReaderView extends StatefulWidget {
 }
 
 class _ReaderViewState extends State<ReaderView> {
-  int startPage = 0;
-
   bool hasNext = true;
   bool hasPrev = true;
 

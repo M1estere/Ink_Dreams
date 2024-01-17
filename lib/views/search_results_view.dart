@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/views/blocks/search_result_block.dart';
 import 'package:manga_reading/support/get_by_search.dart';
-import 'package:manga_reading/views/support/no_books_by_reques.dart';
+import 'package:manga_reading/views/support/no_books_by_request.dart';
 
 class SearchResultsView extends StatefulWidget {
   const SearchResultsView({super.key});

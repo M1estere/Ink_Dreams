@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:manga_reading/support/auth_provider.dart';
 import 'package:manga_reading/views/auth_page_view.dart';
+import 'package:manga_reading/views/support/fetching_circle.dart';
 import 'package:manga_reading/views/user_section_view.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -12,6 +15,26 @@ class AccountPageView extends StatefulWidget {
 }
 
 class _AccountPageViewState extends State<AccountPageView> {
+  UserFull pageUser = UserFull(
+    id: '',
+    email: '',
+    nickname: '',
+    registerDate: Timestamp.fromDate(DateTime.now()),
+  );
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    getFullUserInfo(currentUser!.id).then((value) {
+      setState(() {
+        pageUser = value;
+        isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,383 +55,465 @@ class _AccountPageViewState extends State<AccountPageView> {
             ],
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .27,
-                child: const Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 70,
-                      backgroundColor: Colors.white,
-                      child: CircleAvatar(
-                        radius: 60,
-                        backgroundColor: Color.fromARGB(255, 255, 17, 0),
-                        // foregroundImage:
-                        //     AssetImage('assets/images/attack.jpg'),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'M1estere',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.5,
-                      ),
-                    ),
-                    Text(
-                      'Ilya Solovyev',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.5,
-                        height: .75,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 135,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(right: 20),
-                      child: Material(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.black.withOpacity(.65),
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(15),
-                          splashColor: const Color.fromARGB(255, 34, 34, 34),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.rightToLeftWithFade,
-                                child: UserSectionView(
-                                  sectionName: 'reading',
-                                ),
-                              ),
-                            );
-                          },
-                          child: const SizedBox(
-                            height: 135,
-                            width: 140,
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Icon(
-                                        Icons.list,
-                                        color: Colors.white,
-                                        size: 50,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Reading',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w500,
-                                          letterSpacing: 2,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(right: 20),
-                      child: Material(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.black.withOpacity(.65),
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(15),
-                          splashColor: const Color.fromARGB(255, 34, 34, 34),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.rightToLeftWithFade,
-                                child: UserSectionView(
-                                  sectionName: 'favourites',
-                                ),
-                              ),
-                            );
-                          },
-                          child: const SizedBox(
-                            height: 135,
-                            width: 180,
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Icon(
-                                        Icons.favorite,
-                                        color: Colors.white,
-                                        size: 50,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Favourites',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w500,
-                                          letterSpacing: 2,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(right: 20),
-                      child: Material(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.black.withOpacity(.65),
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(15),
-                          splashColor: const Color.fromARGB(255, 34, 34, 34),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.rightToLeftWithFade,
-                                child: UserSectionView(
-                                  sectionName: 'planned',
-                                ),
-                              ),
-                            );
-                          },
-                          child: const SizedBox(
-                            height: 135,
-                            width: 145,
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Icon(
-                                        Icons.save,
-                                        color: Colors.white,
-                                        size: 50,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Planned',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w500,
-                                          letterSpacing: 2,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      child: Material(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.black.withOpacity(.65),
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(15),
-                          splashColor: const Color.fromARGB(255, 34, 34, 34),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.rightToLeftWithFade,
-                                child: UserSectionView(
-                                  sectionName: 'finished',
-                                ),
-                              ),
-                            );
-                          },
-                          child: const SizedBox(
-                            height: 135,
-                            width: 160,
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Icon(
-                                        Icons.timer,
-                                        color: Colors.white,
-                                        size: 50,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Finished',
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w500,
-                                          letterSpacing: 2,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .27,
+        child: !isLoading
+            ? Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      margin: const EdgeInsets.only(
-                        bottom: 10,
-                      ),
-                      child: SizedBox(
-                        height: 50,
-                        width: MediaQuery.of(context).size.width * .75,
-                        child: ClipRect(
-                          child: Material(
-                            borderRadius: BorderRadius.circular(7),
-                            color: Colors.black,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(7),
-                              splashColor:
-                                  const Color.fromARGB(255, 34, 34, 34),
-                              onTap: () {},
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Personalize',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 1.5,
-                                    ),
-                                  ), // text
-                                ],
-                              ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * .27,
+                      child: Column(
+                        children: [
+                          const CircleAvatar(
+                            radius: 70,
+                            backgroundColor: Colors.white,
+                            child: CircleAvatar(
+                              radius: 60,
+                              backgroundColor: Colors.red,
                             ),
                           ),
-                        ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            pageUser.nickname,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.5,
+                            ),
+                          ),
+                          Text(
+                            'Since: ${DateFormat('dd/mm/yyyy').format(pageUser.registerDate.toDate())}',
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 1.5,
+                              height: 1,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width * .75,
-                      child: ClipRect(
-                        child: Material(
-                          borderRadius: BorderRadius.circular(7),
-                          color: Colors.black,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(7),
-                            splashColor: const Color.fromARGB(255, 34, 34, 34),
-                            onTap: () {
-                              signOut().then((value) {
-                                if (value == 0) {
-                                  Navigator.pushReplacement(
+                      height: 135,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(right: 20),
+                            child: Material(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.black.withOpacity(.65),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(15),
+                                splashColor:
+                                    const Color.fromARGB(255, 34, 34, 34),
+                                onTap: () {
+                                  Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: ((context) {
-                                        return const AuthPageView();
-                                      }),
+                                    PageTransition(
+                                      type: PageTransitionType
+                                          .rightToLeftWithFade,
+                                      child: UserSectionView(
+                                        sectionName: 'friends',
+                                      ),
                                     ),
                                   );
-                                } else {
-                                  print('No user');
-                                }
-                              });
-                            },
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Log Out',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 1.5,
+                                },
+                                child: const SizedBox(
+                                  height: 135,
+                                  width: 160,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Icon(
+                                              Icons.person,
+                                              color: Colors.white,
+                                              size: 50,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '2 Friends',
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: 2,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ), // text
-                              ],
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          Container(
+                            margin: const EdgeInsets.only(right: 20),
+                            child: Material(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.black.withOpacity(.65),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(15),
+                                splashColor:
+                                    const Color.fromARGB(255, 34, 34, 34),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType
+                                          .rightToLeftWithFade,
+                                      child: UserSectionView(
+                                        sectionName: 'reading',
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const SizedBox(
+                                  height: 135,
+                                  width: 140,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Icon(
+                                              Icons.list,
+                                              color: Colors.white,
+                                              size: 50,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Reading',
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: 2,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(right: 20),
+                            child: Material(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.black.withOpacity(.65),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(15),
+                                splashColor:
+                                    const Color.fromARGB(255, 34, 34, 34),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType
+                                          .rightToLeftWithFade,
+                                      child: UserSectionView(
+                                        sectionName: 'favourites',
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const SizedBox(
+                                  height: 135,
+                                  width: 180,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Icon(
+                                              Icons.favorite,
+                                              color: Colors.white,
+                                              size: 50,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Favourites',
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: 2,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(right: 20),
+                            child: Material(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.black.withOpacity(.65),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(15),
+                                splashColor:
+                                    const Color.fromARGB(255, 34, 34, 34),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType
+                                          .rightToLeftWithFade,
+                                      child: UserSectionView(
+                                        sectionName: 'planned',
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const SizedBox(
+                                  height: 135,
+                                  width: 145,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Icon(
+                                              Icons.save,
+                                              color: Colors.white,
+                                              size: 50,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Planned',
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: 2,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            child: Material(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.black.withOpacity(.65),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(15),
+                                splashColor:
+                                    const Color.fromARGB(255, 34, 34, 34),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType
+                                          .rightToLeftWithFade,
+                                      child: UserSectionView(
+                                        sectionName: 'finished',
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const SizedBox(
+                                  height: 135,
+                                  width: 160,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Icon(
+                                              Icons.timer,
+                                              color: Colors.white,
+                                              size: 50,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Finished',
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: 2,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    )
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * .27,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(
+                              bottom: 10,
+                            ),
+                            child: SizedBox(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width * .75,
+                              child: ClipRect(
+                                child: Material(
+                                  borderRadius: BorderRadius.circular(7),
+                                  color: Colors.black,
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(7),
+                                    splashColor:
+                                        const Color.fromARGB(255, 34, 34, 34),
+                                    onTap: () {},
+                                    child: const Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Personalize',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w400,
+                                            letterSpacing: 1.5,
+                                          ),
+                                        ), // text
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            width: MediaQuery.of(context).size.width * .75,
+                            child: ClipRect(
+                              child: Material(
+                                borderRadius: BorderRadius.circular(7),
+                                color: Colors.black,
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(7),
+                                  splashColor:
+                                      const Color.fromARGB(255, 34, 34, 34),
+                                  onTap: () {
+                                    signOut().then((value) {
+                                      if (value == 0) {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: ((context) {
+                                              return const AuthPageView();
+                                            }),
+                                          ),
+                                        );
+                                      } else {
+                                        print('No user');
+                                      }
+                                    });
+                                  },
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Log Out',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 1.5,
+                                        ),
+                                      ), // text
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              ),
-            ],
-          ),
-        ),
+              )
+            : const FetchingCircle(),
       ),
     );
   }

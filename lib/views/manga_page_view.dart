@@ -117,6 +117,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                                   color: Colors.white,
                                   fontSize: 35,
                                   fontWeight: FontWeight.bold,
+                                  height: 1.2,
                                 ),
                               ),
                             ),

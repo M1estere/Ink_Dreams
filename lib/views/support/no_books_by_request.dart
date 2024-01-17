@@ -24,7 +24,7 @@ class NoBooksByRequest extends StatelessWidget {
               width: MediaQuery.of(context).size.width * .7,
               child: const Text(
                 textAlign: TextAlign.center,
-                'Sorry, no books found!',
+                'Sorry, nothing found!',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 25,

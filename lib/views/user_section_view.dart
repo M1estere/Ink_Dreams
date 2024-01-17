@@ -4,7 +4,7 @@ import 'package:manga_reading/support/classes/manga_book_timed.dart';
 import 'package:manga_reading/support/user_actions.dart';
 import 'package:manga_reading/views/blocks/user_section_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
-import 'package:manga_reading/views/support/no_books_by_reques.dart';
+import 'package:manga_reading/views/support/no_books_by_request.dart';
 
 class UserSectionView extends StatefulWidget {
   final String sectionName;
@@ -38,6 +38,7 @@ class _UserSectionViewState extends State<UserSectionView> {
     setState(() {
       isLoading = true;
     });
+
     getMangaByUserSection(currentUser!.id, widget.sectionName).then((value) {
       setState(() {
         mangaBooks = value;
