@@ -96,7 +96,7 @@ class _UserSectionViewState extends State<UserSectionView> {
         child: Container(
           width: double.infinity,
           decoration: const BoxDecoration(
-            color: Color(0xFF23202B),
+            color: Color(0xFF121212),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(

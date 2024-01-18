@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
       title: 'Manga Reader',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF8E1617),
+          seedColor: Colors.red,
         ),
-        scaffoldBackgroundColor: const Color(0xFF23202B),
+        scaffoldBackgroundColor: const Color(0xFF121212),
         useMaterial3: true,
       ),
       home: userLogged() ? const MainWrapper() : const AuthPageView(),

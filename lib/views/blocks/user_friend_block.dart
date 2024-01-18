@@ -81,71 +81,105 @@ class UserFriendBlock extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * .05,
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * .38,
+                width: MediaQuery.of(context).size.width * .6,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Icon(
-                          Icons.book,
-                          color: Color(0xFF8E1617),
-                          size: 25,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Icon(
+                              Icons.add,
+                              color: Color(0xFF8E1617),
+                              size: 25,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              DateFormat('dd/MM/yyyy').format(addDate.toDate()),
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '$finished finished',
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Icon(
+                              Icons.book,
+                              color: Color(0xFF8E1617),
+                              size: 25,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              '$finished',
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.add,
-                          color: Color(0xFF8E1617),
-                          size: 25,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          DateFormat('dd/MM/yyyy').format(addDate.toDate()),
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
+                    const SizedBox(
+                      height: 2,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Icon(
-                          Icons.person,
-                          color: Color(0xFF8E1617),
-                          size: 25,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Icon(
+                              Icons.person,
+                              color: Color(0xFF8E1617),
+                              size: 25,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              DateFormat('dd/MM/yyyy').format(regDate.toDate()),
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          DateFormat('dd/MM/yyyy').format(regDate.toDate()),
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Icon(
+                              Icons.favorite,
+                              color: Color(0xFF8E1617),
+                              size: 25,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              '$finished',
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),

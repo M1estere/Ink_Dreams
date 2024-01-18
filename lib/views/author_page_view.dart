@@ -37,7 +37,7 @@ class _AuthorPageViewState extends State<AuthorPageView> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        toolbarHeight: 60,
+        toolbarHeight: 55,
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
@@ -64,7 +64,7 @@ class _AuthorPageViewState extends State<AuthorPageView> {
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
-                  letterSpacing: 2,
+                  letterSpacing: 0,
                 ),
               ),
             ],
@@ -75,7 +75,7 @@ class _AuthorPageViewState extends State<AuthorPageView> {
         child: Container(
           width: double.infinity,
           decoration: const BoxDecoration(
-            color: Color(0xFF23202B),
+            color: Color(0xFF121212),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

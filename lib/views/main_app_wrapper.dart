@@ -23,7 +23,7 @@ class _MainWrapperState extends State<MainWrapper> {
       // explore app bar
       AppBar(
         systemOverlayStyle: SystemUiOverlayStyle.light,
-        toolbarHeight: 60,
+        toolbarHeight: 55,
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
@@ -39,34 +39,17 @@ class _MainWrapperState extends State<MainWrapper> {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  letterSpacing: 2,
+                  fontSize: 25,
+                  letterSpacing: 0,
                 ),
               ),
             ),
           ],
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10, top: 10),
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _currentPageIndex = 2;
-                });
-              },
-              child: const CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.black,
-                foregroundImage: AssetImage('assets/images/attack.jpg'),
-              ),
-            ),
-          ),
-        ],
       ),
       // search intro app bar
       AppBar(
-        toolbarHeight: 60,
+        toolbarHeight: 55,
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
@@ -82,8 +65,8 @@ class _MainWrapperState extends State<MainWrapper> {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  letterSpacing: 2,
+                  fontSize: 25,
+                  letterSpacing: 0,
                 ),
               ),
             ),
@@ -92,44 +75,31 @@ class _MainWrapperState extends State<MainWrapper> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10, top: 10),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.blue,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          type: PageTransitionType.rightToLeftWithFade,
-                          child: const SearchResultsView(),
-                        ),
-                      );
-                    },
-                    icon: const Icon(
+            child: ClipOval(
+              child: Material(
+                color: Colors.white, // Button color
+                child: InkWell(
+                  splashColor: Colors.grey, // Splash color
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeftWithFade,
+                        child: const SearchResultsView(),
+                      ),
+                    );
+                  },
+                  child: const SizedBox(
+                    width: 43,
+                    height: 43,
+                    child: Icon(
                       Icons.search,
-                      color: Colors.white,
-                      size: 35,
+                      color: Colors.black,
+                      size: 33,
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _currentPageIndex = 2;
-                    });
-                  },
-                  child: const CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.black,
-                    foregroundImage: AssetImage('assets/images/attack.jpg'),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ],
@@ -137,7 +107,7 @@ class _MainWrapperState extends State<MainWrapper> {
       // account app bar
       AppBar(
         systemOverlayStyle: SystemUiOverlayStyle.light,
-        toolbarHeight: 60,
+        toolbarHeight: 55,
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
@@ -153,8 +123,8 @@ class _MainWrapperState extends State<MainWrapper> {
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  letterSpacing: 2,
+                  fontSize: 25,
+                  letterSpacing: 0,
                 ),
               ),
             ),
@@ -177,31 +147,31 @@ class _MainWrapperState extends State<MainWrapper> {
       body: bodies,
       bottomNavigationBar: CurvedNavigationBar(
         index: _currentPageIndex,
-        animationDuration: Duration(milliseconds: 300),
+        animationDuration: const Duration(milliseconds: 300),
         onTap: (value) {
           setState(() {
             _currentPageIndex = value;
           });
         },
         height: 60,
-        backgroundColor: const Color(0xFF23202B),
+        backgroundColor: const Color(0xFF121212),
         buttonBackgroundColor: Colors.white,
-        color: const Color.fromARGB(255, 66, 61, 80),
-        items: const [
+        color: const Color(0xFF252525),
+        items: [
           Icon(
             Icons.list,
             size: 35,
-            color: Colors.black,
+            color: _currentPageIndex == 0 ? Colors.black : Colors.grey,
           ),
           Icon(
             Icons.search,
             size: 35,
-            color: Colors.black,
+            color: _currentPageIndex == 1 ? Colors.black : Colors.grey,
           ),
           Icon(
             Icons.person,
             size: 35,
-            color: Colors.black,
+            color: _currentPageIndex == 2 ? Colors.black : Colors.grey,
           ),
         ],
       ),

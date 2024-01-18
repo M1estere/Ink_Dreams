@@ -198,16 +198,18 @@ class _ExploreView extends State<ExploreView> {
                           bottom: BorderSide(
                             width: 2,
                             color: _currentSectionIndex == 0
-                                ? const Color(0xFF9D1515)
+                                ? Colors.red
                                 : Colors.transparent,
                           ),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'MAIN',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
+                          color: _currentSectionIndex == 0
+                              ? Colors.white
+                              : Colors.grey,
+                          fontSize: _currentSectionIndex == 0 ? 20 : 18,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -228,22 +230,27 @@ class _ExploreView extends State<ExploreView> {
                           bottom: BorderSide(
                             width: 2,
                             color: _currentSectionIndex == 1
-                                ? const Color(0xFF9D1515)
+                                ? Colors.red
                                 : Colors.transparent,
                           ),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'CATEGORIES',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
+                          color: _currentSectionIndex == 1
+                              ? Colors.white
+                              : Colors.grey,
+                          fontSize: _currentSectionIndex == 1 ? 20 : 18,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 10,
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * .72,

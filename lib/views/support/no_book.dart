@@ -19,7 +19,7 @@ class NoBookAnnounce extends StatelessWidget {
             height: 5,
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * .7,
+            width: MediaQuery.of(context).size.width * .8,
             child: const Text(
               textAlign: TextAlign.center,
               'Sorry, a requested book was not found!',

@@ -71,13 +71,13 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Popular',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          letterSpacing: 1.5,
-                          fontWeight: FontWeight.w400),
+                    Text(
+                      'Popular'.toUpperCase(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -97,13 +97,13 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      'Hottest',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          letterSpacing: 1.5,
-                          fontWeight: FontWeight.w400),
+                    Text(
+                      'Hottest'.toUpperCase(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -123,13 +123,13 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      'Best Authors',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          letterSpacing: 1.5,
-                          fontWeight: FontWeight.w400),
+                    Text(
+                      'Best Authors'.toUpperCase(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),

@@ -68,8 +68,8 @@ class _AccountPageViewState extends State<AccountPageView> {
             colors: [
               const Color(0xFF9D1515).withOpacity(.5),
               const Color(0xFF9D1515).withOpacity(.5),
-              const Color(0xFF23202B),
-              const Color(0xFF23202B),
+              const Color(0xFF121212),
+              const Color(0xFF121212),
             ],
           ),
         ),

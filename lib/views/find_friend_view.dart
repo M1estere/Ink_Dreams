@@ -42,11 +42,11 @@ class _FindFriendViewState extends State<FindFriendView> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        toolbarHeight: 60,
+        toolbarHeight: 55,
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        leadingWidth: 370,
+        leadingWidth: MediaQuery.of(context).size.width * .6,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),
           child: Row(
@@ -68,8 +68,8 @@ class _FindFriendViewState extends State<FindFriendView> {
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  letterSpacing: 2,
+                  fontSize: 25,
+                  letterSpacing: 0,
                 ),
               ),
             ],
@@ -80,7 +80,7 @@ class _FindFriendViewState extends State<FindFriendView> {
         child: Container(
           width: double.infinity,
           decoration: const BoxDecoration(
-            color: Color(0xFF23202B),
+            color: Color(0xFF121212),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -91,8 +91,8 @@ class _FindFriendViewState extends State<FindFriendView> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(15),
+                    color: const Color(0xFF252525),
                   ),
                   child: SizedBox(
                     height: 65,
@@ -100,29 +100,28 @@ class _FindFriendViewState extends State<FindFriendView> {
                       controller: searchController,
                       textAlignVertical: TextAlignVertical.center,
                       style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 25,
+                        color: Colors.white,
+                        fontSize: 22,
                         fontWeight: FontWeight.w400,
-                        letterSpacing: 1,
+                        letterSpacing: .5,
                       ),
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        prefixIcon: Icon(
                           Icons.search,
                           size: 35,
-                          color: Colors.black,
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          color: Color(0xFFA2A2A2),
                         ),
                         hintText: 'Search anything...',
-                        hintStyle: const TextStyle(
-                          color: Color.fromARGB(255, 70, 70, 70),
-                          fontSize: 25,
+                        hintStyle: TextStyle(
+                          color: Color(0xFFA2A2A2),
+                          fontSize: 22,
                           fontWeight: FontWeight.w400,
-                          letterSpacing: 1,
+                          letterSpacing: .5,
                         ),
                       ),
                       onChanged: (value) {

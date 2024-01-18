@@ -9,6 +9,13 @@ import 'package:manga_reading/support/get_full_manga.dart';
 
 // manga interaction
 Future addRating(String title, int rating) async {
+  bool add = true;
+  int prevValue = 0;
+  await getUserRating(currentUser!.id, title).then((value) {
+    add = value == 0 ? true : false;
+    prevValue = value;
+  });
+
   MangaPageFull manga = await getMangaByName(title);
 
   DatabaseReference ref = FirebaseDatabase.instance.ref().child('manga_books');
@@ -25,10 +32,111 @@ Future addRating(String title, int rating) async {
     }
 
     if (index != -1) {
-      ref.child(index.toString()).update(
-        {'rates': 1, 'rating': 1},
-      );
+      final snapshot = await ref.child(index.toString()).get();
+      Map data = snapshot.value as Map;
+
+      int currentRates = data['rates'];
+      int currentRating = data['rating'];
+
+      int increment = 0;
+      if (rating < 0) {
+        increment = -1;
+      } else if (rating > 0) {
+        increment = 1;
+      }
+
+      if (add) {
+        ref.child(index.toString()).update(
+          {'rates': currentRates + increment, 'rating': currentRating + rating},
+        );
+      } else {
+        ref.child(index.toString()).update(
+          {'rates': currentRates, 'rating': currentRating - prevValue + rating},
+        );
+      }
     }
+  }
+}
+
+Future<int> getUserRating(String id, String title) async {
+  int result = 0;
+
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('id', isEqualTo: id)
+      .get();
+  QueryDocumentSnapshot qSnapshot = snapshot.docs[0];
+
+  List finishedTitles = [];
+  var data = qSnapshot.data() as Map<String, dynamic>;
+  if (data.containsKey('finished')) {
+    finishedTitles = data['finished'];
+  }
+
+  for (var manga in finishedTitles) {
+    if (manga['name'].toString().toLowerCase() == title.toLowerCase()) {
+      result = manga['rating'];
+    }
+  }
+
+  return result;
+}
+
+Future addToFinished(String title, int rating) async {
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('id', isEqualTo: currentUser!.id)
+      .get();
+  List currentTitles = [];
+
+  QueryDocumentSnapshot qSnapshot = snapshot.docs[0];
+
+  List finishedTitles = [];
+  var data = qSnapshot.data() as Map<String, dynamic>;
+  if (data.containsKey('finished')) {
+    finishedTitles = data['finished'];
+
+    int index = -1;
+    for (int i = 0; i < finishedTitles.length; i++) {
+      if (finishedTitles[i]['name'].toString().toLowerCase() ==
+          title.toLowerCase()) {
+        index = i;
+      }
+    }
+
+    if (index != -1) {
+      finishedTitles[index]['rating'] = rating;
+    } else {
+      finishedTitles.add({
+        'name': title.capitalizeEveryWord(),
+        'add_time': DateTime.now().add(const Duration(hours: 3)),
+        'rating': rating,
+      });
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser!.id)
+        .set(
+      {'finished': finishedTitles},
+      SetOptions(merge: true),
+    );
+  } else {
+    List res = [
+      {
+        'name': title.capitalizeEveryWord(),
+        'add_time': DateTime.now().add(const Duration(hours: 3)),
+        'rating': rating,
+      }
+    ];
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser!.id)
+        .set(
+      {'finished': res},
+      SetOptions(
+        merge: true,
+      ),
+    );
   }
 }
 
@@ -52,16 +160,34 @@ Future addToSection(String sectionName, String title) async {
   resultTitles.addAll(currentTitles);
   (bool, int) valuesSet = isInList(resultTitles, title);
   if (valuesSet.$1) {
+    if (sectionName == 'finished') {
+      int index = valuesSet.$2;
+      int userRating = resultTitles[index]['rating'];
+
+      addRating(title, -userRating);
+    }
     resultTitles.removeAt(valuesSet.$2);
   } else {
-    resultTitles.add(
-      {
-        'name': title.capitalizeEveryWord(),
-        'add_time': DateTime.now().add(
-          const Duration(hours: 3),
-        ),
-      },
-    );
+    if (sectionName == 'finished') {
+      resultTitles.add(
+        {
+          'name': title.capitalizeEveryWord(),
+          'add_time': DateTime.now().add(
+            const Duration(hours: 3),
+          ),
+          'rating': 0,
+        },
+      );
+    } else {
+      resultTitles.add(
+        {
+          'name': title.capitalizeEveryWord(),
+          'add_time': DateTime.now().add(
+            const Duration(hours: 3),
+          ),
+        },
+      );
+    }
   }
 
   await FirebaseFirestore.instance.collection('users').doc(currentUser!.id).set(

@@ -113,7 +113,7 @@ class CategoryResultBlock extends StatelessWidget {
                             TextSpan(
                               text: chapters.toString(),
                               style: const TextStyle(
-                                color: Color(0xFF9D1515),
+                                color: Colors.red,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -133,7 +133,7 @@ class CategoryResultBlock extends StatelessWidget {
                             TextSpan(
                               text: status,
                               style: const TextStyle(
-                                  color: Color(0xFF9D1515),
+                                  color: Colors.red,
                                   letterSpacing: 1,
                                   fontWeight: FontWeight.w500),
                             ),

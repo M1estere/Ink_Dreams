@@ -58,7 +58,7 @@ class _ReaderViewState extends State<ReaderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 60,
+        toolbarHeight: 55,
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
@@ -89,7 +89,7 @@ class _ReaderViewState extends State<ReaderView> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
-                      letterSpacing: 1.2,
+                      letterSpacing: 0,
                     ),
                   ),
                 ),
@@ -114,7 +114,7 @@ class _ReaderViewState extends State<ReaderView> {
                           widget.filePath =
                               widget.chapters![widget.index]!['link'];
                           widget.title =
-                              "${widget.defTitle} [${widget.chapters![widget.index]!['name']}]";
+                              "${widget.defTitle} - v${widget.chapters![widget.index]!['name']}";
 
                           return super.widget;
                         },
@@ -143,7 +143,7 @@ class _ReaderViewState extends State<ReaderView> {
                           widget.filePath =
                               widget.chapters![widget.index]!['link'];
                           widget.title =
-                              "${widget.defTitle} [${widget.chapters![widget.index]!['name']}]";
+                              "${widget.defTitle} - v${widget.chapters![widget.index]!['name']}";
 
                           return super.widget;
                         },

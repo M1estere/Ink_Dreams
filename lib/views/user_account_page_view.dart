@@ -70,7 +70,7 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * .07,
+        toolbarHeight: 55,
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
@@ -92,12 +92,12 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                 ),
               ),
               Text(
-                'm1estere'.toUpperCase(),
+                pageUser.nickname.toUpperCase(),
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  letterSpacing: 2,
+                  fontSize: 25,
+                  letterSpacing: 0,
                 ),
               ),
             ],
@@ -117,8 +117,8 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
               colors: [
                 const Color.fromARGB(255, 157, 21, 134).withOpacity(.5),
                 const Color.fromARGB(255, 157, 21, 134).withOpacity(.5),
-                const Color(0xFF23202B),
-                const Color(0xFF23202B),
+                const Color(0xFF121212),
+                const Color(0xFF121212),
               ],
             ),
           ),
