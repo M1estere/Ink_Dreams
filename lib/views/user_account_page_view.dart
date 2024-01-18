@@ -39,30 +39,38 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
     super.initState();
 
     getFullUserInfo(widget.id).then((value) {
-      setState(() {
-        pageUser = value;
-      });
-
-      getFriendManga(widget.id, 'finished').then((value) {
+      if (mounted) {
         setState(() {
-          mangaBooks = value;
-          isLoading = false;
+          pageUser = value;
         });
-      });
+
+        getFriendManga(widget.id, 'finished').then((value) {
+          if (mounted) {
+            setState(() {
+              mangaBooks = value;
+              isLoading = false;
+            });
+          }
+        });
+      }
     });
   }
 
   refresh() {
-    setState(() {
-      isLoading = true;
-    });
-
-    getFullUserInfo(widget.id).then((value) {
+    if (mounted) {
       setState(() {
-        pageUser = value;
-        isLoading = false;
+        isLoading = true;
       });
-    });
+
+      getFullUserInfo(widget.id).then((value) {
+        if (mounted) {
+          setState(() {
+            pageUser = value;
+            isLoading = false;
+          });
+        }
+      });
+    }
   }
 
   @override

@@ -25,24 +25,30 @@ class _UserFriendsViewState extends State<UserFriendsView> {
     super.initState();
 
     getFriends().then((value) {
-      setState(() {
-        isLoading = false;
-        friends = value;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+          friends = value;
+        });
+      }
     });
   }
 
   refresh() {
-    setState(() {
-      isLoading = true;
-    });
-
-    getFriends().then((value) {
+    if (mounted) {
       setState(() {
-        isLoading = false;
-        friends = value;
+        isLoading = true;
       });
-    });
+
+      getFriends().then((value) {
+        if (mounted) {
+          setState(() {
+            isLoading = false;
+            friends = value;
+          });
+        }
+      });
+    }
   }
 
   @override

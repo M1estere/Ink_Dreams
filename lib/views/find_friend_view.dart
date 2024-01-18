@@ -23,10 +23,12 @@ class _FindFriendViewState extends State<FindFriendView> {
     super.initState();
 
     getAllUsers().then((value) {
-      setState(() {
-        isLoading = false;
-        users = value;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+          users = value;
+        });
+      }
     });
   }
 
@@ -128,10 +130,12 @@ class _FindFriendViewState extends State<FindFriendView> {
                         getUsersBySearch(
                                 searchController.text.trim().toLowerCase())
                             .then((value) {
-                          setState(() {
-                            users.clear();
-                            users = value;
-                          });
+                          if (mounted) {
+                            setState(() {
+                              users.clear();
+                              users = value;
+                            });
+                          }
                         });
                       },
                     ),

@@ -44,43 +44,55 @@ class _MangaPageViewState extends State<MangaPageView> {
 
     getMangaByName(widget.title).then(
       (value) {
-        setState(() {
-          manga = value;
-        });
-
-        mangaInSection('favourites', widget.title).then((value) {
+        if (mounted) {
           setState(() {
-            inFavourites = value;
+            manga = value;
           });
 
-          mangaInSection('planned', widget.title).then((value) {
-            setState(() {
-              inPlanned = value;
-            });
-
-            mangaInSection('finished', widget.title).then((value) {
+          mangaInSection('favourites', widget.title).then((value) {
+            if (mounted) {
               setState(() {
-                inFinished = value;
+                inFavourites = value;
               });
 
-              getUserRating(currentUser!.id, widget.title).then((value) {
-                setState(() {
-                  userRate = value;
+              mangaInSection('planned', widget.title).then((value) {
+                if (mounted) {
+                  setState(() {
+                    inPlanned = value;
+                  });
 
-                  isLoading = false;
-                  if (manga.title == null) {
-                    nullState = true;
-                  }
-                  if ((manga.rates != 0 && manga.rating != 0)) {
-                    totalRating = (manga.rating! / manga.rates!).round();
-                  }
+                  mangaInSection('finished', widget.title).then((value) {
+                    if (mounted) {
+                      setState(() {
+                        inFinished = value;
+                      });
 
-                  isLoadingRating = false;
-                });
+                      getUserRating(currentUser!.id, widget.title)
+                          .then((value) {
+                        if (mounted) {
+                          setState(() {
+                            userRate = value;
+
+                            isLoading = false;
+                            if (manga.title == null) {
+                              nullState = true;
+                            }
+                            if ((manga.rates != 0 && manga.rating != 0)) {
+                              totalRating =
+                                  (manga.rating! / manga.rates!).round();
+                            }
+
+                            isLoadingRating = false;
+                          });
+                        }
+                      });
+                    }
+                  });
+                }
               });
-            });
+            }
           });
-        });
+        }
       },
     );
   }
@@ -88,52 +100,60 @@ class _MangaPageViewState extends State<MangaPageView> {
   updateRating() {
     getMangaByName(widget.title).then((value) {
       getMangaByName(widget.title).then((value) {
-        setState(() {
-          manga = value;
-        });
-
-        getUserRating(currentUser!.id, widget.title).then((value) {
+        if (mounted) {
           setState(() {
-            userRate = value;
-
-            if (manga.rates != 0) {
-              totalRating = (manga.rating! / manga.rates!).round();
-            }
-
-            isLoadingRating = false;
+            manga = value;
           });
-        });
+
+          getUserRating(currentUser!.id, widget.title).then((value) {
+            if (mounted) {
+              setState(() {
+                userRate = value;
+
+                if (manga.rates != 0) {
+                  totalRating = (manga.rating! / manga.rates!).round();
+                }
+
+                isLoadingRating = false;
+              });
+            }
+          });
+        }
       });
     });
   }
 
   updateMangaSectionStatus(String sectionName) {
-    setState(() {
-      isLoading = true;
-    });
+    if (mounted) {
+      setState(() {
+        isLoading = true;
+      });
 
-    setState(() {
-      if (sectionName.toLowerCase() == 'favourites') {
-        inFavourites = !inFavourites;
-      } else if (sectionName.toLowerCase() == 'planned') {
-        inPlanned = !inPlanned;
-      } else if (sectionName.toLowerCase() == 'finished') {
-        inFinished = !inFinished;
+      setState(() {
+        if (sectionName.toLowerCase() == 'favourites') {
+          inFavourites = !inFavourites;
+        } else if (sectionName.toLowerCase() == 'planned') {
+          inPlanned = !inPlanned;
+        } else if (sectionName.toLowerCase() == 'finished') {
+          inFinished = !inFinished;
 
-        if (!inFinished) {
-          isLoadingRating = true;
-          updateRating();
+          if (!inFinished) {
+            isLoadingRating = true;
+            updateRating();
+          }
         }
-      }
 
-      isLoading = false;
-    });
+        isLoading = false;
+      });
+    }
   }
 
   placeRating(int amount) {
-    setState(() {
-      isLoadingRating = true;
-    });
+    if (mounted) {
+      setState(() {
+        isLoadingRating = true;
+      });
+    }
 
     addRating(widget.title, amount).then((value) {
       updateRating();
@@ -185,9 +205,11 @@ class _MangaPageViewState extends State<MangaPageView> {
                               placeRating(index + 1);
                               addToFinished(widget.title, index + 1);
 
-                              setState(() {
-                                inFinished = !inFinished;
-                              });
+                              if (mounted) {
+                                setState(() {
+                                  inFinished = !inFinished;
+                                });
+                              }
                               Navigator.pop(context);
                             },
                             icon: Icon(
@@ -461,7 +483,8 @@ class _MangaPageViewState extends State<MangaPageView> {
                           height: 5,
                         ),
                         SizedBox(
-                          height: 50,
+                          height: 55,
+                          width: double.infinity,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -494,7 +517,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                               Container(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 3),
-                                width: MediaQuery.of(context).size.width * .26,
+                                width: MediaQuery.of(context).size.width * .29,
                                 height: double.infinity,
                                 child: Material(
                                   color: Colors.white,
@@ -531,8 +554,14 @@ class _MangaPageViewState extends State<MangaPageView> {
                                             ),
                                           ),
                                           SizedBox(
-                                            width: 50,
-                                            height: 50,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                .12,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                .12,
                                             child: Icon(
                                               !inFinished
                                                   ? Icons.close

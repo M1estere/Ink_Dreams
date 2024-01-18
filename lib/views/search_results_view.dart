@@ -98,14 +98,18 @@ class _SearchResultsViewState extends State<SearchResultsView> {
                     onChanged: (value) {
                       getMangaBySearch(value).then((res) {
                         if (value.isEmpty) {
-                          setState(() {
-                            canDisplay = false;
-                          });
+                          if (mounted) {
+                            setState(() {
+                              canDisplay = false;
+                            });
+                          }
                         } else {
-                          setState(() {
-                            searchResults = res;
-                            canDisplay = true;
-                          });
+                          if (mounted) {
+                            setState(() {
+                              searchResults = res;
+                              canDisplay = true;
+                            });
+                          }
                         }
                       });
                     },

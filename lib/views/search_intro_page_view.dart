@@ -27,17 +27,21 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
 
     getRandomManga(Random().nextInt(8) + 8).then(
       (value) {
-        setState(() {
-          popularManga = value.sublist(0, (value.length / 2).round());
-          hottestManga =
-              value.sublist((value.length / 2).round(), value.length);
-          getRandomAuthor(1).then((value) {
-            setState(() {
-              authors = value;
-              isLoading = false;
+        if (mounted) {
+          setState(() {
+            popularManga = value.sublist(0, (value.length / 2).round());
+            hottestManga =
+                value.sublist((value.length / 2).round(), value.length);
+            getRandomAuthor(1).then((value) {
+              if (mounted) {
+                setState(() {
+                  authors = value;
+                  isLoading = false;
+                });
+              }
             });
           });
-        });
+        }
       },
     );
   }
@@ -48,17 +52,21 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
       onRefresh: () async {
         getRandomManga(Random().nextInt(8) + 8).then(
           (value) {
-            setState(() {
-              popularManga = value.sublist(0, (value.length / 2).round());
-              hottestManga =
-                  value.sublist((value.length / 2).round(), value.length);
-              getRandomAuthor(1).then((value) {
-                setState(() {
-                  authors = value;
-                  isLoading = false;
+            if (mounted) {
+              setState(() {
+                popularManga = value.sublist(0, (value.length / 2).round());
+                hottestManga =
+                    value.sublist((value.length / 2).round(), value.length);
+                getRandomAuthor(1).then((value) {
+                  if (mounted) {
+                    setState(() {
+                      authors = value;
+                      isLoading = false;
+                    });
+                  }
                 });
               });
-            });
+            }
           },
         );
       },
@@ -80,7 +88,7 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
-                      height: 360,
+                      height: MediaQuery.of(context).size.height * .4,
                       child: ListView.builder(
                         itemBuilder: (context, index) {
                           return SearchMangaBlock(
@@ -92,9 +100,6 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                         scrollDirection: Axis.horizontal,
                         itemCount: popularManga.length,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
                     ),
                     Text(
                       'Hottest'.toUpperCase(),

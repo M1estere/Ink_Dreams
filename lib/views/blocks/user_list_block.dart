@@ -32,24 +32,30 @@ class _UserListBlockState extends State<UserListBlock> {
     super.initState();
 
     idIsFriend(widget.id).then((value) {
-      setState(() {
-        isLoading = false;
-        isInFriendList = value;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+          isInFriendList = value;
+        });
+      }
     });
   }
 
   refresh() {
-    setState(() {
-      isLoading = true;
-    });
-
-    idIsFriend(widget.id).then((value) {
+    if (mounted) {
       setState(() {
-        isLoading = false;
-        isInFriendList = value;
+        isLoading = true;
       });
-    });
+
+      idIsFriend(widget.id).then((value) {
+        if (mounted) {
+          setState(() {
+            isLoading = false;
+            isInFriendList = value;
+          });
+        }
+      });
+    }
   }
 
   @override
@@ -173,9 +179,11 @@ class _UserListBlockState extends State<UserListBlock> {
                   ? IconButton(
                       onPressed: () {
                         addToFriends(widget.id).then((value) {
-                          setState(() {
-                            refresh();
-                          });
+                          if (mounted) {
+                            setState(() {
+                              refresh();
+                            });
+                          }
                         });
                       },
                       icon: Icon(

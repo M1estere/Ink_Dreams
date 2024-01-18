@@ -149,9 +149,11 @@ class _MainWrapperState extends State<MainWrapper> {
         index: _currentPageIndex,
         animationDuration: const Duration(milliseconds: 300),
         onTap: (value) {
-          setState(() {
-            _currentPageIndex = value;
-          });
+          if (mounted) {
+            setState(() {
+              _currentPageIndex = value;
+            });
+          }
         },
         height: 60,
         backgroundColor: const Color(0xFF121212),

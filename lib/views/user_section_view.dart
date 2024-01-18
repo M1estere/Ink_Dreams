@@ -32,40 +32,50 @@ class _UserSectionViewState extends State<UserSectionView> {
 
     if (widget.sectionName.contains('finished')) {
       getFriendManga(widget.id, widget.sectionName).then((value) {
-        setState(() {
-          mangaBooks = value;
-          isLoading = false;
-        });
+        if (mounted) {
+          setState(() {
+            mangaBooks = value;
+            isLoading = false;
+          });
+        }
       });
     } else {
       getMangaByUserSection(widget.id, widget.sectionName).then((value) {
-        setState(() {
-          mangaBooks = value;
-          isLoading = false;
-        });
+        if (mounted) {
+          setState(() {
+            mangaBooks = value;
+            isLoading = false;
+          });
+        }
       });
     }
   }
 
   refresh() {
-    setState(() {
-      isLoading = true;
-    });
+    if (mounted) {
+      setState(() {
+        isLoading = true;
+      });
 
-    if (widget.sectionName.contains('finished')) {
-      getFriendManga(widget.id, widget.sectionName).then((value) {
-        setState(() {
-          mangaBooks = value;
-          isLoading = false;
+      if (widget.sectionName.contains('finished')) {
+        getFriendManga(widget.id, widget.sectionName).then((value) {
+          if (mounted) {
+            setState(() {
+              mangaBooks = value;
+              isLoading = false;
+            });
+          }
         });
-      });
-    } else {
-      getMangaByUserSection(widget.id, widget.sectionName).then((value) {
-        setState(() {
-          mangaBooks = value;
-          isLoading = false;
+      } else {
+        getMangaByUserSection(widget.id, widget.sectionName).then((value) {
+          if (mounted) {
+            setState(() {
+              mangaBooks = value;
+              isLoading = false;
+            });
+          }
         });
-      });
+      }
     }
   }
 
@@ -95,13 +105,17 @@ class _UserSectionViewState extends State<UserSectionView> {
                   color: Colors.white,
                 ),
               ),
-              Text(
-                '${widget.sectionName} [${widget.userName}]'.toUpperCase(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                  letterSpacing: 0,
+              Expanded(
+                child: FittedBox(
+                  child: Text(
+                    '${widget.sectionName} [${widget.userName}]'.toUpperCase(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      letterSpacing: 0,
+                    ),
+                  ),
                 ),
               ),
             ],

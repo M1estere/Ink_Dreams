@@ -27,12 +27,12 @@ class SearchMangaBlock extends StatelessWidget {
         );
       },
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * .45,
+        width: MediaQuery.of(context).size.width * .5,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 280,
+              height: MediaQuery.of(context).size.height * .3,
               margin: const EdgeInsets.only(right: 20),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),

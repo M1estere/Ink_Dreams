@@ -40,18 +40,20 @@ class _ReaderViewState extends State<ReaderView> {
   }
 
   void recheck() {
-    setState(() {
-      hasNext = true;
-      hasPrev = true;
+    if (mounted) {
+      setState(() {
+        hasNext = true;
+        hasPrev = true;
 
-      if (widget.index >= widget.chapters!.length - 1) {
-        hasNext = false;
-      }
+        if (widget.index >= widget.chapters!.length - 1) {
+          hasNext = false;
+        }
 
-      if (widget.index <= 0) {
-        hasPrev = false;
-      }
-    });
+        if (widget.index <= 0) {
+          hasPrev = false;
+        }
+      });
+    }
   }
 
   @override

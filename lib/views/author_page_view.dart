@@ -25,10 +25,12 @@ class _AuthorPageViewState extends State<AuthorPageView> {
     super.initState();
 
     getMangaByAuthor(widget.authorName).then((value) {
-      setState(() {
-        isLoading = false;
-        mangaBooks = value;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+          mangaBooks = value;
+        });
+      }
     });
   }
 

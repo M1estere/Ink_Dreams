@@ -22,12 +22,14 @@ class _CategoryPageViewState extends State<CategoryPageView> {
 
     getMangaByCategory(widget.categoryTitle).then(
       (value) {
-        setState(
-          () {
-            mangaBooks = value;
-            isLoading = false;
-          },
-        );
+        if (mounted) {
+          setState(
+            () {
+              mangaBooks = value;
+              isLoading = false;
+            },
+          );
+        }
       },
     );
   }

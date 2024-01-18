@@ -63,14 +63,16 @@ class _AuthPageViewState extends State<AuthPageView> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        signInOpened = true;
-                        pageController.animateToPage(
-                          0,
-                          curve: Curves.decelerate,
-                          duration: const Duration(milliseconds: 300),
-                        );
-                      });
+                      if (mounted) {
+                        setState(() {
+                          signInOpened = true;
+                          pageController.animateToPage(
+                            0,
+                            curve: Curves.decelerate,
+                            duration: const Duration(milliseconds: 300),
+                          );
+                        });
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -100,14 +102,16 @@ class _AuthPageViewState extends State<AuthPageView> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        signInOpened = false;
-                        pageController.animateToPage(
-                          1,
-                          curve: Curves.decelerate,
-                          duration: const Duration(milliseconds: 300),
-                        );
-                      });
+                      if (mounted) {
+                        setState(() {
+                          signInOpened = false;
+                          pageController.animateToPage(
+                            1,
+                            curve: Curves.decelerate,
+                            duration: const Duration(milliseconds: 300),
+                          );
+                        });
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -142,9 +146,11 @@ class _AuthPageViewState extends State<AuthPageView> {
               height: 420,
               child: PageView(
                 onPageChanged: (value) {
-                  setState(() {
-                    signInOpened = value == 1 ? false : true;
-                  });
+                  if (mounted) {
+                    setState(() {
+                      signInOpened = value == 1 ? false : true;
+                    });
+                  }
                 },
                 controller: pageController,
                 pageSnapping: true,
@@ -242,9 +248,12 @@ class _AuthPageViewState extends State<AuthPageView> {
                                     size: 30,
                                   ),
                                   onPressed: () {
-                                    setState(() {
-                                      logPasswordVisible = !logPasswordVisible;
-                                    });
+                                    if (mounted) {
+                                      setState(() {
+                                        logPasswordVisible =
+                                            !logPasswordVisible;
+                                      });
+                                    }
                                   },
                                 ),
                               ),
@@ -264,10 +273,12 @@ class _AuthPageViewState extends State<AuthPageView> {
                             onTap: () {
                               if (loginEmail.text.trim().isEmpty ||
                                   loginPassword.text.trim().isEmpty) {
-                                setState(() {
-                                  hasLogError = true;
-                                  logErrorText = 'Fill all fields';
-                                });
+                                if (mounted) {
+                                  setState(() {
+                                    hasLogError = true;
+                                    logErrorText = 'Fill all fields';
+                                  });
+                                }
                                 return;
                               }
 
@@ -276,41 +287,43 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 loginPassword.text.trim(),
                               ).then(
                                 (value) {
-                                  switch (value) {
-                                    case 0: // all good
-                                      Navigator.pushReplacement(
-                                        context,
-                                        PageTransition(
-                                          type: PageTransitionType
-                                              .rightToLeftWithFade,
-                                          child: const MainWrapper(),
-                                        ),
-                                      );
-                                      break;
-                                    case 1:
-                                      setState(() {
-                                        hasLogError = true;
-                                        logErrorText = 'User not found';
-                                      });
-                                      break;
-                                    case 2:
-                                      setState(() {
-                                        hasLogError = true;
-                                        logErrorText = 'Wrong password';
-                                      });
-                                      break;
-                                    case 3:
-                                      setState(() {
-                                        hasLogError = true;
-                                        logErrorText = 'Invalid email';
-                                      });
-                                      break;
-                                    case 4:
-                                      setState(() {
-                                        hasLogError = true;
-                                        logErrorText = 'Something went wrong';
-                                      });
-                                      break;
+                                  if (mounted) {
+                                    switch (value) {
+                                      case 0: // all good
+                                        Navigator.pushReplacement(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType
+                                                .rightToLeftWithFade,
+                                            child: const MainWrapper(),
+                                          ),
+                                        );
+                                        break;
+                                      case 1:
+                                        setState(() {
+                                          hasLogError = true;
+                                          logErrorText = 'User not found';
+                                        });
+                                        break;
+                                      case 2:
+                                        setState(() {
+                                          hasLogError = true;
+                                          logErrorText = 'Wrong password';
+                                        });
+                                        break;
+                                      case 3:
+                                        setState(() {
+                                          hasLogError = true;
+                                          logErrorText = 'Invalid email';
+                                        });
+                                        break;
+                                      case 4:
+                                        setState(() {
+                                          hasLogError = true;
+                                          logErrorText = 'Something went wrong';
+                                        });
+                                        break;
+                                    }
                                   }
                                 },
                               );
@@ -473,9 +486,12 @@ class _AuthPageViewState extends State<AuthPageView> {
                                     color: Colors.grey,
                                   ),
                                   onPressed: () {
-                                    setState(() {
-                                      regPasswordVisible = !regPasswordVisible;
-                                    });
+                                    if (mounted) {
+                                      setState(() {
+                                        regPasswordVisible =
+                                            !regPasswordVisible;
+                                      });
+                                    }
                                   },
                                 ),
                                 hintText: 'Enter password...',
@@ -550,10 +566,12 @@ class _AuthPageViewState extends State<AuthPageView> {
                             onTap: () {
                               if (registerPassword.text.trim() !=
                                   registerConfirmPassword.text.trim()) {
-                                setState(() {
-                                  hasRegError = true;
-                                  regErrorText = 'Passwords mismatch';
-                                });
+                                if (mounted) {
+                                  setState(() {
+                                    hasRegError = true;
+                                    regErrorText = 'Passwords mismatch';
+                                  });
+                                }
                                 return;
                               }
 
@@ -561,10 +579,12 @@ class _AuthPageViewState extends State<AuthPageView> {
                                   registerPassword.text.trim().isEmpty ||
                                   registerConfirmPassword.text.trim().isEmpty ||
                                   registerNickname.text.trim().isEmpty) {
-                                setState(() {
-                                  hasRegError = true;
-                                  regErrorText = 'Fill all fields';
-                                });
+                                if (mounted) {
+                                  setState(() {
+                                    hasRegError = true;
+                                    regErrorText = 'Fill all fields';
+                                  });
+                                }
                                 return;
                               }
 
@@ -574,41 +594,43 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 registerNickname.text.trim(),
                               ).then(
                                 (value) {
-                                  switch (value) {
-                                    case 0: // all good
-                                      Navigator.pushReplacement(
-                                        context,
-                                        PageTransition(
-                                          type: PageTransitionType
-                                              .rightToLeftWithFade,
-                                          child: const MainWrapper(),
-                                        ),
-                                      );
-                                      break;
-                                    case 1:
-                                      setState(() {
-                                        hasRegError = true;
-                                        regErrorText = 'Weak password';
-                                      });
-                                      break;
-                                    case 2:
-                                      setState(() {
-                                        hasRegError = true;
-                                        regErrorText = 'Email is in use';
-                                      });
-                                      break;
-                                    case 3:
-                                      setState(() {
-                                        hasRegError = true;
-                                        regErrorText = 'Invalid email';
-                                      });
-                                      break;
-                                    default:
-                                      setState(() {
-                                        hasRegError = true;
-                                        regErrorText = 'Something went wrong';
-                                      });
-                                      break;
+                                  if (mounted) {
+                                    switch (value) {
+                                      case 0: // all good
+                                        Navigator.pushReplacement(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType
+                                                .rightToLeftWithFade,
+                                            child: const MainWrapper(),
+                                          ),
+                                        );
+                                        break;
+                                      case 1:
+                                        setState(() {
+                                          hasRegError = true;
+                                          regErrorText = 'Weak password';
+                                        });
+                                        break;
+                                      case 2:
+                                        setState(() {
+                                          hasRegError = true;
+                                          regErrorText = 'Email is in use';
+                                        });
+                                        break;
+                                      case 3:
+                                        setState(() {
+                                          hasRegError = true;
+                                          regErrorText = 'Invalid email';
+                                        });
+                                        break;
+                                      default:
+                                        setState(() {
+                                          hasRegError = true;
+                                          regErrorText = 'Something went wrong';
+                                        });
+                                        break;
+                                    }
                                   }
                                 },
                               );

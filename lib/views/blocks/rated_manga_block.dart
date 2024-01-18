@@ -59,7 +59,7 @@ class RatedMangaBlock extends StatelessWidget {
             top: 15,
             bottom: 15,
             left: 15,
-            right: 3,
+            right: 15,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -67,7 +67,7 @@ class RatedMangaBlock extends StatelessWidget {
             children: [
               SizedBox(
                 height: double.infinity,
-                width: MediaQuery.of(context).size.width * .3,
+                width: MediaQuery.of(context).size.width * .33,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.network(
@@ -92,7 +92,7 @@ class RatedMangaBlock extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 15),
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width * .55,
+                  width: MediaQuery.of(context).size.width * .485,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -108,6 +108,7 @@ class RatedMangaBlock extends StatelessWidget {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
+                                height: 1,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -116,8 +117,8 @@ class RatedMangaBlock extends StatelessWidget {
                           Text(
                             author,
                             style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
                               color: Colors.grey,
                             ),
                           ),
@@ -148,15 +149,19 @@ class RatedMangaBlock extends StatelessWidget {
                                   size: 5,
                                   color: Colors.red,
                                 ),
-                                Padding(
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * .24,
                                   padding: const EdgeInsets.only(left: 7),
-                                  child: Text(
-                                    DateFormat('dd/MM/yyyy')
-                                        .format(finishDate.toDate()),
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
+                                  child: FittedBox(
+                                    child: Text(
+                                      DateFormat('dd/MM/yyyy')
+                                          .format(finishDate.toDate()),
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -219,10 +224,10 @@ class RatedMangaBlock extends StatelessWidget {
                             style: const TextStyle(
                               overflow: TextOverflow.ellipsis,
                               color: Colors.grey,
-                              fontSize: 15,
+                              fontSize: 13,
                               fontWeight: FontWeight.w400,
                             ),
-                            maxLines: 3,
+                            maxLines: 4,
                             textAlign: TextAlign.start,
                           ),
                         ],

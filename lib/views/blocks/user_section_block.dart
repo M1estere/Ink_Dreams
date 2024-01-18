@@ -61,7 +61,7 @@ class UserSectionBlock extends StatelessWidget {
             children: [
               SizedBox(
                 height: double.infinity,
-                width: MediaQuery.of(context).size.width * .3,
+                width: MediaQuery.of(context).size.width * .33,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Image.network(
@@ -86,7 +86,7 @@ class UserSectionBlock extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 15),
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width * .55,
+                  width: MediaQuery.of(context).size.width * .48,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,6 +102,7 @@ class UserSectionBlock extends StatelessWidget {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
+                                height: 1,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -110,18 +111,15 @@ class UserSectionBlock extends StatelessWidget {
                           Text(
                             author,
                             style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
                               color: Colors.grey,
                             ),
                           ),
-                          const SizedBox(
-                            height: 2.5,
-                          ),
                           Row(
                             children: [
-                              Icon(
-                                Icons.add,
+                              const Icon(
+                                Icons.save,
                                 size: 22,
                                 color: Colors.red,
                               ),
@@ -192,7 +190,7 @@ class UserSectionBlock extends StatelessWidget {
                             style: const TextStyle(
                               overflow: TextOverflow.ellipsis,
                               color: Colors.grey,
-                              fontSize: 15,
+                              fontSize: 13,
                               fontWeight: FontWeight.w400,
                             ),
                             maxLines: 3,

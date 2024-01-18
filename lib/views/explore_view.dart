@@ -55,23 +55,27 @@ class _ExploreView extends State<ExploreView> {
 
     getCategories().then(
       (value) {
-        setState(
-          () {
-            categories = value;
-          },
-        );
+        if (mounted) {
+          setState(
+            () {
+              categories = value;
+            },
+          );
+        }
       },
     );
 
     getRandomManga(3).then((value) {
-      setState(() {
-        isLoading = false;
+      if (mounted) {
+        setState(() {
+          isLoading = false;
 
-        mangaBooks = value;
+          mangaBooks = value;
 
-        currentTitle = mangaBooks[0].title!;
-        currentAuthor = mangaBooks[0].author!;
-      });
+          currentTitle = mangaBooks[0].title!;
+          currentAuthor = mangaBooks[0].author!;
+        });
+      }
     });
   }
 
@@ -93,10 +97,12 @@ class _ExploreView extends State<ExploreView> {
                       height: MediaQuery.of(context).size.height * .64,
                       child: PageView.builder(
                         onPageChanged: (value) {
-                          setState(() {
-                            currentTitle = mangaBooks[value].title!;
-                            currentAuthor = mangaBooks[value].author!;
-                          });
+                          if (mounted) {
+                            setState(() {
+                              currentTitle = mangaBooks[value].title!;
+                              currentAuthor = mangaBooks[value].author!;
+                            });
+                          }
                         },
                         padEnds: false,
                         scrollDirection: Axis.horizontal,
@@ -192,9 +198,11 @@ class _ExploreView extends State<ExploreView> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        _currentSectionIndex = 0;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _currentSectionIndex = 0;
+                        });
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -224,9 +232,11 @@ class _ExploreView extends State<ExploreView> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        _currentSectionIndex = 1;
-                      });
+                      if (mounted) {
+                        setState(() {
+                          _currentSectionIndex = 1;
+                        });
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(

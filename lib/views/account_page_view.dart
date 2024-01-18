@@ -33,24 +33,30 @@ class _AccountPageViewState extends State<AccountPageView> {
     super.initState();
 
     getFullUserInfo(currentUser!.id).then((value) {
-      setState(() {
-        pageUser = value;
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          pageUser = value;
+          isLoading = false;
+        });
+      }
     });
   }
 
   refresh() {
-    setState(() {
-      isLoading = true;
-    });
-
-    getFullUserInfo(currentUser!.id).then((value) {
+    if (mounted) {
       setState(() {
-        pageUser = value;
-        isLoading = false;
+        isLoading = true;
       });
-    });
+
+      getFullUserInfo(currentUser!.id).then((value) {
+        if (mounted) {
+          setState(() {
+            pageUser = value;
+            isLoading = false;
+          });
+        }
+      });
+    }
   }
 
   @override
