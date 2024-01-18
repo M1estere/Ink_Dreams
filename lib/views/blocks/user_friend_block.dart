@@ -87,7 +87,7 @@ class UserFriendBlock extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -109,6 +109,9 @@ class UserFriendBlock extends StatelessWidget {
                               ),
                             ),
                           ],
+                        ),
+                        const SizedBox(
+                          width: 20,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -137,7 +140,7 @@ class UserFriendBlock extends StatelessWidget {
                       height: 2,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -159,6 +162,9 @@ class UserFriendBlock extends StatelessWidget {
                               ),
                             ),
                           ],
+                        ),
+                        const SizedBox(
+                          width: 20,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,

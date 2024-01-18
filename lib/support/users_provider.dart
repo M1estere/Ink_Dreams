@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:manga_reading/support/auth_provider.dart';
-import 'package:manga_reading/support/classes/find_user.dart';
+import 'package:manga_reading/support/classes/app_user.dart';
 import 'package:manga_reading/support/classes/friend_user.dart';
 
-Future<List<FindUser>> getAllUsers() async {
-  List<FindUser> result = [];
+Future<List<AppUser>> getAllUsers() async {
+  List<AppUser> result = [];
 
   QuerySnapshot snapshot =
       await FirebaseFirestore.instance.collection('users').get();
 
   for (var element in snapshot.docs) {
     if (element['id'] == currentUser!.id) continue;
-    FindUser user = await _getUser(element['id'], '');
+    AppUser user = await _getUser(element['id'], '');
 
     if (user.id.isNotEmpty) {
       result.add(user);
@@ -21,15 +21,15 @@ Future<List<FindUser>> getAllUsers() async {
   return result;
 }
 
-Future<List<FindUser>> getUsersBySearch(String query) async {
-  List<FindUser> result = [];
+Future<List<AppUser>> getUsersBySearch(String query) async {
+  List<AppUser> result = [];
 
   QuerySnapshot snapshot =
       await FirebaseFirestore.instance.collection('users').get();
 
   for (var element in snapshot.docs) {
     if (element['id'] == currentUser!.id) continue;
-    FindUser user = await _getUser(element['id'], query);
+    AppUser user = await _getUser(element['id'], query);
 
     if (user.id.isNotEmpty) {
       result.add(user);
@@ -63,8 +63,8 @@ Future<List<FriendUser>> getFriends() async {
   return result;
 }
 
-Future<FindUser> _getUser(String id, String seqToCheck) async {
-  FindUser result;
+Future<AppUser> _getUser(String id, String seqToCheck) async {
+  AppUser result;
 
   String nickname = '';
   String email = '';
@@ -75,7 +75,7 @@ Future<FindUser> _getUser(String id, String seqToCheck) async {
       .where('id', isEqualTo: id)
       .get();
 
-  snapshot.docs.forEach((element) {
+  for (var element in snapshot.docs) {
     if (element.exists) {
       var data = element.data() as Map<String, dynamic>;
       if (data.containsKey('nickname')) {
@@ -91,10 +91,10 @@ Future<FindUser> _getUser(String id, String seqToCheck) async {
         finished = data['finished'];
       }
     }
-  });
+  }
 
   if (nickname.toLowerCase().contains(seqToCheck)) {
-    result = FindUser(
+    result = AppUser(
       id: id,
       email: email,
       nickname: nickname,
@@ -105,7 +105,7 @@ Future<FindUser> _getUser(String id, String seqToCheck) async {
     return result;
   }
 
-  return FindUser(
+  return AppUser(
       id: '',
       nickname: '',
       email: '',
@@ -124,7 +124,7 @@ Future<FriendUser> _getFriend(String id, Timestamp addDate) async {
       .where('id', isEqualTo: id)
       .get();
 
-  snapshot.docs.forEach((element) {
+  for (var element in snapshot.docs) {
     if (element.exists) {
       var data = element.data() as Map<String, dynamic>;
       if (data.containsKey('nickname')) {
@@ -137,7 +137,7 @@ Future<FriendUser> _getFriend(String id, Timestamp addDate) async {
         finished = data['finished'];
       }
     }
-  });
+  }
 
   result = FriendUser(
     id: id,

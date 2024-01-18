@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
-import 'package:manga_reading/views/blocks/search_result_block.dart';
+import 'package:manga_reading/views/blocks/full_manga_block.dart';
 import 'package:manga_reading/support/get_by_search.dart';
 import 'package:manga_reading/views/support/no_books_by_request.dart';
 
@@ -28,11 +28,11 @@ class _SearchResultsViewState extends State<SearchResultsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 60,
+        toolbarHeight: 55,
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        leadingWidth: 180,
+        leadingWidth: MediaQuery.of(context).size.width * .4,
         leading: Container(
           padding: const EdgeInsets.only(left: 10, top: 10),
           child: Row(
@@ -138,12 +138,16 @@ class _SearchResultsViewState extends State<SearchResultsView> {
                                 itemCount: searchResults.length,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (context, index) {
-                                  return SearchResultBlock(
+                                  return FullMangaBlock(
                                     title: searchResults[index].title!,
                                     chapters: searchResults[index].chapters!,
                                     status: searchResults[index].status!,
                                     author: searchResults[index].author!,
                                     image: searchResults[index].image!,
+                                    desc: searchResults[index].desc!,
+                                    rates: searchResults[index].rates!,
+                                    ratings: searchResults[index].ratings!,
+                                    releaseYear: searchResults[index].year!,
                                   );
                                 },
                               ),

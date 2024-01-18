@@ -4,8 +4,6 @@ import 'package:manga_reading/extensions/string_extension.dart';
 import 'package:manga_reading/support/auth_provider.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/support/classes/manga_book_timed.dart';
-import 'package:manga_reading/support/classes/manga_page.dart';
-import 'package:manga_reading/support/get_full_manga.dart';
 
 // manga interaction
 Future addRating(String title, int rating) async {
@@ -15,8 +13,6 @@ Future addRating(String title, int rating) async {
     add = value == 0 ? true : false;
     prevValue = value;
   });
-
-  MangaPageFull manga = await getMangaByName(title);
 
   DatabaseReference ref = FirebaseDatabase.instance.ref().child('manga_books');
 
@@ -82,12 +78,35 @@ Future<int> getUserRating(String id, String title) async {
   return result;
 }
 
+Future<Timestamp> getFinishTime(String id, String title) async {
+  Timestamp result = Timestamp.now();
+
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('id', isEqualTo: id)
+      .get();
+  QueryDocumentSnapshot qSnapshot = snapshot.docs[0];
+
+  List finishedTitles = [];
+  var data = qSnapshot.data() as Map<String, dynamic>;
+  if (data.containsKey('finished')) {
+    finishedTitles = data['finished'];
+  }
+
+  for (var manga in finishedTitles) {
+    if (manga['name'].toString().toLowerCase() == title.toLowerCase()) {
+      result = manga['add_time'];
+    }
+  }
+
+  return result;
+}
+
 Future addToFinished(String title, int rating) async {
   QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('users')
       .where('id', isEqualTo: currentUser!.id)
       .get();
-  List currentTitles = [];
 
   QueryDocumentSnapshot qSnapshot = snapshot.docs[0];
 
@@ -147,14 +166,14 @@ Future addToSection(String sectionName, String title) async {
       .get();
   List currentTitles = [];
 
-  snapshot.docs.forEach((element) {
+  for (var element in snapshot.docs) {
     if (element.exists) {
       var data = element.data() as Map<String, dynamic>;
       if (data.containsKey(sectionName)) {
         currentTitles = data[sectionName];
       }
     }
-  });
+  }
 
   List resultTitles = [];
   resultTitles.addAll(currentTitles);
@@ -217,14 +236,14 @@ Future<List<MangaBookTimed>> getMangaByUserSection(
 
   List currentTitles = [];
 
-  snapshot.docs.forEach((element) {
+  for (var element in snapshot.docs) {
     if (element.exists) {
       var data = element.data() as Map<String, dynamic>;
       if (data.containsKey(sectionName)) {
         currentTitles = data[sectionName];
       }
     }
-  });
+  }
 
   List<MangaBookTimed> result = [];
   if (currentTitles.isNotEmpty) {
@@ -242,14 +261,14 @@ Future<bool> mangaInSection(String sectionName, String mangaTitle) async {
 
   List currentTitles = [];
 
-  snapshot.docs.forEach((element) {
+  for (var element in snapshot.docs) {
     if (element.exists) {
       var data = element.data() as Map<String, dynamic>;
       if (data.containsKey(sectionName)) {
         currentTitles = data[sectionName];
       }
     }
-  });
+  }
 
   for (Map title in currentTitles) {
     if (title['name'].toString().toLowerCase() == mangaTitle.toLowerCase()) {
@@ -283,6 +302,9 @@ Future<List<MangaBookTimed>> _getMangaByName(List titles) async {
             chapters: block.chapters,
             year: block.year,
             addTime: title['add_time'],
+            desc: block.desc,
+            rates: block.rates,
+            ratings: block.ratings,
           );
           result.add(book);
         }
@@ -302,14 +324,14 @@ Future addToFriends(String id) async {
       .get();
   List currentFriends = [];
 
-  snapshot.docs.forEach((element) {
+  for (var element in snapshot.docs) {
     if (element.exists) {
       var data = element.data() as Map<String, dynamic>;
       if (data.containsKey('friends')) {
         currentFriends = data['friends'];
       }
     }
-  });
+  }
 
   List resultFriends = [];
   resultFriends.addAll(currentFriends);
@@ -343,14 +365,14 @@ Future<bool> idIsFriend(String id) async {
 
   List currentFriends = [];
 
-  snapshot.docs.forEach((element) {
+  for (var element in snapshot.docs) {
     if (element.exists) {
       var data = element.data() as Map<String, dynamic>;
       if (data.containsKey('friends')) {
         currentFriends = data['friends'];
       }
     }
-  });
+  }
 
   for (Map title in currentFriends) {
     if (title['id'].toString() == id) {

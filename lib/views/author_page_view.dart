@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:manga_reading/support/classes/author_manga.dart';
+import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/support/get_author_manga.dart';
-import 'package:manga_reading/views/blocks/author_manga_block.dart';
+import 'package:manga_reading/views/blocks/full_manga_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
 
 class AuthorPageView extends StatefulWidget {
@@ -18,7 +18,7 @@ class AuthorPageView extends StatefulWidget {
 
 class _AuthorPageViewState extends State<AuthorPageView> {
   bool isLoading = true;
-  List<AuthorManga> mangaBooks = [];
+  List<MangaBook> mangaBooks = [];
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _AuthorPageViewState extends State<AuthorPageView> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        leadingWidth: MediaQuery.of(context).size.width,
+        leadingWidth: MediaQuery.of(context).size.width * .8,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),
           child: Row(
@@ -89,13 +89,16 @@ class _AuthorPageViewState extends State<AuthorPageView> {
                       ? ListView.builder(
                           itemCount: mangaBooks.length,
                           itemBuilder: (context, index) {
-                            return AuthorMangaBlock(
+                            return FullMangaBlock(
                               title: mangaBooks[index].title!,
-                              chapters: mangaBooks[index].chaptersAmount!,
+                              chapters: mangaBooks[index].chapters!,
                               status: mangaBooks[index].status!,
                               author: widget.authorName,
                               image: mangaBooks[index].image!,
-                              genres: mangaBooks[index].genres!,
+                              desc: mangaBooks[index].desc!,
+                              rates: mangaBooks[index].rates!,
+                              ratings: mangaBooks[index].ratings!,
+                              releaseYear: mangaBooks[index].year!,
                             );
                           },
                           scrollDirection: Axis.vertical,

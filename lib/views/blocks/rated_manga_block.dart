@@ -5,17 +5,18 @@ import 'package:manga_reading/extensions/string_extension.dart';
 import 'package:manga_reading/views/manga_page_view.dart';
 import 'package:page_transition/page_transition.dart';
 
-class UserSectionBlock extends StatelessWidget {
+class RatedMangaBlock extends StatelessWidget {
   final String title;
   final String status;
   final int chapters;
   final String author;
   final String image;
   final String desc;
-  final Timestamp addDate;
-  final Function updateFunc;
+  final int userRate;
+  final Timestamp finishDate;
+  final Function? updateFunc;
 
-  const UserSectionBlock({
+  const RatedMangaBlock({
     super.key,
     required this.title,
     required this.chapters,
@@ -23,8 +24,9 @@ class UserSectionBlock extends StatelessWidget {
     required this.author,
     required this.image,
     required this.desc,
-    required this.addDate,
-    required this.updateFunc,
+    required this.userRate,
+    required this.finishDate,
+    this.updateFunc,
   });
 
   @override
@@ -37,7 +39,11 @@ class UserSectionBlock extends StatelessWidget {
             type: PageTransitionType.rightToLeftWithFade,
             child: MangaPageView(title: title),
           ),
-        ).then((value) => updateFunc());
+        ).then((value) {
+          if (updateFunc != null) {
+            updateFunc!();
+          }
+        });
       },
       child: Container(
         height: 215,
@@ -115,27 +121,48 @@ class UserSectionBlock extends StatelessWidget {
                               color: Colors.grey,
                             ),
                           ),
-                          const SizedBox(
-                            height: 2.5,
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.add,
-                                size: 22,
-                                color: Colors.red,
-                              ),
-                              Text(
-                                DateFormat('dd/MM/yyyy')
-                                    .format(addDate.toDate()),
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
+                          SizedBox(
+                            height: 30,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 30,
+                                  width: 82,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: 5,
+                                    itemBuilder: (context, index) {
+                                      return Icon(
+                                        index < userRate
+                                            ? Icons.star
+                                            : Icons.star_border,
+                                        color: Colors.yellow,
+                                        size: 15,
+                                      );
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ],
-                          )
+                                const Icon(
+                                  Icons.circle,
+                                  size: 5,
+                                  color: Colors.red,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 7),
+                                  child: Text(
+                                    DateFormat('dd/MM/yyyy')
+                                        .format(finishDate.toDate()),
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                       Column(
@@ -143,26 +170,26 @@ class UserSectionBlock extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                width: 60,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const Icon(
-                                      Icons.book,
-                                      color: Colors.red,
-                                      size: 22,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Icon(
+                                    Icons.book,
+                                    color: Colors.red,
+                                    size: 22,
+                                  ),
+                                  Text(
+                                    chapters.toString(),
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                    Text(
-                                      chapters.toString(),
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                width: 20,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,

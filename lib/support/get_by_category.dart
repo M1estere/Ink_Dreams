@@ -20,6 +20,10 @@ Future<List<MangaBook>> getMangaByCategory(String searchCategory) async {
           chapters: block.chapters,
           image: block.image,
           status: block.status,
+          rates: block.rates,
+          ratings: block.ratings,
+          desc: block.desc,
+          year: block.year,
         );
         result.add(book);
       }

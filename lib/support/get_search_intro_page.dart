@@ -20,6 +20,12 @@ Future<List<MangaBook>> getRandomManga(int amount) async {
         image: block.image,
         year: block.year,
         author: block.author,
+        categories: block.categories,
+        chapters: block.chapters,
+        desc: block.desc,
+        rates: block.rates,
+        ratings: block.ratings,
+        status: block.status,
       );
 
       result.add(book);

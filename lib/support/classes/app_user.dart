@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FindUser {
+class AppUser {
   String id;
   String nickname;
   String email;
   Timestamp regDate;
   List finishedManga;
 
-  FindUser({
+  AppUser({
     required this.id,
     required this.nickname,
     required this.email,

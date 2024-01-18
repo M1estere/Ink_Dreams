@@ -1,8 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:manga_reading/support/classes/author_manga.dart';
+import 'package:manga_reading/support/classes/manga_book.dart';
 
-Future<List<AuthorManga>> getMangaByAuthor(String authorName) async {
-  List<AuthorManga> result = [];
+Future<List<MangaBook>> getMangaByAuthor(String authorName) async {
+  List<MangaBook> result = [];
 
   DatabaseReference ref = FirebaseDatabase.instance.ref().child('manga_books');
 
@@ -10,15 +10,20 @@ Future<List<AuthorManga>> getMangaByAuthor(String authorName) async {
   if (snapshot.exists) {
     List data = snapshot.value as List;
     for (var i = 0; i < data.length; i++) {
-      AuthorMangaT block = AuthorMangaT.fromJson(data[i] as Map);
+      MangaBookT block = MangaBookT.fromJson(data[i] as Map);
 
       if (block.author!.toLowerCase() == authorName.toLowerCase()) {
-        AuthorManga book = AuthorManga(
+        MangaBook book = MangaBook(
           title: block.title,
-          chaptersAmount: block.chaptersAmount,
           status: block.status,
-          genres: block.genres,
           image: block.image,
+          author: block.author,
+          categories: block.categories,
+          chapters: block.chapters,
+          desc: block.desc,
+          rates: block.rates,
+          ratings: block.ratings,
+          year: block.year,
         );
 
         result.add(book);

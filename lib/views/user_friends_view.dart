@@ -56,7 +56,7 @@ class _UserFriendsViewState extends State<UserFriendsView> {
               Navigator.push(
                 context,
                 PageTransition(
-                    child: FindFriendView(),
+                    child: const FindFriendView(),
                     type: PageTransitionType.rightToLeft),
               ).then((value) => refresh());
             },
@@ -67,11 +67,11 @@ class _UserFriendsViewState extends State<UserFriendsView> {
             ),
           ),
         ],
-        toolbarHeight: 60,
+        toolbarHeight: 55,
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        leadingWidth: 370,
+        leadingWidth: MediaQuery.of(context).size.width * .75,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),
           child: Row(
@@ -93,8 +93,8 @@ class _UserFriendsViewState extends State<UserFriendsView> {
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  letterSpacing: 2,
+                  fontSize: 25,
+                  letterSpacing: 0,
                 ),
               ),
             ],

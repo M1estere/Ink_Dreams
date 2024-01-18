@@ -27,7 +27,7 @@ class SearchMangaBlock extends StatelessWidget {
         );
       },
       child: SizedBox(
-        width: 185,
+        width: MediaQuery.of(context).size.width * .45,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -55,24 +55,38 @@ class SearchMangaBlock extends StatelessWidget {
                 ),
               ),
             ),
-            Text(
-              title,
-              maxLines: 1,
-              style: const TextStyle(
-                color: Colors.white,
-                overflow: TextOverflow.ellipsis,
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                letterSpacing: 1.5,
-              ),
+            const SizedBox(
+              height: 2.5,
             ),
-            Text(
-              releaseYear,
-              style: const TextStyle(
-                color: Colors.grey,
-                fontSize: 17,
-                fontWeight: FontWeight.w300,
-                letterSpacing: 1.5,
+            SizedBox(
+              width: MediaQuery.of(context).size.width * .4,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      overflow: TextOverflow.ellipsis,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 1.5,
+                      height: 1.2,
+                    ),
+                  ),
+                  Text(
+                    releaseYear,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                      letterSpacing: 1.5,
+                      height: 1.2,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

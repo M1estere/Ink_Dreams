@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/support/get_by_category.dart';
-import 'package:manga_reading/views/blocks/category_result_block.dart';
+import 'package:manga_reading/views/blocks/full_manga_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
 
 class CategoryPageView extends StatefulWidget {
@@ -37,11 +37,11 @@ class _CategoryPageViewState extends State<CategoryPageView> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        toolbarHeight: 60,
+        toolbarHeight: 55,
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        leadingWidth: 250,
+        leadingWidth: MediaQuery.of(context).size.width * .8,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),
           child: Row(
@@ -63,8 +63,8 @@ class _CategoryPageViewState extends State<CategoryPageView> {
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                  letterSpacing: 2,
+                  fontSize: 25,
+                  letterSpacing: 0,
                 ),
               ),
             ],
@@ -82,24 +82,29 @@ class _CategoryPageViewState extends State<CategoryPageView> {
             child: Column(
               children: [
                 Container(
+                  width: double.infinity,
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   margin: const EdgeInsets.only(bottom: 20),
                   height: MediaQuery.of(context).size.height * .84,
-                  child: ListView.builder(
-                    itemCount: mangaBooks.length,
-                    itemBuilder: (context, index) {
-                      return isLoading
-                          ? const FetchingCircle()
-                          : CategoryResultBlock(
+                  child: !isLoading
+                      ? ListView.builder(
+                          itemCount: mangaBooks.length,
+                          itemBuilder: (context, index) {
+                            return FullMangaBlock(
                               title: mangaBooks[index].title!,
                               chapters: mangaBooks[index].chapters!,
                               status: mangaBooks[index].status!,
                               author: mangaBooks[index].author!,
                               image: mangaBooks[index].image!,
+                              rates: mangaBooks[index].rates!,
+                              ratings: mangaBooks[index].ratings!,
+                              desc: mangaBooks[index].desc!,
+                              releaseYear: mangaBooks[index].year!,
                             );
-                    },
-                    scrollDirection: Axis.vertical,
-                  ),
+                          },
+                          scrollDirection: Axis.vertical,
+                        )
+                      : const FetchingCircle(),
                 ),
               ],
             ),

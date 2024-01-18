@@ -72,15 +72,26 @@ class _AuthPageViewState extends State<AuthPageView> {
                         );
                       });
                     },
-                    child: Text(
-                      'SIGN IN',
-                      style: TextStyle(
-                        color: signInOpened
-                            ? Colors.white
-                            : const Color(0xFF6D6D6D),
-                        fontWeight: FontWeight.bold,
-                        fontSize: signInOpened ? 25 : 20,
-                        letterSpacing: 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            width: 2,
+                            color:
+                                signInOpened ? Colors.red : Colors.transparent,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'SIGN IN',
+                        style: TextStyle(
+                          color: signInOpened
+                              ? Colors.white
+                              : const Color(0xFF6D6D6D),
+                          fontWeight: FontWeight.w500,
+                          fontSize: signInOpened ? 22 : 20,
+                          letterSpacing: 0,
+                        ),
                       ),
                     ),
                   ),
@@ -98,15 +109,26 @@ class _AuthPageViewState extends State<AuthPageView> {
                         );
                       });
                     },
-                    child: Text(
-                      'SIGN UP',
-                      style: TextStyle(
-                        color: !signInOpened
-                            ? Colors.white
-                            : const Color(0xFF6D6D6D),
-                        fontWeight: FontWeight.bold,
-                        fontSize: !signInOpened ? 25 : 20,
-                        letterSpacing: 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            width: 2,
+                            color:
+                                !signInOpened ? Colors.red : Colors.transparent,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'SIGN UP',
+                        style: TextStyle(
+                          color: !signInOpened
+                              ? Colors.white
+                              : const Color(0xFF6D6D6D),
+                          fontWeight: FontWeight.w500,
+                          fontSize: signInOpened ? 22 : 20,
+                          letterSpacing: 0,
+                        ),
                       ),
                     ),
                   )
@@ -137,8 +159,8 @@ class _AuthPageViewState extends State<AuthPageView> {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xFF323242),
+                            borderRadius: BorderRadius.circular(15),
+                            color: const Color(0xFF252525),
                           ),
                           child: SizedBox(
                             height: 60,
@@ -149,24 +171,22 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 color: Colors.white,
                                 fontSize: 22,
                                 fontWeight: FontWeight.w400,
-                                letterSpacing: 1,
+                                letterSpacing: .5,
                               ),
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
                                 hintText: 'Enter email...',
-                                hintStyle: const TextStyle(
-                                  color: Color(0xFF6D6D6D),
+                                prefixIcon: Icon(
+                                  Icons.email_rounded,
+                                  size: 30,
+                                  color: Color(0xFFA2A2A2),
+                                ),
+                                hintStyle: TextStyle(
+                                  color: Color(0xFFA2A2A2),
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 1.5,
@@ -180,8 +200,8 @@ class _AuthPageViewState extends State<AuthPageView> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xFF323242),
+                            borderRadius: BorderRadius.circular(15),
+                            color: const Color(0xFF252525),
                           ),
                           child: SizedBox(
                             height: 60,
@@ -196,37 +216,36 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 letterSpacing: 1,
                               ),
                               decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                hintText: 'Enter password...',
+                                prefixIcon: const Icon(
+                                  Icons.key,
+                                  size: 30,
+                                  color: Color(0xFFA2A2A2),
+                                ),
+                                hintStyle: const TextStyle(
+                                  color: Color(0xFFA2A2A2),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: 1.5,
+                                ),
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     logPasswordVisible
                                         ? Icons.visibility
                                         : Icons.visibility_off,
                                     color: Colors.grey,
+                                    size: 30,
                                   ),
                                   onPressed: () {
                                     setState(() {
                                       logPasswordVisible = !logPasswordVisible;
                                     });
                                   },
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                hintText: 'Enter password...',
-                                hintStyle: const TextStyle(
-                                  color: Color(0xFF6D6D6D),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 1.5,
                                 ),
                               ),
                             ),
@@ -236,12 +255,12 @@ class _AuthPageViewState extends State<AuthPageView> {
                           height: 20,
                         ),
                         Material(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(20),
                           color: const Color(0xFF8E1617),
                           child: InkWell(
                             splashColor:
                                 const Color(0xFF8E1617).withOpacity(.6),
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(20),
                             onTap: () {
                               if (loginEmail.text.trim().isEmpty ||
                                   loginPassword.text.trim().isEmpty) {
@@ -296,16 +315,16 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 },
                               );
                             },
-                            child: const SizedBox(
+                            child: SizedBox(
                               height: 60,
                               width: double.infinity,
                               child: Center(
                                 child: Text(
-                                  'Sign In',
-                                  style: TextStyle(
+                                  'Sign In'.toUpperCase(),
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 25,
+                                    fontSize: 20,
                                     letterSpacing: 1.5,
                                   ),
                                 ),
@@ -343,8 +362,8 @@ class _AuthPageViewState extends State<AuthPageView> {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xFF323242),
+                            borderRadius: BorderRadius.circular(15),
+                            color: const Color(0xFF252525),
                           ),
                           child: SizedBox(
                             height: 60,
@@ -357,22 +376,20 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 fontWeight: FontWeight.w400,
                                 letterSpacing: 1,
                               ),
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
                                 hintText: 'Enter your nickname...',
-                                hintStyle: const TextStyle(
-                                  color: Color(0xFF6D6D6D),
+                                prefixIcon: Icon(
+                                  Icons.person,
+                                  size: 30,
+                                  color: Color(0xFFA2A2A2),
+                                ),
+                                hintStyle: TextStyle(
+                                  color: Color(0xFFA2A2A2),
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 1.5,
@@ -386,8 +403,8 @@ class _AuthPageViewState extends State<AuthPageView> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xFF323242),
+                            borderRadius: BorderRadius.circular(15),
+                            color: const Color(0xFF252525),
                           ),
                           child: SizedBox(
                             height: 60,
@@ -400,22 +417,20 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 fontWeight: FontWeight.w400,
                                 letterSpacing: 1,
                               ),
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
                                 hintText: 'Enter email...',
-                                hintStyle: const TextStyle(
-                                  color: Color(0xFF6D6D6D),
+                                prefixIcon: Icon(
+                                  Icons.email_rounded,
+                                  size: 30,
+                                  color: Color(0xFFA2A2A2),
+                                ),
+                                hintStyle: TextStyle(
+                                  color: Color(0xFFA2A2A2),
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 1.5,
@@ -429,8 +444,8 @@ class _AuthPageViewState extends State<AuthPageView> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xFF323242),
+                            borderRadius: BorderRadius.circular(15),
+                            color: const Color(0xFF252525),
                           ),
                           child: SizedBox(
                             height: 60,
@@ -445,6 +460,11 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 letterSpacing: 1,
                               ),
                               decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     regPasswordVisible
@@ -458,21 +478,14 @@ class _AuthPageViewState extends State<AuthPageView> {
                                     });
                                   },
                                 ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
                                 hintText: 'Enter password...',
+                                prefixIcon: const Icon(
+                                  Icons.key,
+                                  size: 30,
+                                  color: Color(0xFFA2A2A2),
+                                ),
                                 hintStyle: const TextStyle(
-                                  color: Color(0xFF6D6D6D),
+                                  color: Color(0xFFA2A2A2),
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 1.5,
@@ -486,8 +499,8 @@ class _AuthPageViewState extends State<AuthPageView> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xFF323242),
+                            borderRadius: BorderRadius.circular(15),
+                            color: const Color(0xFF252525),
                           ),
                           child: SizedBox(
                             height: 60,
@@ -502,22 +515,20 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 fontWeight: FontWeight.w400,
                                 letterSpacing: 1,
                               ),
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                  ),
-                                ),
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
                                 hintText: 'Confirm your password...',
-                                hintStyle: const TextStyle(
-                                  color: Color(0xFF6D6D6D),
+                                prefixIcon: Icon(
+                                  Icons.verified_rounded,
+                                  size: 30,
+                                  color: Color(0xFFA2A2A2),
+                                ),
+                                hintStyle: TextStyle(
+                                  color: Color(0xFFA2A2A2),
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 1.5,
@@ -530,12 +541,12 @@ class _AuthPageViewState extends State<AuthPageView> {
                           height: 20,
                         ),
                         Material(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(20),
                           color: const Color(0xFF8E1617),
                           child: InkWell(
                             splashColor:
                                 const Color(0xFF8E1617).withOpacity(.6),
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(20),
                             onTap: () {
                               if (registerPassword.text.trim() !=
                                   registerConfirmPassword.text.trim()) {
@@ -602,16 +613,16 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 },
                               );
                             },
-                            child: const SizedBox(
+                            child: SizedBox(
                               height: 60,
                               width: double.infinity,
                               child: Center(
                                 child: Text(
-                                  'Sign Up',
-                                  style: TextStyle(
+                                  'Sign Up'.toUpperCase(),
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 25,
+                                    fontSize: 20,
                                     letterSpacing: 1.5,
                                   ),
                                 ),

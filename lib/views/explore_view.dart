@@ -90,7 +90,7 @@ class _ExploreView extends State<ExploreView> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: SizedBox(
                       width: double.infinity,
-                      height: MediaQuery.of(context).size.height * .59,
+                      height: MediaQuery.of(context).size.height * .64,
                       child: PageView.builder(
                         onPageChanged: (value) {
                           setState(() {
@@ -133,9 +133,9 @@ class _ExploreView extends State<ExploreView> {
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 25,
+                            fontSize: 23,
                             fontWeight: FontWeight.bold,
-                            letterSpacing: 2.5,
+                            letterSpacing: 1.5,
                           ),
                         ),
                       ),
@@ -145,9 +145,9 @@ class _ExploreView extends State<ExploreView> {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.grey[600],
-                            fontSize: 20,
+                            fontSize: 19,
                             fontWeight: FontWeight.w500,
-                            letterSpacing: 2.5,
+                            letterSpacing: 1,
                           ),
                         ),
                       ),
@@ -181,7 +181,11 @@ class _ExploreView extends State<ExploreView> {
         width: double.infinity,
         decoration: const BoxDecoration(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+          padding: const EdgeInsets.only(
+            bottom: 20,
+            left: 10,
+            right: 10,
+          ),
           child: Column(
             children: <Widget>[
               Row(
@@ -253,7 +257,7 @@ class _ExploreView extends State<ExploreView> {
                 height: 10,
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height * .72,
+                height: MediaQuery.of(context).size.height * .75,
                 child: pageSections,
               ),
             ],

@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:manga_reading/support/classes/author_block.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
@@ -86,8 +85,8 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                         itemBuilder: (context, index) {
                           return SearchMangaBlock(
                             title: popularManga[index].title!,
-                            releaseYear: popularManga[index].year!,
                             image: popularManga[index].image!,
+                            releaseYear: popularManga[index].year!,
                           );
                         },
                         scrollDirection: Axis.horizontal,
@@ -114,8 +113,8 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                         itemBuilder: (context, index) {
                           return SearchMangaBlock(
                             title: hottestManga[index].title!,
-                            releaseYear: hottestManga[index].year!,
                             image: hottestManga[index].image!,
+                            releaseYear: hottestManga[index].year!,
                           );
                         },
                       ),

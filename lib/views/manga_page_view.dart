@@ -96,8 +96,6 @@ class _MangaPageViewState extends State<MangaPageView> {
           setState(() {
             userRate = value;
 
-            print('Rates: ${manga.rates}');
-            print('Ratings: ${manga.rating}');
             if (manga.rates != 0) {
               totalRating = (manga.rating! / manga.rates!).round();
             }
@@ -159,7 +157,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * .13,
                 decoration: BoxDecoration(
-                  color: const Color.fromRGBO(117, 117, 117, 1), // Colors.white
+                  color: Colors.white, // Colors.white
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -187,6 +185,9 @@ class _MangaPageViewState extends State<MangaPageView> {
                               placeRating(index + 1);
                               addToFinished(widget.title, index + 1);
 
+                              setState(() {
+                                inFinished = !inFinished;
+                              });
                               Navigator.pop(context);
                             },
                             icon: Icon(
@@ -327,7 +328,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * .95,
+                          width: double.infinity,
                           child: Text(
                             widget.title,
                             style: const TextStyle(
@@ -341,147 +342,82 @@ class _MangaPageViewState extends State<MangaPageView> {
                         const SizedBox(
                           height: 2,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 45,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: 25,
-                                    child: Text(
-                                      manga.author!,
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w400,
-                                        height: 0,
-                                      ),
-                                    ),
+                        SizedBox(
+                          height: 45,
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 25,
+                                child: Text(
+                                  manga.author!,
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w400,
+                                    height: 0,
                                   ),
-                                  !isLoadingRating
-                                      ? GestureDetector(
-                                          onTap: () {
-                                            openDialog(userRate);
-                                          },
-                                          child: SizedBox(
-                                            height: 20,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
+                                ),
+                              ),
+                              !isLoadingRating
+                                  ? GestureDetector(
+                                      onTap: () {
+                                        openDialog(userRate);
+                                      },
+                                      child: SizedBox(
+                                        height: 20,
+                                        width:
+                                            MediaQuery.of(context).size.width *
                                                 .35,
-                                            child: Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      .27,
-                                                  child: ListView.builder(
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    itemCount: 5,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return Icon(
-                                                        index < totalRating
-                                                            ? Icons.star
-                                                            : Icons.star_border,
-                                                        color: Colors.yellow,
-                                                        size: 20,
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                                Text(
-                                                  '(${manga.rates.toString()})',
-                                                  style: const TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                              ],
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  .27,
+                                              child: ListView.builder(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                itemCount: 5,
+                                                itemBuilder: (context, index) {
+                                                  return Icon(
+                                                    index < totalRating
+                                                        ? Icons.star
+                                                        : Icons.star_border,
+                                                    color: Colors.yellow,
+                                                    size: 20,
+                                                  );
+                                                },
+                                              ),
                                             ),
-                                          ),
-                                        )
-                                      : Container(
-                                          margin: const EdgeInsets.only(top: 5),
-                                          height: 3,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              .35,
-                                          child:
-                                              const LinearProgressIndicator()),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * .39,
-                              height: 45,
-                              child: Material(
-                                color: Colors.white,
-                                borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(12),
-                                  bottomLeft: Radius.circular(12),
-                                ),
-                                child: InkWell(
-                                  borderRadius: const BorderRadius.only(
-                                    topRight: Radius.circular(12),
-                                    bottomLeft: Radius.circular(12),
-                                  ),
-                                  splashColor: Colors.grey, // Splash color
-                                  onTap: () {
-                                    addToSection('finished', widget.title);
-                                    updateMangaSectionStatus('finished');
-
-                                    if (inFinished) {
-                                      openDialog(userRate);
-                                    }
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'finished'.toUpperCase(),
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                            Text(
+                                              '(${manga.rates.toString()})',
+                                              style: const TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        SizedBox(
-                                          width: 50,
-                                          height: 50,
-                                          child: Icon(
-                                            !inFinished
-                                                ? Icons.close
-                                                : Icons.check_circle,
-                                            color: !inFinished
-                                                ? Colors.black
-                                                : Colors.red,
-                                            size: 35,
-                                          ),
-                                        ),
-                                      ],
+                                      ),
+                                    )
+                                  : Container(
+                                      margin: const EdgeInsets.only(top: 5),
+                                      height: 3,
+                                      width: MediaQuery.of(context).size.width *
+                                          .35,
+                                      child: const LinearProgressIndicator(),
                                     ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         const SizedBox(
                           height: 10,
@@ -524,27 +460,97 @@ class _MangaPageViewState extends State<MangaPageView> {
                         const SizedBox(
                           height: 5,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Read Chapters'.toUpperCase(),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
+                        SizedBox(
+                          height: 50,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: double.infinity,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Read Chapters'.toUpperCase(),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Last: 126'.toUpperCase(),
+                                      style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Text(
-                              'Last: 126'.toUpperCase(),
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
+                              Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 3),
+                                width: MediaQuery.of(context).size.width * .26,
+                                height: double.infinity,
+                                child: Material(
+                                  color: Colors.white,
+                                  borderRadius: const BorderRadius.only(
+                                    topRight: Radius.circular(12),
+                                    bottomLeft: Radius.circular(12),
+                                  ),
+                                  child: InkWell(
+                                    borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(12),
+                                      bottomLeft: Radius.circular(12),
+                                    ),
+                                    splashColor: Colors.grey, // Splash color
+                                    onTap: () {
+                                      addToSection('finished', widget.title);
+                                      updateMangaSectionStatus('finished');
+
+                                      if (inFinished) {
+                                        openDialog(userRate);
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'done'.toUpperCase(),
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: Icon(
+                                              !inFinished
+                                                  ? Icons.close
+                                                  : Icons.check_circle,
+                                              color: !inFinished
+                                                  ? Colors.black
+                                                  : Colors.red,
+                                              size: 35,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         const SizedBox(
                           height: 10,

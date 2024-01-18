@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:manga_reading/support/auth_provider.dart';
-import 'package:manga_reading/support/classes/manga_book_timed.dart';
+import 'package:manga_reading/support/classes/rated_manga.dart';
 import 'package:manga_reading/support/classes/user_full.dart';
-import 'package:manga_reading/support/user_actions.dart';
-import 'package:manga_reading/views/blocks/category_result_block.dart';
+import 'package:manga_reading/support/get_friend_manga.dart';
+import 'package:manga_reading/views/blocks/rated_manga_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
 import 'package:manga_reading/views/support/no_books_by_request.dart';
 import 'package:manga_reading/views/user_section_view.dart';
@@ -23,7 +23,7 @@ class UserAccountPageView extends StatefulWidget {
 }
 
 class _UserAccountPageViewState extends State<UserAccountPageView> {
-  List<MangaBookTimed> mangaBooks = [];
+  List<RatedMangaBook> mangaBooks = [];
 
   UserFull pageUser = UserFull(
     id: '',
@@ -43,7 +43,7 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
         pageUser = value;
       });
 
-      getMangaByUserSection(widget.id, 'finished').then((value) {
+      getFriendManga(widget.id, 'finished').then((value) {
         setState(() {
           mangaBooks = value;
           isLoading = false;
@@ -389,12 +389,16 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                   Expanded(
                                     child: ListView.builder(
                                       itemBuilder: (context, index) {
-                                        return CategoryResultBlock(
+                                        return RatedMangaBlock(
+                                          finishDate:
+                                              mangaBooks[index].addTime!,
                                           title: mangaBooks[index].title!,
                                           chapters: mangaBooks[index].chapters!,
                                           status: mangaBooks[index].status!,
                                           author: mangaBooks[index].author!,
                                           image: mangaBooks[index].image!,
+                                          userRate: mangaBooks[index].userRate!,
+                                          desc: mangaBooks[index].desc!,
                                         );
                                       },
                                       itemCount: mangaBooks.length,

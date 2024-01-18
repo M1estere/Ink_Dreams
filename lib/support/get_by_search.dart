@@ -24,6 +24,9 @@ Future<List<MangaBook>> getMangaBySearch(String query) async {
           categories: block.categories,
           chapters: block.chapters,
           year: block.year,
+          desc: block.desc,
+          rates: block.rates,
+          ratings: block.ratings,
         );
 
         result.add(book);

@@ -1,21 +1,19 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:manga_reading/extensions/string_extension.dart';
 import 'package:manga_reading/views/manga_page_view.dart';
 import 'package:page_transition/page_transition.dart';
 
-class UserSectionBlock extends StatelessWidget {
+class FullMangaBlock extends StatelessWidget {
   final String title;
   final String status;
   final int chapters;
   final String author;
   final String image;
   final String desc;
-  final Timestamp addDate;
-  final Function updateFunc;
+  final int rates;
+  final int ratings;
+  final String releaseYear;
 
-  const UserSectionBlock({
+  const FullMangaBlock({
     super.key,
     required this.title,
     required this.chapters,
@@ -23,8 +21,9 @@ class UserSectionBlock extends StatelessWidget {
     required this.author,
     required this.image,
     required this.desc,
-    required this.addDate,
-    required this.updateFunc,
+    required this.rates,
+    required this.ratings,
+    required this.releaseYear,
   });
 
   @override
@@ -37,7 +36,7 @@ class UserSectionBlock extends StatelessWidget {
             type: PageTransitionType.rightToLeftWithFade,
             child: MangaPageView(title: title),
           ),
-        ).then((value) => updateFunc());
+        );
       },
       child: Container(
         height: 215,
@@ -116,64 +115,47 @@ class UserSectionBlock extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(
-                            height: 2.5,
+                            height: 5,
                           ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.add,
-                                size: 22,
-                                color: Colors.red,
-                              ),
-                              Text(
-                                DateFormat('dd/MM/yyyy')
-                                    .format(addDate.toDate()),
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      Column(
-                        children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                width: 60,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const Icon(
-                                      Icons.book,
-                                      color: Colors.red,
-                                      size: 22,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Icon(
+                                    Icons.book,
+                                    color: Colors.red,
+                                    size: 22,
+                                  ),
+                                  Text(
+                                    chapters.toString(),
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                    Text(
-                                      chapters.toString(),
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                width: 20,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   const Icon(
-                                    Icons.timer,
+                                    Icons.star,
                                     color: Colors.red,
                                     size: 22,
                                   ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
                                   Text(
-                                    status.capitalize(),
+                                    rates != 0
+                                        ? (ratings / rates).toStringAsFixed(1)
+                                        : '0',
                                     style: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 15,
@@ -185,7 +167,7 @@ class UserSectionBlock extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(
-                            height: 3,
+                            height: 5,
                           ),
                           Text(
                             desc,
@@ -200,27 +182,27 @@ class UserSectionBlock extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // RichText(
-                      //   text: TextSpan(
-                      //     text: 'Status: ',
-                      //     style: const TextStyle(
-                      //       fontSize: 15,
-                      //       letterSpacing: 1,
-                      //       fontWeight: FontWeight.w500,
-                      //       color: Colors.grey,
-                      //     ),
-                      //     children: <TextSpan>[
-                      //       TextSpan(
-                      //         text: status,
-                      //         style: const TextStyle(
-                      //           color: Colors.red,
-                      //           letterSpacing: 1,
-                      //           fontWeight: FontWeight.w500,
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
+                      RichText(
+                        text: TextSpan(
+                          text: 'Status: ',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            letterSpacing: 1,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.grey,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: status,
+                              style: const TextStyle(
+                                color: Colors.red,
+                                letterSpacing: 1,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:manga_reading/support/classes/manga_book_timed.dart';
+import 'package:manga_reading/support/get_friend_manga.dart';
 import 'package:manga_reading/support/user_actions.dart';
+import 'package:manga_reading/views/blocks/rated_manga_block.dart';
 import 'package:manga_reading/views/blocks/user_section_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
 import 'package:manga_reading/views/support/no_books_by_request.dart';
@@ -9,6 +10,7 @@ class UserSectionView extends StatefulWidget {
   final String sectionName;
   final String userName;
   final String id;
+
   const UserSectionView({
     super.key,
     required this.id,
@@ -21,19 +23,28 @@ class UserSectionView extends StatefulWidget {
 }
 
 class _UserSectionViewState extends State<UserSectionView> {
-  List<MangaBookTimed> mangaBooks = [];
+  List mangaBooks = [];
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
 
-    getMangaByUserSection(widget.id, widget.sectionName).then((value) {
-      setState(() {
-        mangaBooks = value;
-        isLoading = false;
+    if (widget.sectionName.contains('finished')) {
+      getFriendManga(widget.id, widget.sectionName).then((value) {
+        setState(() {
+          mangaBooks = value;
+          isLoading = false;
+        });
       });
-    });
+    } else {
+      getMangaByUserSection(widget.id, widget.sectionName).then((value) {
+        setState(() {
+          mangaBooks = value;
+          isLoading = false;
+        });
+      });
+    }
   }
 
   refresh() {
@@ -41,12 +52,21 @@ class _UserSectionViewState extends State<UserSectionView> {
       isLoading = true;
     });
 
-    getMangaByUserSection(widget.id, widget.sectionName).then((value) {
-      setState(() {
-        mangaBooks = value;
-        isLoading = false;
+    if (widget.sectionName.contains('finished')) {
+      getFriendManga(widget.id, widget.sectionName).then((value) {
+        setState(() {
+          mangaBooks = value;
+          isLoading = false;
+        });
       });
-    });
+    } else {
+      getMangaByUserSection(widget.id, widget.sectionName).then((value) {
+        setState(() {
+          mangaBooks = value;
+          isLoading = false;
+        });
+      });
+    }
   }
 
   @override
@@ -54,7 +74,7 @@ class _UserSectionViewState extends State<UserSectionView> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        toolbarHeight: 60,
+        toolbarHeight: 55,
         elevation: 0,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
@@ -75,17 +95,13 @@ class _UserSectionViewState extends State<UserSectionView> {
                   color: Colors.white,
                 ),
               ),
-              Expanded(
-                child: FittedBox(
-                  child: Text(
-                    '${widget.sectionName} [${widget.userName}]'.toUpperCase(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      letterSpacing: 2,
-                    ),
-                  ),
+              Text(
+                '${widget.sectionName} [${widget.userName}]'.toUpperCase(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                  letterSpacing: 0,
                 ),
               ),
             ],
@@ -114,15 +130,30 @@ class _UserSectionViewState extends State<UserSectionView> {
                               child: ListView.builder(
                                 itemCount: mangaBooks.length,
                                 itemBuilder: (context, index) {
-                                  return UserSectionBlock(
-                                    title: mangaBooks[index].title!,
-                                    addDateTime: mangaBooks[index].addTime!,
-                                    chapters: mangaBooks[index].chapters!,
-                                    status: mangaBooks[index].status!,
-                                    author: mangaBooks[index].author!,
-                                    updateParent: refresh,
-                                    image: mangaBooks[index].image!,
-                                  );
+                                  return !widget.sectionName
+                                          .contains('finished')
+                                      ? UserSectionBlock(
+                                          title: mangaBooks[index].title!,
+                                          desc: mangaBooks[index].desc!,
+                                          addDate: mangaBooks[index].addTime!,
+                                          chapters: mangaBooks[index].chapters!,
+                                          status: mangaBooks[index].status!,
+                                          author: mangaBooks[index].author!,
+                                          updateFunc: refresh,
+                                          image: mangaBooks[index].image!,
+                                        )
+                                      : RatedMangaBlock(
+                                          finishDate:
+                                              mangaBooks[index].addTime!,
+                                          title: mangaBooks[index].title!,
+                                          chapters: mangaBooks[index].chapters!,
+                                          status: mangaBooks[index].status!,
+                                          author: mangaBooks[index].author!,
+                                          image: mangaBooks[index].image!,
+                                          userRate: mangaBooks[index].userRate!,
+                                          desc: mangaBooks[index].desc!,
+                                          updateFunc: refresh,
+                                        );
                                 },
                                 scrollDirection: Axis.vertical,
                               ),
