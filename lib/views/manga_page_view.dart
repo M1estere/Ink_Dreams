@@ -38,6 +38,9 @@ class _MangaPageViewState extends State<MangaPageView> {
 
   int totalRating = 0;
 
+  bool hasLastChapter = false;
+  String lastChapter = '';
+
   @override
   void initState() {
     super.initState();
@@ -73,16 +76,28 @@ class _MangaPageViewState extends State<MangaPageView> {
                           setState(() {
                             userRate = value;
 
-                            isLoading = false;
-                            if (manga.title == null) {
-                              nullState = true;
-                            }
-                            if ((manga.rates != 0 && manga.rating != 0)) {
-                              totalRating =
-                                  (manga.rating! / manga.rates!).round();
-                            }
-
                             isLoadingRating = false;
+                          });
+
+                          getLastChapter(widget.title, currentUser!.id)
+                              .then((value) {
+                            if (mounted) {
+                              setState(() {
+                                if (value.isNotEmpty) {
+                                  hasLastChapter = true;
+                                  lastChapter = value;
+                                }
+
+                                isLoading = false;
+                                if (manga.title == null) {
+                                  nullState = true;
+                                }
+                                if ((manga.rates != 0 && manga.rating != 0)) {
+                                  totalRating =
+                                      (manga.rating! / manga.rates!).round();
+                                }
+                              });
+                            }
                           });
                         }
                       });
@@ -95,6 +110,21 @@ class _MangaPageViewState extends State<MangaPageView> {
         }
       },
     );
+  }
+
+  updateLast() {
+    getLastChapter(widget.title, currentUser!.id).then((value) {
+      if (mounted) {
+        setState(() {
+          if (value.isNotEmpty) {
+            hasLastChapter = true;
+            lastChapter = value;
+          } else {
+            hasLastChapter = false;
+          }
+        });
+      }
+    });
   }
 
   updateRating() {
@@ -175,9 +205,9 @@ class _MangaPageViewState extends State<MangaPageView> {
                   horizontal: 15,
                 ),
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height * .13,
+                height: MediaQuery.of(context).size.height * .125,
                 decoration: BoxDecoration(
-                  color: Colors.white, // Colors.white
+                  color: const Color(0xFF252525), // Colors.white
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -187,7 +217,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                       "Leave your rating!",
                       style: TextStyle(
                         fontSize: 24,
-                        color: Colors.black,
+                        color: Colors.white,
                         fontWeight: FontWeight.w500,
                       ),
                       textAlign: TextAlign.start,
@@ -483,7 +513,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                           height: 5,
                         ),
                         SizedBox(
-                          height: 55,
+                          height: 60,
                           width: double.infinity,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -503,14 +533,45 @@ class _MangaPageViewState extends State<MangaPageView> {
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    Text(
-                                      'Last: 126'.toUpperCase(),
-                                      style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
+                                    hasLastChapter
+                                        ? SizedBox(
+                                            height: 30,
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'LAST: vol.$lastChapter',
+                                                  style: const TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                                IconButton(
+                                                  padding: EdgeInsets.zero,
+                                                  onPressed: () {
+                                                    removeFromReading(
+                                                        widget.title);
+                                                    if (mounted) {
+                                                      setState(() {
+                                                        hasLastChapter = false;
+                                                        lastChapter = '';
+                                                      });
+                                                    }
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.delete,
+                                                    color: Colors.red,
+                                                    size: 30,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        : const Center(),
                                   ],
                                 ),
                               ),
@@ -671,8 +732,10 @@ class _MangaPageViewState extends State<MangaPageView> {
                 chapters: manga.chapters,
                 index: index,
                 filePath: manga.chapters![index]!['link'],
+                confTitle: '${manga.chapters![index]!['name']}',
                 title: "${manga.title} - v${manga.chapters![index]!['name']}",
                 defTitle: "${manga.title}",
+                updateFunc: updateLast,
               ),
             ),
           );
@@ -680,7 +743,9 @@ class _MangaPageViewState extends State<MangaPageView> {
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color(0xFF121212),
+            color: manga.chapters![index]!['name'] == lastChapter
+                ? Colors.white
+                : const Color(0xFF252525),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
@@ -688,9 +753,11 @@ class _MangaPageViewState extends State<MangaPageView> {
                 const EdgeInsets.only(top: 5, right: 10, left: 5, bottom: 5),
             child: Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.play_arrow,
-                  color: Colors.white,
+                  color: manga.chapters![index]!['name'] == lastChapter
+                      ? Colors.black
+                      : Colors.white,
                   size: 50,
                 ),
                 const SizedBox(
@@ -702,21 +769,24 @@ class _MangaPageViewState extends State<MangaPageView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Volume ${manga.chapters![index]!['name']}",
-                        style: const TextStyle(
+                        "Volume ${manga.chapters![index]!['name']}"
+                            .toUpperCase(),
+                        style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          color: manga.chapters![index]!['name'] == lastChapter
+                              ? Colors.black
+                              : Colors.white,
                         ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            "Pages: ${manga.chapters![index]!['pages']}",
+                            "PAGES: ${manga.chapters![index]!['pages']}",
                             style: const TextStyle(
                               fontSize: 17,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w400,
                               color: Colors.grey,
                             ),
                           ),

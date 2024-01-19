@@ -33,6 +33,7 @@ class SearchMangaBlock extends StatelessWidget {
           children: [
             Container(
               height: MediaQuery.of(context).size.height * .3,
+              width: double.infinity,
               margin: const EdgeInsets.only(right: 20),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),

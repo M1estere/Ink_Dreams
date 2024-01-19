@@ -217,6 +217,106 @@ Future addToSection(String sectionName, String title) async {
   );
 }
 
+Future addToReadingSection(String lastChapter, String title) async {
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('id', isEqualTo: currentUser!.id)
+      .get();
+  List currentTitles = [];
+
+  for (var element in snapshot.docs) {
+    if (element.exists) {
+      var data = element.data() as Map<String, dynamic>;
+      if (data.containsKey('reading')) {
+        currentTitles = data['reading'];
+      }
+    }
+  }
+
+  List resultTitles = [];
+  resultTitles.addAll(currentTitles);
+  (bool, int) valuesSet = isInList(resultTitles, title);
+  if (valuesSet.$1) {
+    resultTitles.removeAt(valuesSet.$2);
+  }
+  resultTitles.add(
+    {
+      'name': title.capitalizeEveryWord(),
+      'add_time': DateTime.now().add(
+        const Duration(hours: 3),
+      ),
+      'last': lastChapter,
+    },
+  );
+
+  await FirebaseFirestore.instance.collection('users').doc(currentUser!.id).set(
+    {'reading': resultTitles},
+    SetOptions(
+      merge: true,
+    ),
+  );
+}
+
+Future removeFromReading(String title) async {
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('id', isEqualTo: currentUser!.id)
+      .get();
+  List currentTitles = [];
+
+  for (var element in snapshot.docs) {
+    if (element.exists) {
+      var data = element.data() as Map<String, dynamic>;
+      if (data.containsKey('reading')) {
+        currentTitles = data['reading'];
+      }
+    }
+  }
+
+  List resultTitles = [];
+  resultTitles.addAll(currentTitles);
+  (bool, int) valuesSet = isInList(resultTitles, title);
+  if (valuesSet.$1) {
+    resultTitles.removeAt(valuesSet.$2);
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser!.id)
+        .set(
+      {'reading': resultTitles},
+      SetOptions(
+        merge: true,
+      ),
+    );
+  }
+}
+
+Future<String> getLastChapter(String title, String id) async {
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('id', isEqualTo: id)
+      .get();
+  List currentTitles = [];
+
+  for (var element in snapshot.docs) {
+    if (element.exists) {
+      var data = element.data() as Map<String, dynamic>;
+      if (data.containsKey('reading')) {
+        currentTitles = data['reading'];
+      }
+    }
+  }
+
+  String result = '';
+  for (var manga in currentTitles) {
+    if (manga['name'].toString().toLowerCase() == title.toLowerCase()) {
+      result = manga['last'];
+    }
+  }
+
+  return result;
+}
+
 (bool, int) isInList(List list, String title) {
   for (int i = 0; i < list.length; i++) {
     if (list[i]['name'].toString().toLowerCase() == title.toLowerCase()) {

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:manga_reading/support/user_actions.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
 
@@ -14,6 +15,8 @@ class ReaderView extends StatefulWidget {
   String filePath;
   String title;
   String defTitle;
+  String confTitle;
+  Function updateFunc;
 
   ReaderView({
     super.key,
@@ -22,6 +25,8 @@ class ReaderView extends StatefulWidget {
     required this.filePath,
     required this.title,
     required this.defTitle,
+    required this.confTitle,
+    required this.updateFunc,
   });
 
   @override
@@ -36,6 +41,7 @@ class _ReaderViewState extends State<ReaderView> {
   void initState() {
     super.initState();
 
+    addToReadingSection(widget.confTitle, widget.defTitle);
     recheck();
   }
 
@@ -74,6 +80,7 @@ class _ReaderViewState extends State<ReaderView> {
             children: [
               IconButton(
                 onPressed: () {
+                  widget.updateFunc();
                   Navigator.pop(context);
                 },
                 icon: const Icon(
