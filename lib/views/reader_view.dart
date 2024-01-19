@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:internet_file/internet_file.dart';
 import 'package:manga_reading/support/user_actions.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
@@ -38,6 +41,10 @@ class _ReaderViewState extends State<ReaderView> {
   bool hasNext = true;
   bool hasPrev = true;
 
+  bool isLoading = true;
+
+  double percentage = 0;
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +56,16 @@ class _ReaderViewState extends State<ReaderView> {
     });
 
     recheck();
+  }
+
+  Future<Uint8List> test() async {
+    return await InternetFile.get(
+      widget.filePath,
+      progress: (receivedLength, contentLength) {
+        percentage = receivedLength / contentLength * 100;
+        print('$percentage');
+      },
+    );
   }
 
   void recheck() {
@@ -175,42 +192,41 @@ class _ReaderViewState extends State<ReaderView> {
         ],
       ),
       body: Center(
-        child: FutureBuilder<File>(
-          future: DefaultCacheManager().getSingleFile(widget.filePath),
-          builder: (context, snapshot) => snapshot.hasData
-              ? PdfDocumentLoader.openFile(
-                  onError: (p0) {
-                    return const Center(
-                      child: Text(
-                        'Some error occured',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    );
-                  },
-                  snapshot.data!.path,
-                  documentBuilder: (context, pdfDocument, pageCount) =>
-                      LayoutBuilder(
-                    builder: (context, constraints) => ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: pageCount,
-                      itemBuilder: (context, index) => Container(
-                        margin: const EdgeInsets.all(5),
-                        padding: const EdgeInsets.all(5),
-                        color: Colors.black12,
-                        child: PdfPageView(
-                          pdfDocument: pdfDocument,
-                          pageNumber: index + 1,
-                        ),
+          child: FutureBuilder<File>(
+        future: DefaultCacheManager().getSingleFile(widget.filePath),
+        builder: (context, snapshot) => snapshot.hasData
+            ? PdfDocumentLoader.openFile(
+                onError: (p0) {
+                  return const Center(
+                    child: Text(
+                      'Some error occured',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  );
+                },
+                snapshot.data!.path,
+                documentBuilder: (context, pdfDocument, pageCount) =>
+                    LayoutBuilder(
+                  builder: (context, constraints) => ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: pageCount,
+                    itemBuilder: (context, index) => Container(
+                      margin: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
+                      color: Colors.black12,
+                      child: PdfPageView(
+                        pdfDocument: pdfDocument,
+                        pageNumber: index + 1,
                       ),
                     ),
                   ),
-                )
-              : const FetchingCircle(),
-        ),
-      ),
+                ),
+              )
+            : const FetchingCircle(),
+      )),
     );
   }
 
