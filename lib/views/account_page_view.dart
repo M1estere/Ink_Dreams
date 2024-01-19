@@ -73,7 +73,7 @@ class _AccountPageViewState extends State<AccountPageView> {
             stops: const [0, .5, .5, 1],
             colors: [
               const Color(0xFF9D1515).withOpacity(.5),
-              const Color(0xFF9D1515).withOpacity(.5),
+              const Color(0xFFAD5B5B).withOpacity(.5),
               const Color(0xFF121212),
               const Color(0xFF121212),
             ],
@@ -143,7 +143,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                     PageTransition(
                                       type: PageTransitionType
                                           .rightToLeftWithFade,
-                                      child: UserFriendsView(),
+                                      child: const UserFriendsView(),
                                     ),
                                   ).then((value) => refresh());
                                 },
@@ -319,6 +319,71 @@ class _AccountPageViewState extends State<AccountPageView> {
                               ),
                             ),
                           ),
+                          Container(
+                            margin: const EdgeInsets.only(right: 20),
+                            child: Material(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.black.withOpacity(.65),
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(15),
+                                splashColor:
+                                    const Color.fromARGB(255, 34, 34, 34),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      type: PageTransitionType
+                                          .rightToLeftWithFade,
+                                      child: UserSectionView(
+                                        id: currentUser!.id,
+                                        userName: pageUser.nickname,
+                                        sectionName: 'planned',
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const SizedBox(
+                                  height: 135,
+                                  width: 145,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Icon(
+                                              Icons.save,
+                                              color: Colors.white,
+                                              size: 50,
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Planned',
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: 2,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                           SizedBox(
                             child: Material(
                               borderRadius: BorderRadius.circular(15),
@@ -391,42 +456,6 @@ class _AccountPageViewState extends State<AccountPageView> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Container(
-                            margin: const EdgeInsets.only(
-                              bottom: 10,
-                            ),
-                            child: SizedBox(
-                              height: 50,
-                              width: MediaQuery.of(context).size.width * .75,
-                              child: ClipRect(
-                                child: Material(
-                                  borderRadius: BorderRadius.circular(7),
-                                  color: Colors.black,
-                                  child: InkWell(
-                                    borderRadius: BorderRadius.circular(7),
-                                    splashColor:
-                                        const Color.fromARGB(255, 34, 34, 34),
-                                    onTap: () {},
-                                    child: const Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Personalize',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 1.5,
-                                          ),
-                                        ), // text
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
                           SizedBox(
                             height: 50,
                             width: MediaQuery.of(context).size.width * .75,

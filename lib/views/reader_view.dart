@@ -16,6 +16,7 @@ class ReaderView extends StatefulWidget {
   String title;
   String defTitle;
   String confTitle;
+
   Function updateFunc;
 
   ReaderView({
@@ -41,7 +42,12 @@ class _ReaderViewState extends State<ReaderView> {
   void initState() {
     super.initState();
 
-    addToReadingSection(widget.confTitle, widget.defTitle);
+    addToReadingSection(
+            widget.chapters![widget.index]!['name'], widget.defTitle)
+        .then((value) {
+      widget.updateFunc();
+    });
+
     recheck();
   }
 
@@ -80,7 +86,6 @@ class _ReaderViewState extends State<ReaderView> {
             children: [
               IconButton(
                 onPressed: () {
-                  widget.updateFunc();
                   Navigator.pop(context);
                 },
                 icon: const Icon(

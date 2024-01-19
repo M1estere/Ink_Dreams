@@ -91,10 +91,10 @@ class _ExploreView extends State<ExploreView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.only(top: 10),
                     child: SizedBox(
                       width: double.infinity,
-                      height: MediaQuery.of(context).size.height * .64,
+                      height: MediaQuery.of(context).size.height * .65,
                       child: PageView.builder(
                         onPageChanged: (value) {
                           if (mounted) {
@@ -164,9 +164,9 @@ class _ExploreView extends State<ExploreView> {
             : const FetchingCircle(),
         // categories section
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.only(top: 10),
           child: SizedBox(
-            height: MediaQuery.of(context).size.height * .75,
+            height: MediaQuery.of(context).size.height * .9,
             child: ListView.builder(
               itemCount: categories.length,
               itemBuilder: (context, index) {
@@ -182,96 +182,93 @@ class _ExploreView extends State<ExploreView> {
       ],
     );
 
-    return SafeArea(
-      child: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(),
-        child: Padding(
-          padding: const EdgeInsets.only(
-            bottom: 20,
-            left: 10,
-            right: 10,
-          ),
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      if (mounted) {
-                        setState(() {
-                          _currentSectionIndex = 0;
-                        });
-                      }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            width: 2,
-                            color: _currentSectionIndex == 0
-                                ? Colors.red
-                                : Colors.transparent,
-                          ),
-                        ),
-                      ),
-                      child: Text(
-                        'MAIN',
-                        style: TextStyle(
+    return Container(
+      width: double.infinity,
+      decoration: const BoxDecoration(),
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: 10,
+          right: 10,
+        ),
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    if (mounted) {
+                      setState(() {
+                        _currentSectionIndex = 0;
+                      });
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          width: 2,
                           color: _currentSectionIndex == 0
-                              ? Colors.white
-                              : Colors.grey,
-                          fontSize: _currentSectionIndex == 0 ? 20 : 18,
-                          fontWeight: FontWeight.w500,
+                              ? Colors.red
+                              : Colors.transparent,
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      if (mounted) {
-                        setState(() {
-                          _currentSectionIndex = 1;
-                        });
-                      }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            width: 2,
-                            color: _currentSectionIndex == 1
-                                ? Colors.red
-                                : Colors.transparent,
-                          ),
-                        ),
+                    child: Text(
+                      'MAIN',
+                      style: TextStyle(
+                        color: _currentSectionIndex == 0
+                            ? Colors.white
+                            : Colors.grey,
+                        fontSize: _currentSectionIndex == 0 ? 20 : 18,
+                        fontWeight: FontWeight.w500,
                       ),
-                      child: Text(
-                        'CATEGORIES',
-                        style: TextStyle(
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    if (mounted) {
+                      setState(() {
+                        _currentSectionIndex = 1;
+                      });
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          width: 2,
                           color: _currentSectionIndex == 1
-                              ? Colors.white
-                              : Colors.grey,
-                          fontSize: _currentSectionIndex == 1 ? 20 : 18,
-                          fontWeight: FontWeight.w500,
+                              ? Colors.red
+                              : Colors.transparent,
                         ),
                       ),
                     ),
+                    child: Text(
+                      'CATEGORIES',
+                      style: TextStyle(
+                        color: _currentSectionIndex == 1
+                            ? Colors.white
+                            : Colors.grey,
+                        fontSize: _currentSectionIndex == 1 ? 20 : 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * .75,
-                child: pageSections,
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .85,
+              child: pageSections,
+            ),
+          ],
         ),
       ),
     );

@@ -38,6 +38,7 @@ class _CategoryPageViewState extends State<CategoryPageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      extendBody: true,
       appBar: AppBar(
         toolbarHeight: 55,
         elevation: 0,
@@ -80,14 +81,12 @@ class _CategoryPageViewState extends State<CategoryPageView> {
             color: Color(0xFF121212),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  margin: const EdgeInsets.only(bottom: 20),
-                  height: MediaQuery.of(context).size.height * .84,
+                  height: MediaQuery.of(context).size.height * .88,
                   child: !isLoading
                       ? ListView.builder(
                           itemCount: mangaBooks.length,

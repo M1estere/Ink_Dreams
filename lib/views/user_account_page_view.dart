@@ -123,8 +123,8 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
               end: Alignment.bottomCenter,
               stops: const [0, .42, .42, 1],
               colors: [
-                const Color.fromARGB(255, 157, 21, 134).withOpacity(.5),
-                const Color.fromARGB(255, 157, 21, 134).withOpacity(.5),
+                const Color(0xFF9D1586).withOpacity(.5),
+                const Color(0xFF99498C).withOpacity(.5),
                 const Color(0xFF121212),
                 const Color(0xFF121212),
               ],
@@ -132,8 +132,7 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
           ),
           child: !isLoading
               ? Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                  padding: const EdgeInsets.only(left: 10, right: 10, top: 15),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -293,6 +292,71 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                             children: [
                                               Text(
                                                 'Favourites',
+                                                style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.w500,
+                                                  letterSpacing: 2,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(right: 20),
+                              child: Material(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.black.withOpacity(.65),
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(15),
+                                  splashColor:
+                                      const Color.fromARGB(255, 34, 34, 34),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      PageTransition(
+                                        type: PageTransitionType
+                                            .rightToLeftWithFade,
+                                        child: UserSectionView(
+                                          id: widget.id,
+                                          userName: pageUser.nickname,
+                                          sectionName: 'planned',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const SizedBox(
+                                    height: 135,
+                                    width: 145,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Icon(
+                                                Icons.save,
+                                                color: Colors.white,
+                                                size: 50,
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Planned',
                                                 style: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 25,

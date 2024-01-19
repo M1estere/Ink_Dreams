@@ -143,6 +143,7 @@ class _MainWrapperState extends State<MainWrapper> {
     );
 
     return Scaffold(
+      extendBody: true,
       appBar: appbarList[_currentPageIndex],
       body: bodies,
       bottomNavigationBar: CurvedNavigationBar(
@@ -156,7 +157,7 @@ class _MainWrapperState extends State<MainWrapper> {
           }
         },
         height: 60,
-        backgroundColor: const Color(0xFF121212),
+        backgroundColor: Colors.transparent,
         buttonBackgroundColor: Colors.white,
         color: const Color(0xFF252525),
         items: [
