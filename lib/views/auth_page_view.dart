@@ -50,9 +50,24 @@ class _AuthPageViewState extends State<AuthPageView> {
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .3,
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height * .23,
+                width: MediaQuery.of(context).size.height * .23,
+                child: const Image(
+                  image: AssetImage(
+                    'assets/images/icon-no-bg.png',
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .03,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
@@ -88,8 +103,8 @@ class _AuthPageViewState extends State<AuthPageView> {
                         'SIGN IN',
                         style: TextStyle(
                           color: signInOpened
-                              ? Colors.white
-                              : const Color(0xFF6D6D6D),
+                              ? Theme.of(context).primaryColor
+                              : Colors.grey,
                           fontWeight: FontWeight.w500,
                           fontSize: signInOpened ? 22 : 20,
                           letterSpacing: 0,
@@ -127,8 +142,8 @@ class _AuthPageViewState extends State<AuthPageView> {
                         'SIGN UP',
                         style: TextStyle(
                           color: !signInOpened
-                              ? Colors.white
-                              : const Color(0xFF6D6D6D),
+                              ? Theme.of(context).primaryColor
+                              : Colors.grey,
                           fontWeight: FontWeight.w500,
                           fontSize: signInOpened ? 22 : 20,
                           letterSpacing: 0,
@@ -166,37 +181,61 @@ class _AuthPageViewState extends State<AuthPageView> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: const Color(0xFF252525),
+                            color:
+                                Theme.of(context).snackBarTheme.backgroundColor,
+                            border: Border(
+                              bottom: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              top: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              left: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              right: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                            ),
                           ),
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: loginEmail,
+                              controller: registerEmail,
                               textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
                                 fontSize: 22,
                                 fontWeight: FontWeight.w400,
                                 letterSpacing: .5,
                               ),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                hintText: 'Enter email...',
+                              decoration: InputDecoration(
+                                border: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .border,
+                                focusedBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .focusedBorder,
+                                enabledBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .enabledBorder,
+                                errorBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .errorBorder,
+                                disabledBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .disabledBorder,
                                 prefixIcon: Icon(
                                   Icons.email_rounded,
-                                  size: 30,
-                                  color: Color(0xFFA2A2A2),
+                                  size: 25,
+                                  color: Theme.of(context)
+                                      .inputDecorationTheme
+                                      .prefixIconColor,
                                 ),
-                                hintStyle: TextStyle(
-                                  color: Color(0xFFA2A2A2),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 1.5,
-                                ),
+                                hintText: 'Enter email...',
+                                hintStyle: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .hintStyle,
                               ),
                             ),
                           ),
@@ -207,45 +246,68 @@ class _AuthPageViewState extends State<AuthPageView> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: const Color(0xFF252525),
+                            color:
+                                Theme.of(context).snackBarTheme.backgroundColor,
+                            border: Border(
+                              bottom: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              top: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              left: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              right: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                            ),
                           ),
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: loginPassword,
-                              obscureText: !logPasswordVisible,
+                              controller: registerEmail,
                               textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
                                 fontSize: 22,
                                 fontWeight: FontWeight.w400,
-                                letterSpacing: 1,
+                                letterSpacing: .5,
                               ),
                               decoration: InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                hintText: 'Enter password...',
-                                prefixIcon: const Icon(
+                                border: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .border,
+                                focusedBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .focusedBorder,
+                                enabledBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .enabledBorder,
+                                errorBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .errorBorder,
+                                disabledBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .disabledBorder,
+                                prefixIcon: Icon(
                                   Icons.key,
-                                  size: 30,
-                                  color: Color(0xFFA2A2A2),
+                                  size: 25,
+                                  color: Theme.of(context)
+                                      .inputDecorationTheme
+                                      .prefixIconColor,
                                 ),
-                                hintStyle: const TextStyle(
-                                  color: Color(0xFFA2A2A2),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 1.5,
-                                ),
+                                hintText: 'Enter password...',
+                                hintStyle: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .hintStyle,
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     logPasswordVisible
                                         ? Icons.visibility
                                         : Icons.visibility_off,
                                     color: Colors.grey,
-                                    size: 30,
+                                    size: 27,
                                   ),
                                   onPressed: () {
                                     if (mounted) {
@@ -265,10 +327,9 @@ class _AuthPageViewState extends State<AuthPageView> {
                         ),
                         Material(
                           borderRadius: BorderRadius.circular(20),
-                          color: const Color(0xFF8E1617),
+                          color: Colors.red,
                           child: InkWell(
-                            splashColor:
-                                const Color(0xFF8E1617).withOpacity(.6),
+                            splashColor: Colors.red.withOpacity(.6),
                             borderRadius: BorderRadius.circular(20),
                             onTap: () {
                               if (loginEmail.text.trim().isEmpty ||
@@ -376,37 +437,61 @@ class _AuthPageViewState extends State<AuthPageView> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: const Color(0xFF252525),
+                            color:
+                                Theme.of(context).snackBarTheme.backgroundColor,
+                            border: Border(
+                              bottom: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              top: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              left: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              right: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                            ),
                           ),
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: registerNickname,
+                              controller: registerEmail,
                               textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
                                 fontSize: 22,
                                 fontWeight: FontWeight.w400,
-                                letterSpacing: 1,
+                                letterSpacing: .5,
                               ),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                hintText: 'Enter your nickname...',
+                              decoration: InputDecoration(
+                                border: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .border,
+                                focusedBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .focusedBorder,
+                                enabledBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .enabledBorder,
+                                errorBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .errorBorder,
+                                disabledBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .disabledBorder,
                                 prefixIcon: Icon(
                                   Icons.person,
-                                  size: 30,
-                                  color: Color(0xFFA2A2A2),
+                                  size: 25,
+                                  color: Theme.of(context)
+                                      .inputDecorationTheme
+                                      .prefixIconColor,
                                 ),
-                                hintStyle: TextStyle(
-                                  color: Color(0xFFA2A2A2),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 1.5,
-                                ),
+                                hintText: 'Enter your nickname...',
+                                hintStyle: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .hintStyle,
                               ),
                             ),
                           ),
@@ -417,37 +502,61 @@ class _AuthPageViewState extends State<AuthPageView> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: const Color(0xFF252525),
+                            color:
+                                Theme.of(context).snackBarTheme.backgroundColor,
+                            border: Border(
+                              bottom: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              top: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              left: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              right: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                            ),
                           ),
                           child: SizedBox(
                             height: 60,
                             child: TextField(
                               controller: registerEmail,
                               textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
                                 fontSize: 22,
                                 fontWeight: FontWeight.w400,
-                                letterSpacing: 1,
+                                letterSpacing: .5,
                               ),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                hintText: 'Enter email...',
+                              decoration: InputDecoration(
+                                border: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .border,
+                                focusedBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .focusedBorder,
+                                enabledBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .enabledBorder,
+                                errorBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .errorBorder,
+                                disabledBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .disabledBorder,
                                 prefixIcon: Icon(
                                   Icons.email_rounded,
-                                  size: 30,
-                                  color: Color(0xFFA2A2A2),
+                                  size: 25,
+                                  color: Theme.of(context)
+                                      .inputDecorationTheme
+                                      .prefixIconColor,
                                 ),
-                                hintStyle: TextStyle(
-                                  color: Color(0xFFA2A2A2),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 1.5,
-                                ),
+                                hintText: 'Enter email...',
+                                hintStyle: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .hintStyle,
                               ),
                             ),
                           ),
@@ -458,26 +567,61 @@ class _AuthPageViewState extends State<AuthPageView> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: const Color(0xFF252525),
+                            color:
+                                Theme.of(context).snackBarTheme.backgroundColor,
+                            border: Border(
+                              bottom: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              top: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              left: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              right: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                            ),
                           ),
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              obscureText: !regPasswordVisible,
-                              controller: registerPassword,
+                              controller: registerEmail,
                               textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
                                 fontSize: 22,
                                 fontWeight: FontWeight.w400,
-                                letterSpacing: 1,
+                                letterSpacing: .5,
                               ),
                               decoration: InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
+                                border: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .border,
+                                focusedBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .focusedBorder,
+                                enabledBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .enabledBorder,
+                                errorBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .errorBorder,
+                                disabledBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .disabledBorder,
+                                prefixIcon: Icon(
+                                  Icons.key,
+                                  size: 25,
+                                  color: Theme.of(context)
+                                      .inputDecorationTheme
+                                      .prefixIconColor,
+                                ),
+                                hintText: 'Enter password...',
+                                hintStyle: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .hintStyle,
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     regPasswordVisible
@@ -494,18 +638,6 @@ class _AuthPageViewState extends State<AuthPageView> {
                                     }
                                   },
                                 ),
-                                hintText: 'Enter password...',
-                                prefixIcon: const Icon(
-                                  Icons.key,
-                                  size: 30,
-                                  color: Color(0xFFA2A2A2),
-                                ),
-                                hintStyle: const TextStyle(
-                                  color: Color(0xFFA2A2A2),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 1.5,
-                                ),
                               ),
                             ),
                           ),
@@ -516,39 +648,61 @@ class _AuthPageViewState extends State<AuthPageView> {
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: const Color(0xFF252525),
+                            color:
+                                Theme.of(context).snackBarTheme.backgroundColor,
+                            border: Border(
+                              bottom: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              top: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              left: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                              right: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .outlineBorder!,
+                            ),
                           ),
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              obscureText: true,
-                              controller: registerConfirmPassword,
+                              controller: registerEmail,
                               textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                decorationStyle: TextDecorationStyle.dotted,
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
                                 fontSize: 22,
                                 fontWeight: FontWeight.w400,
-                                letterSpacing: 1,
+                                letterSpacing: .5,
                               ),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                hintText: 'Confirm your password...',
+                              decoration: InputDecoration(
+                                border: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .border,
+                                focusedBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .focusedBorder,
+                                enabledBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .enabledBorder,
+                                errorBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .errorBorder,
+                                disabledBorder: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .disabledBorder,
                                 prefixIcon: Icon(
                                   Icons.verified_rounded,
-                                  size: 30,
-                                  color: Color(0xFFA2A2A2),
+                                  size: 25,
+                                  color: Theme.of(context)
+                                      .inputDecorationTheme
+                                      .prefixIconColor,
                                 ),
-                                hintStyle: TextStyle(
-                                  color: Color(0xFFA2A2A2),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 1.5,
-                                ),
+                                hintText: 'Confirm password...',
+                                hintStyle: Theme.of(context)
+                                    .inputDecorationTheme
+                                    .hintStyle,
                               ),
                             ),
                           ),
@@ -558,10 +712,9 @@ class _AuthPageViewState extends State<AuthPageView> {
                         ),
                         Material(
                           borderRadius: BorderRadius.circular(20),
-                          color: const Color(0xFF8E1617),
+                          color: Colors.red,
                           child: InkWell(
-                            splashColor:
-                                const Color(0xFF8E1617).withOpacity(.6),
+                            splashColor: Colors.red.withOpacity(.6),
                             borderRadius: BorderRadius.circular(20),
                             onTap: () {
                               if (registerPassword.text.trim() !=

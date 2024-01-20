@@ -91,37 +91,52 @@ class _FindFriendViewState extends State<FindFriendView> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: const Color(0xFF252525),
+                    color: Theme.of(context).snackBarTheme.backgroundColor,
+                    border: Border(
+                      bottom:
+                          Theme.of(context).inputDecorationTheme.outlineBorder!,
+                      top:
+                          Theme.of(context).inputDecorationTheme.outlineBorder!,
+                      left:
+                          Theme.of(context).inputDecorationTheme.outlineBorder!,
+                      right:
+                          Theme.of(context).inputDecorationTheme.outlineBorder!,
+                    ),
                   ),
                   child: SizedBox(
                     height: 65,
                     child: TextField(
                       controller: searchController,
                       textAlignVertical: TextAlignVertical.center,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
                         fontSize: 22,
                         fontWeight: FontWeight.w400,
                         letterSpacing: .5,
                       ),
-                      decoration: const InputDecoration(
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
+                      decoration: InputDecoration(
+                        border: Theme.of(context).inputDecorationTheme.border,
+                        focusedBorder: Theme.of(context)
+                            .inputDecorationTheme
+                            .focusedBorder,
+                        enabledBorder: Theme.of(context)
+                            .inputDecorationTheme
+                            .enabledBorder,
+                        errorBorder:
+                            Theme.of(context).inputDecorationTheme.errorBorder,
+                        disabledBorder: Theme.of(context)
+                            .inputDecorationTheme
+                            .disabledBorder,
                         prefixIcon: Icon(
                           Icons.search,
-                          size: 35,
-                          color: Color(0xFFA2A2A2),
+                          size: 30,
+                          color: Theme.of(context)
+                              .inputDecorationTheme
+                              .prefixIconColor,
                         ),
                         hintText: 'Search anything...',
-                        hintStyle: TextStyle(
-                          color: Color(0xFFA2A2A2),
-                          fontSize: 22,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: .5,
-                        ),
+                        hintStyle:
+                            Theme.of(context).inputDecorationTheme.hintStyle,
                       ),
                       onChanged: (value) {
                         getUsersBySearch(
@@ -137,9 +152,6 @@ class _FindFriendViewState extends State<FindFriendView> {
                       },
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
                 Expanded(
                   child: !isLoading

@@ -1,11 +1,11 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:manga_reading/views/account_page_view.dart';
 import 'package:manga_reading/views/explore_view.dart';
 import 'package:manga_reading/views/search_intro_page_view.dart';
 import 'package:manga_reading/views/search_results_view.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:stylish_bottom_bar/model/bar_items.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 class MainWrapper extends StatefulWidget {
   const MainWrapper({super.key});
@@ -22,12 +22,11 @@ class _MainWrapperState extends State<MainWrapper> {
     final appbarList = [
       // explore app bar
       AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle.light,
         toolbarHeight: 55,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        leadingWidth: 180,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
+        leadingWidth: MediaQuery.of(context).size.width * .5,
         leading: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -36,12 +35,7 @@ class _MainWrapperState extends State<MainWrapper> {
               padding: const EdgeInsets.only(left: 10, top: 10),
               child: Text(
                 'EXPLORE',
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                  letterSpacing: 0,
-                ),
+                style: Theme.of(context).appBarTheme.titleTextStyle,
               ),
             ),
           ],
@@ -51,9 +45,9 @@ class _MainWrapperState extends State<MainWrapper> {
       AppBar(
         toolbarHeight: 55,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        leadingWidth: 180,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
+        leadingWidth: MediaQuery.of(context).size.width * .5,
         leading: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -62,12 +56,7 @@ class _MainWrapperState extends State<MainWrapper> {
               padding: const EdgeInsets.only(left: 10, top: 10),
               child: Text(
                 'SEARCH',
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                  letterSpacing: 0,
-                ),
+                style: Theme.of(context).appBarTheme.titleTextStyle,
               ),
             ),
           ],
@@ -77,7 +66,9 @@ class _MainWrapperState extends State<MainWrapper> {
             padding: const EdgeInsets.only(right: 10, top: 10),
             child: ClipOval(
               child: Material(
-                color: Theme.of(context).primaryColor, // Button color
+                color: Theme.of(context)
+                    .appBarTheme
+                    .foregroundColor, // Button color
                 child: InkWell(
                   splashColor: Colors.grey, // Splash color
                   onTap: () {
@@ -94,7 +85,8 @@ class _MainWrapperState extends State<MainWrapper> {
                     height: 43,
                     child: Icon(
                       Icons.search,
-                      color: Theme.of(context).secondaryHeaderColor,
+                      color:
+                          Theme.of(context).appBarTheme.actionsIconTheme!.color,
                       size: 33,
                     ),
                   ),
@@ -106,12 +98,11 @@ class _MainWrapperState extends State<MainWrapper> {
       ),
       // account app bar
       AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle.light,
         toolbarHeight: 55,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        leadingWidth: 180,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
+        leadingWidth: MediaQuery.of(context).size.width * .5,
         leading: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -120,12 +111,7 @@ class _MainWrapperState extends State<MainWrapper> {
               padding: const EdgeInsets.only(left: 10, top: 10),
               child: Text(
                 'ACCOUNT',
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                  letterSpacing: 0,
-                ),
+                style: Theme.of(context).appBarTheme.titleTextStyle,
               ),
             ),
           ],
@@ -143,44 +129,59 @@ class _MainWrapperState extends State<MainWrapper> {
     );
 
     return Scaffold(
-      extendBody: true,
       appBar: appbarList[_currentPageIndex],
       body: bodies,
-      bottomNavigationBar: CurvedNavigationBar(
-        index: _currentPageIndex,
-        animationDuration: const Duration(milliseconds: 300),
-        onTap: (value) {
-          if (mounted) {
-            setState(() {
-              _currentPageIndex = value;
-            });
-          }
+      bottomNavigationBar: StylishBottomBar(
+        hasNotch: true,
+        currentIndex: _currentPageIndex,
+        onTap: (index) {
+          setState(() {
+            _currentPageIndex = index;
+          });
         },
-        height: 60,
-        backgroundColor: Colors.transparent,
-        buttonBackgroundColor: Theme.of(context).bottomAppBarTheme.color!,
-        color: const Color(0xFF252525),
+        backgroundColor:
+            Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+        option: AnimatedBarOptions(
+          iconSize: 30,
+          barAnimation: BarAnimation.liquid,
+          opacity: 0.3,
+        ),
         items: [
-          Icon(
-            Icons.list,
-            size: 35,
-            color: _currentPageIndex == 0
-                ? Theme.of(context).bottomAppBarTheme.shadowColor!
-                : Colors.grey,
+          BottomBarItem(
+            icon: const Icon(Icons.home_outlined),
+            title: Text(
+              'Explore',
+              style:
+                  Theme.of(context).bottomNavigationBarTheme.selectedLabelStyle,
+            ),
+            unSelectedColor: Colors.grey,
+            selectedIcon: const Icon(Icons.home),
+            selectedColor:
+                Theme.of(context).bottomNavigationBarTheme.selectedItemColor!,
           ),
-          Icon(
-            Icons.search,
-            size: 35,
-            color: _currentPageIndex == 1
-                ? Theme.of(context).bottomAppBarTheme.shadowColor!
-                : Colors.grey,
+          BottomBarItem(
+            icon: const Icon(Icons.search),
+            title: Text(
+              'Search',
+              style:
+                  Theme.of(context).bottomNavigationBarTheme.selectedLabelStyle,
+            ),
+            unSelectedColor: Colors.grey,
+            selectedIcon: const Icon(Icons.search),
+            selectedColor:
+                Theme.of(context).bottomNavigationBarTheme.selectedItemColor!,
           ),
-          Icon(
-            Icons.person,
-            size: 35,
-            color: _currentPageIndex == 2
-                ? Theme.of(context).bottomAppBarTheme.shadowColor!
-                : Colors.grey,
+          BottomBarItem(
+            icon: const Icon(Icons.person_outline),
+            title: Text(
+              'Account',
+              style:
+                  Theme.of(context).bottomNavigationBarTheme.selectedLabelStyle,
+            ),
+            unSelectedColor: Colors.grey,
+            selectedIcon: const Icon(Icons.person),
+            selectedColor:
+                Theme.of(context).bottomNavigationBarTheme.selectedItemColor!,
           ),
         ],
       ),

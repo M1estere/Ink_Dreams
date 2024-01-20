@@ -59,139 +59,152 @@ class _UserListBlockState extends State<UserListBlock> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => UserAccountPageView(id: widget.id),
-          ),
-        );
-      },
-      child: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.only(
-          bottom: 20,
-        ),
-        height: 132,
-        decoration: BoxDecoration(
-          color: Colors.black,
+    return Container(
+      margin: const EdgeInsets.only(
+        bottom: 20,
+      ),
+      child: Material(
+        borderRadius: BorderRadius.circular(15),
+        color: Theme.of(context).cardColor,
+        child: InkWell(
           borderRadius: BorderRadius.circular(15),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 15,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
+          splashColor: Colors.grey.withOpacity(.3),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UserAccountPageView(id: widget.id),
+              ),
+            );
+          },
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              border: Border(
+                bottom: Theme.of(context).inputDecorationTheme.outlineBorder!,
+                top: Theme.of(context).inputDecorationTheme.outlineBorder!,
+                left: Theme.of(context).inputDecorationTheme.outlineBorder!,
+                right: Theme.of(context).inputDecorationTheme.outlineBorder!,
+              ),
+            ),
+            height: 132,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15,
+                vertical: 15,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .2,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const CircleAvatar(
-                          radius: 35,
-                          backgroundColor: Colors.white,
-                          child: CircleAvatar(
-                            radius: 27,
-                            backgroundColor: Colors.red,
-                          ),
-                        ),
-                        FittedBox(
-                          child: Text(
-                            widget.nickname,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .05,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * .38,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * .2,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Icon(
-                              Icons.book,
-                              color: Color(0xFF8E1617),
-                              size: 25,
+                            const CircleAvatar(
+                              radius: 35,
+                              backgroundColor: Colors.red,
+                              child: CircleAvatar(
+                                radius: 27,
+                                backgroundColor: Colors.white,
+                              ),
                             ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              '${widget.finished} finished',
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w500,
+                            FittedBox(
+                              child: Text(
+                                widget.nickname,
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * .05,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * .38,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Icon(
-                              Icons.person,
-                              color: Color(0xFF8E1617),
-                              size: 25,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Icon(
+                                  Icons.book,
+                                  color: Colors.red,
+                                  size: 25,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  '${widget.finished} finished',
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              DateFormat('dd/MM/yyyy')
-                                  .format(widget.regDate.toDate()),
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Icon(
+                                  Icons.person,
+                                  color: Colors.red,
+                                  size: 25,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  DateFormat('dd/MM/yyyy')
+                                      .format(widget.regDate.toDate()),
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                  !isLoading
+                      ? IconButton(
+                          onPressed: () {
+                            addToFriends(widget.id).then((value) {
+                              if (mounted) {
+                                setState(() {
+                                  refresh();
+                                });
+                              }
+                            });
+                          },
+                          icon: Icon(
+                            !isInFriendList ? Icons.add : Icons.check,
+                            size: 50,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        )
+                      : const CircularProgressIndicator(),
                 ],
               ),
-              !isLoading
-                  ? IconButton(
-                      onPressed: () {
-                        addToFriends(widget.id).then((value) {
-                          if (mounted) {
-                            setState(() {
-                              refresh();
-                            });
-                          }
-                        });
-                      },
-                      icon: Icon(
-                        !isInFriendList ? Icons.add : Icons.check,
-                        size: 50,
-                        color: Colors.white,
-                      ),
-                    )
-                  : const CircularProgressIndicator(),
-            ],
+            ),
           ),
         ),
       ),

@@ -1,11 +1,7 @@
-import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:internet_file/internet_file.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:manga_reading/support/user_actions.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
 import 'package:pdf_render/pdf_render_widgets.dart';
@@ -57,16 +53,6 @@ class _ReaderViewState extends State<ReaderView> {
     recheck();
   }
 
-  Future<Uint8List> test() async {
-    return await InternetFile.get(
-      widget.filePath,
-      progress: (receivedLength, contentLength) {
-        percentage = receivedLength / contentLength * 100;
-        print('$percentage');
-      },
-    );
-  }
-
   void recheck() {
     if (mounted) {
       setState(() {
@@ -104,10 +90,10 @@ class _ReaderViewState extends State<ReaderView> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back_ios,
                   size: 35,
-                  color: Colors.white,
+                  color: Theme.of(context).appBarTheme.foregroundColor,
                 ),
               ),
               SizedBox(
@@ -115,8 +101,9 @@ class _ReaderViewState extends State<ReaderView> {
                 child: SizedBox(
                   child: Text(
                     widget.title.toUpperCase(),
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color:
+                          Theme.of(context).appBarTheme.titleTextStyle!.color,
                       fontWeight: FontWeight.bold,
                       fontSize: 17,
                       letterSpacing: 0,
@@ -151,9 +138,9 @@ class _ReaderViewState extends State<ReaderView> {
                       ),
                     );
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_back_rounded,
-                    color: Colors.white,
+                    color: Theme.of(context).appBarTheme.foregroundColor,
                   ),
                 )
               : const SizedBox(
@@ -180,9 +167,9 @@ class _ReaderViewState extends State<ReaderView> {
                       ),
                     );
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_forward_rounded,
-                    color: Colors.white,
+                    color: Theme.of(context).appBarTheme.foregroundColor,
                   ),
                 )
               : const SizedBox(
@@ -228,6 +215,4 @@ class _ReaderViewState extends State<ReaderView> {
       )),
     );
   }
-
-  final controller = Completer<PDFViewController>();
 }

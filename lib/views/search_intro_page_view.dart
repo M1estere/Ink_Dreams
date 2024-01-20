@@ -96,7 +96,7 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
-                      margin: EdgeInsets.only(bottom: 20),
+                      margin: const EdgeInsets.only(bottom: 20),
                       height: 360,
                       child: ListView.builder(
                         itemCount: hottestManga.length,
@@ -109,9 +109,6 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                           );
                         },
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
                     ),
                   ],
                 )

@@ -147,6 +147,9 @@ class _ExploreView extends State<ExploreView> {
                       ),
                     ),
                   ),
+                  const SizedBox(
+                    height: 5,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -171,6 +174,7 @@ class _ExploreView extends State<ExploreView> {
                             fontSize: 19,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 1,
+                            height: .55,
                           ),
                         ),
                       ),
@@ -283,7 +287,7 @@ class _ExploreView extends State<ExploreView> {
               height: 10,
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * .85,
+              height: MediaQuery.of(context).size.height * .8,
               child: pageSections,
             ),
           ],

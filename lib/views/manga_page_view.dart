@@ -222,17 +222,22 @@ class _MangaPageViewState extends State<MangaPageView> {
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * .125,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF252525), // Colors.white
+                  color: Theme.of(context)
+                      .snackBarTheme
+                      .backgroundColor, // 0xFF252525
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       "Leave your rating!",
                       style: TextStyle(
                         fontSize: 24,
-                        color: Colors.white,
+                        color: Theme.of(context)
+                            .snackBarTheme
+                            .contentTextStyle!
+                            .color,
                         fontWeight: FontWeight.w500,
                       ),
                       textAlign: TextAlign.start,
@@ -712,11 +717,7 @@ class _MangaPageViewState extends State<MangaPageView> {
     var snackBar = SnackBar(
       content: Text(
         content.capitalize(),
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 17,
-          fontWeight: FontWeight.w400,
-        ),
+        style: Theme.of(context).snackBarTheme.contentTextStyle,
       ),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -728,7 +729,7 @@ class _MangaPageViewState extends State<MangaPageView> {
       duration: const Duration(
         seconds: 3,
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).snackBarTheme.backgroundColor,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }

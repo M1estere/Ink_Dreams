@@ -70,9 +70,8 @@ class CategoryBlock extends StatelessWidget {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(.7),
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
                   ),
                 ),
                 child: Padding(
