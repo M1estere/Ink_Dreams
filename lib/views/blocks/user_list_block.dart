@@ -9,6 +9,7 @@ class UserListBlock extends StatefulWidget {
   final String nickname;
   final int finished;
   final Timestamp regDate;
+  final String imagePath;
 
   const UserListBlock({
     super.key,
@@ -16,6 +17,7 @@ class UserListBlock extends StatefulWidget {
     required this.nickname,
     required this.finished,
     required this.regDate,
+    required this.imagePath,
   });
 
   @override
@@ -88,7 +90,7 @@ class _UserListBlockState extends State<UserListBlock> {
                 right: Theme.of(context).inputDecorationTheme.outlineBorder!,
               ),
             ),
-            height: 132,
+            height: 134,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,
@@ -106,12 +108,31 @@ class _UserListBlockState extends State<UserListBlock> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 35,
                               backgroundColor: Colors.red,
                               child: CircleAvatar(
-                                radius: 27,
-                                backgroundColor: Colors.white,
+                                radius: 32,
+                                backgroundColor: Colors.red,
+                                backgroundImage: Image.network(
+                                  widget.imagePath,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return const Center(
+                                        child: SizedBox(
+                                          width: 30,
+                                          height: 30,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ).image,
                               ),
                             ),
                             FittedBox(

@@ -220,7 +220,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                   horizontal: 15,
                 ),
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height * .125,
+                height: MediaQuery.of(context).size.height * .13,
                 decoration: BoxDecoration(
                   color: Theme.of(context)
                       .snackBarTheme
@@ -815,7 +815,7 @@ class _MangaPageViewState extends State<MangaPageView> {
                   ),
                 ),
                 index < lastChapterIndex
-                    ? Icon(
+                    ? const Icon(
                         Icons.check_circle_outline,
                         color: Colors.grey,
                         size: 30,

@@ -9,6 +9,7 @@ class UserFriendBlock extends StatelessWidget {
   final int finished;
   final Timestamp regDate;
   final Timestamp addDate;
+  final String imagePath;
 
   const UserFriendBlock({
     super.key,
@@ -17,6 +18,7 @@ class UserFriendBlock extends StatelessWidget {
     required this.finished,
     required this.regDate,
     required this.addDate,
+    required this.imagePath,
   });
 
   @override
@@ -50,7 +52,7 @@ class UserFriendBlock extends StatelessWidget {
                 right: Theme.of(context).inputDecorationTheme.outlineBorder!,
               ),
             ),
-            height: 132,
+            height: 134,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 15,
@@ -65,12 +67,29 @@ class UserFriendBlock extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const CircleAvatar(
+                        CircleAvatar(
                           radius: 35,
                           backgroundColor: Colors.red,
                           child: CircleAvatar(
-                            radius: 27,
-                            backgroundColor: Colors.white,
+                            radius: 32,
+                            backgroundColor: Colors.red,
+                            backgroundImage: Image.network(
+                              imagePath,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                } else {
+                                  return const Center(
+                                    child: SizedBox(
+                                      width: 30,
+                                      height: 30,
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
+                                }
+                              },
+                            ).image,
                           ),
                         ),
                         FittedBox(

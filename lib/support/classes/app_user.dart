@@ -6,6 +6,7 @@ class AppUser {
   String email;
   Timestamp regDate;
   List finishedManga;
+  String image;
 
   AppUser({
     required this.id,
@@ -13,5 +14,6 @@ class AppUser {
     required this.email,
     required this.finishedManga,
     required this.regDate,
+    required this.image,
   });
 }

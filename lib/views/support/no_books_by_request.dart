@@ -27,7 +27,7 @@ class NoBooksByRequest extends StatelessWidget {
                 'Sorry, nothing found!',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
-                  fontSize: 25,
+                  fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),
               ),

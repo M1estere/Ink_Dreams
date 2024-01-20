@@ -201,7 +201,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: registerEmail,
+                              controller: loginEmail,
                               textAlignVertical: TextAlignVertical.center,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
@@ -266,7 +266,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: registerEmail,
+                              controller: loginPassword,
                               textAlignVertical: TextAlignVertical.center,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
@@ -274,6 +274,9 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 fontWeight: FontWeight.w400,
                                 letterSpacing: .5,
                               ),
+                              obscureText: logPasswordVisible ? false : true,
+                              enableSuggestions: false,
+                              autocorrect: false,
                               decoration: InputDecoration(
                                 border: Theme.of(context)
                                     .inputDecorationTheme
@@ -457,7 +460,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: registerEmail,
+                              controller: registerNickname,
                               textAlignVertical: TextAlignVertical.center,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
@@ -587,7 +590,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: registerEmail,
+                              controller: registerPassword,
                               textAlignVertical: TextAlignVertical.center,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
@@ -595,6 +598,9 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 fontWeight: FontWeight.w400,
                                 letterSpacing: .5,
                               ),
+                              obscureText: regPasswordVisible ? false : true,
+                              enableSuggestions: false,
+                              autocorrect: false,
                               decoration: InputDecoration(
                                 border: Theme.of(context)
                                     .inputDecorationTheme
@@ -668,7 +674,10 @@ class _AuthPageViewState extends State<AuthPageView> {
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: registerEmail,
+                              controller: registerConfirmPassword,
+                              obscureText: true,
+                              enableSuggestions: false,
+                              autocorrect: false,
                               textAlignVertical: TextAlignVertical.center,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,

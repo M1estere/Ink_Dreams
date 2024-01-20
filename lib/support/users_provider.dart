@@ -70,6 +70,7 @@ Future<AppUser> _getUser(String id, String seqToCheck) async {
   String email = '';
   Timestamp regDate = Timestamp.fromDate(DateTime.now());
   List finished = [];
+  String image = '';
   QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('users')
       .where('id', isEqualTo: id)
@@ -90,6 +91,9 @@ Future<AppUser> _getUser(String id, String seqToCheck) async {
       if (data.containsKey('finished')) {
         finished = data['finished'];
       }
+      if (data.containsKey('image')) {
+        image = data['image'];
+      }
     }
   }
 
@@ -100,17 +104,20 @@ Future<AppUser> _getUser(String id, String seqToCheck) async {
       nickname: nickname,
       regDate: regDate,
       finishedManga: finished,
+      image: image,
     );
 
     return result;
   }
 
   return AppUser(
-      id: '',
-      nickname: '',
-      email: '',
-      finishedManga: List.empty(),
-      regDate: regDate);
+    id: '',
+    nickname: '',
+    email: '',
+    finishedManga: List.empty(),
+    regDate: regDate,
+    image: '',
+  );
 }
 
 Future<FriendUser> _getFriend(String id, Timestamp addDate) async {
@@ -119,6 +126,7 @@ Future<FriendUser> _getFriend(String id, Timestamp addDate) async {
   String nickname = '';
   Timestamp regDate = Timestamp.fromDate(DateTime.now());
   List finished = [];
+  String image = '';
   QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('users')
       .where('id', isEqualTo: id)
@@ -136,6 +144,9 @@ Future<FriendUser> _getFriend(String id, Timestamp addDate) async {
       if (data.containsKey('finished')) {
         finished = data['finished'];
       }
+      if (data.containsKey('image')) {
+        image = data['image'];
+      }
     }
   }
 
@@ -145,6 +156,7 @@ Future<FriendUser> _getFriend(String id, Timestamp addDate) async {
     regDate: regDate,
     addDate: addDate,
     finishedManga: finished,
+    image: image,
   );
 
   return result;

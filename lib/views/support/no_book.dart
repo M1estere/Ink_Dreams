@@ -25,7 +25,7 @@ class NoBookAnnounce extends StatelessWidget {
               'Sorry, a requested book was not found!',
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
-                fontSize: 25,
+                fontSize: 20,
                 fontWeight: FontWeight.w500,
               ),
             ),

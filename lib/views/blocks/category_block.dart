@@ -87,7 +87,7 @@ class CategoryBlock extends StatelessWidget {
                             title.capitalize(),
                             style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 30,
+                              fontSize: 22,
                               fontWeight: FontWeight.w500,
                               letterSpacing: 2,
                             ),
@@ -110,7 +110,7 @@ class CategoryBlock extends StatelessWidget {
                         '\t\t$desc',
                         style: const TextStyle(
                           color: Colors.grey,
-                          fontSize: 15,
+                          fontSize: 13,
                           fontWeight: FontWeight.w400,
                         ),
                         maxLines: 5,
@@ -193,7 +193,7 @@ class CategoryBlock extends StatelessWidget {
                           title.capitalize(),
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 30,
+                            fontSize: 22,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 2,
                           ),

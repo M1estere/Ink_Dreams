@@ -167,6 +167,7 @@ class _FindFriendViewState extends State<FindFriendView> {
                                     finished: users[index].finishedManga.length,
                                     nickname: users[index].nickname,
                                     regDate: users[index].regDate,
+                                    imagePath: users[index].image,
                                   );
                                 },
                                 scrollDirection: Axis.vertical,

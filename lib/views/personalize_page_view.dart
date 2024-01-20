@@ -66,7 +66,7 @@ class _PersonalizePageViewState extends State<PersonalizePageView> {
                   children: [
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.person,
                           color: Colors.red,
                           size: 22,
@@ -96,7 +96,7 @@ class _PersonalizePageViewState extends State<PersonalizePageView> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              CircleAvatar(
+                              const CircleAvatar(
                                 backgroundColor: Colors.red,
                                 radius: 45,
                                 child: CircleAvatar(
@@ -127,15 +127,15 @@ class _PersonalizePageViewState extends State<PersonalizePageView> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             child: TextField(
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 22,
                                 fontWeight: FontWeight.w400,
                                 letterSpacing: .5,
                               ),
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 helperText: 'Your nickname',
                                 helperStyle: TextStyle(
                                   color: Color(0xFFA2A2A2),
@@ -168,7 +168,7 @@ class _PersonalizePageViewState extends State<PersonalizePageView> {
                   borderRadius: BorderRadius.circular(15),
                   color: const Color(0xFF252525),
                 ),
-                child: SizedBox(
+                child: const SizedBox(
                   child: Center(
                     child: Text(
                       'LOG OUT',

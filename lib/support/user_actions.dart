@@ -5,9 +5,19 @@ import 'package:manga_reading/support/auth_provider.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/support/classes/manga_book_timed.dart';
 
+// account interaction
 Future setUserImage(String path) async {
   await FirebaseFirestore.instance.collection('users').doc(currentUser!.id).set(
     {'image': path},
+    SetOptions(
+      merge: true,
+    ),
+  );
+}
+
+Future updateNickname(String nickname) async {
+  await FirebaseFirestore.instance.collection('users').doc(currentUser!.id).set(
+    {'nickname': nickname},
     SetOptions(
       merge: true,
     ),

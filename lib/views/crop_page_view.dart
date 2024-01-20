@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:custom_image_crop/custom_image_crop.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:manga_reading/extensions/string_extension.dart';
 import 'package:manga_reading/support/auth_provider.dart';
 import 'package:manga_reading/support/user_actions.dart';
 
@@ -54,35 +53,40 @@ class _CropPageViewState extends State<CropPageView> {
           ),
         ),
         actions: [
-          TextButton(
-            onPressed: () async {
-              if (canSave == true) {
-                canSave = false;
+          canSave
+              ? TextButton(
+                  onPressed: () async {
+                    if (canSave == true) {
+                      setState(() {
+                        canSave = false;
+                      });
 
-                final image = await controller.onCropImage();
-                if (image != null) {
-                  Navigator.of(context).pop();
+                      final image = await controller.onCropImage();
+                      if (image != null) {
+                        Navigator.of(context).pop();
 
-                  Uint8List bodyBytes = image.bytes;
-                  String fileName = '${currentUser!.id}.jpg';
+                        Uint8List bodyBytes = image.bytes;
+                        String fileName = '${currentUser!.id}.jpg';
 
-                  Reference reference =
-                      FirebaseStorage.instance.ref().child('users_images');
+                        Reference reference = FirebaseStorage.instance
+                            .ref()
+                            .child('users_images');
 
-                  Reference imageToUpload = reference.child(fileName);
+                        Reference imageToUpload = reference.child(fileName);
 
-                  await imageToUpload.putData(bodyBytes);
-                  final imagePath = await imageToUpload.getDownloadURL();
+                        await imageToUpload.putData(bodyBytes);
+                        final imagePath = await imageToUpload.getDownloadURL();
 
-                  await setUserImage(imagePath);
-                }
-              }
-            },
-            child: Text(
-              'done'.toUpperCase(),
-              style: Theme.of(context).appBarTheme.titleTextStyle,
-            ),
-          ),
+                        await setUserImage(imagePath);
+                      }
+                    }
+                  },
+                  child: Text(
+                    'done'.toUpperCase(),
+                    style: Theme.of(context).appBarTheme.titleTextStyle,
+                  ),
+                )
+              : const Text(''),
         ],
       ),
       body: Column(

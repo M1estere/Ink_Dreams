@@ -34,7 +34,7 @@ Future<List<MangaBook>> getRandomManga(int amount) async {
     print('No data available.');
   }
 
-  return processList(amount, result).cast<MangaBook>();
+  return _processList(amount, result).cast<MangaBook>();
 }
 
 Future<List<AuthorBlock>> getRandomAuthor(int amount) async {
@@ -59,10 +59,10 @@ Future<List<AuthorBlock>> getRandomAuthor(int amount) async {
     print('No data available.');
   }
 
-  return processList(amount, result).cast<AuthorBlock>();
+  return _processList(amount, result).cast<AuthorBlock>();
 }
 
-List processList(int amount, List data) {
+List _processList(int amount, List data) {
   if (amount > data.length || amount <= 0) {
     print('Wrong values');
     return [];

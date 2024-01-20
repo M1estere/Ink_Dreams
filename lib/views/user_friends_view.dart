@@ -133,6 +133,7 @@ class _UserFriendsViewState extends State<UserFriendsView> {
                                         friends[index].finishedManga.length,
                                     nickname: friends[index].nickname,
                                     regDate: friends[index].regDate,
+                                    imagePath: friends[index].image,
                                   );
                                 },
                                 scrollDirection: Axis.vertical,

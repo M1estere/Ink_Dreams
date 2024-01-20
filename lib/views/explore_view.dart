@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
-import 'package:manga_reading/support/get_categories.dart';
+import 'package:manga_reading/support/get_manga.dart';
 import 'package:manga_reading/support/get_search_intro_page.dart';
 import 'package:manga_reading/views/blocks/category_block.dart';
 import 'package:manga_reading/views/blocks/explore_start_block.dart';
@@ -287,7 +287,7 @@ class _ExploreView extends State<ExploreView> {
               height: 10,
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * .8,
+              height: MediaQuery.of(context).size.height * .78,
               child: pageSections,
             ),
           ],
