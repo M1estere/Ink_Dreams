@@ -43,10 +43,10 @@ class _SearchResultsViewState extends State<SearchResultsView> {
                     context,
                   );
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back_ios,
                   size: 35,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ],
@@ -127,8 +127,8 @@ class _SearchResultsViewState extends State<SearchResultsView> {
                           children: [
                             Text(
                               'Results'.toUpperCase(),
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -176,11 +176,11 @@ class _SearchResultsViewState extends State<SearchResultsView> {
                             ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width * .8,
-                              child: const Text(
+                              child: Text(
                                 textAlign: TextAlign.center,
                                 'Type something to find!',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 25,
                                   fontWeight: FontWeight.w500,
                                 ),

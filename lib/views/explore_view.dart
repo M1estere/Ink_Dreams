@@ -154,8 +154,8 @@ class _ExploreView extends State<ExploreView> {
                         child: Text(
                           currentTitle,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
                             fontSize: 23,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 1.5,
@@ -235,7 +235,7 @@ class _ExploreView extends State<ExploreView> {
                       'MAIN',
                       style: TextStyle(
                         color: _currentSectionIndex == 0
-                            ? Colors.white
+                            ? Theme.of(context).primaryColor
                             : Colors.grey,
                         fontSize: _currentSectionIndex == 0 ? 20 : 18,
                         fontWeight: FontWeight.w500,
@@ -269,7 +269,7 @@ class _ExploreView extends State<ExploreView> {
                       'CATEGORIES',
                       style: TextStyle(
                         color: _currentSectionIndex == 1
-                            ? Colors.white
+                            ? Theme.of(context).primaryColor
                             : Colors.grey,
                         fontSize: _currentSectionIndex == 1 ? 20 : 18,
                         fontWeight: FontWeight.w500,

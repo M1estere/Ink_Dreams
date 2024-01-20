@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:manga_reading/extensions/string_extension.dart';
 import 'package:manga_reading/views/manga_page_view.dart';
-import 'package:page_transition/page_transition.dart';
 
 class RatedMangaBlock extends StatelessWidget {
   final String title;

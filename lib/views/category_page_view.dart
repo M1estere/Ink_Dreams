@@ -55,16 +55,16 @@ class _CategoryPageViewState extends State<CategoryPageView> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back_ios,
                   size: 35,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               Text(
                 widget.categoryTitle.toUpperCase(),
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
                   letterSpacing: 0,
@@ -75,11 +75,8 @@ class _CategoryPageViewState extends State<CategoryPageView> {
         ),
       ),
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Color(0xFF121212),
-          ),
           child: Padding(
             padding: const EdgeInsets.only(left: 10, right: 10, top: 5),
             child: Column(

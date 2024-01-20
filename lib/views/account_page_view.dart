@@ -7,7 +7,6 @@ import 'package:manga_reading/views/auth_page_view.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
 import 'package:manga_reading/views/user_friends_view.dart';
 import 'package:manga_reading/views/user_section_view.dart';
-import 'package:page_transition/page_transition.dart';
 
 class AccountPageView extends StatefulWidget {
   const AccountPageView({
@@ -63,8 +62,8 @@ class _AccountPageViewState extends State<AccountPageView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        margin: const EdgeInsets.symmetric(
-          vertical: 10,
+        margin: const EdgeInsets.only(
+          bottom: 10,
         ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -74,8 +73,8 @@ class _AccountPageViewState extends State<AccountPageView> {
             colors: [
               const Color(0xFF9D1515).withOpacity(.5),
               const Color(0xFFAD5B5B).withOpacity(.5),
-              const Color(0xFF121212),
-              const Color(0xFF121212),
+              Theme.of(context).secondaryHeaderColor,
+              Theme.of(context).secondaryHeaderColor,
             ],
           ),
         ),
@@ -110,15 +109,26 @@ class _AccountPageViewState extends State<AccountPageView> {
                               letterSpacing: 1.5,
                             ),
                           ),
-                          Text(
-                            'Since: ${DateFormat('dd/MM/yyyy').format(pageUser.registerDate.toDate())}',
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.5,
-                              height: 1,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.app_registration,
+                                size: 25,
+                                color: Colors.red,
+                              ),
+                              Text(
+                                DateFormat('dd/MM/yyyy')
+                                    .format(pageUser.registerDate.toDate()),
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.5,
+                                  height: 1,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

@@ -66,10 +66,10 @@ class _UserFriendsViewState extends State<UserFriendsView> {
                     type: PageTransitionType.rightToLeft),
               ).then((value) => refresh());
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.add,
               size: 40,
-              color: Colors.white,
+              color: Theme.of(context).primaryColor,
             ),
           ),
         ],
@@ -88,16 +88,16 @@ class _UserFriendsViewState extends State<UserFriendsView> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back_ios,
                   size: 35,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               Text(
                 'friends'.toUpperCase(),
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
                   letterSpacing: 0,
@@ -108,11 +108,8 @@ class _UserFriendsViewState extends State<UserFriendsView> {
         ),
       ),
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Color(0xFF121212),
-          ),
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 10,

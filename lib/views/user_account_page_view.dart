@@ -9,7 +9,6 @@ import 'package:manga_reading/views/blocks/rated_manga_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
 import 'package:manga_reading/views/support/no_books_by_request.dart';
 import 'package:manga_reading/views/user_section_view.dart';
-import 'package:page_transition/page_transition.dart';
 
 class UserAccountPageView extends StatefulWidget {
   final String id;
@@ -93,16 +92,16 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back_ios,
                   size: 35,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               Text(
                 pageUser.nickname.toUpperCase(),
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
                   letterSpacing: 0,
@@ -125,8 +124,8 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
               colors: [
                 const Color(0xFF9D1586).withOpacity(.5),
                 const Color(0xFF99498C).withOpacity(.5),
-                const Color(0xFF121212),
-                const Color(0xFF121212),
+                Theme.of(context).secondaryHeaderColor,
+                Theme.of(context).secondaryHeaderColor,
               ],
             ),
           ),
@@ -160,15 +159,26 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                 letterSpacing: 1.5,
                               ),
                             ),
-                            Text(
-                              'Since: ${DateFormat('dd/MM/yyyy').format(pageUser.registerDate.toDate())}',
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1.5,
-                                height: 1,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.app_registration,
+                                  size: 25,
+                                  color: Colors.red,
+                                ),
+                                Text(
+                                  DateFormat('dd/MM/yyyy')
+                                      .format(pageUser.registerDate.toDate()),
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.5,
+                                    height: 1,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -376,10 +386,10 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                             ? Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
+                                  Text(
                                     'Finished',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Theme.of(context).primaryColor,
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold,
                                     ),

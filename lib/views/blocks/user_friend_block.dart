@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:manga_reading/views/user_account_page_view.dart';
-import 'package:page_transition/page_transition.dart';
 
 class UserFriendBlock extends StatelessWidget {
   final String id;

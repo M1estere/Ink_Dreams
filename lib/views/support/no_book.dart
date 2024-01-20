@@ -20,11 +20,11 @@ class NoBookAnnounce extends StatelessWidget {
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width * .8,
-            child: const Text(
+            child: Text(
               textAlign: TextAlign.center,
               'Sorry, a requested book was not found!',
               style: TextStyle(
-                color: Colors.white,
+                color: Theme.of(context).primaryColor,
                 fontSize: 25,
                 fontWeight: FontWeight.w500,
               ),

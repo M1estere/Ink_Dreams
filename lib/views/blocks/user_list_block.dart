@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:manga_reading/support/user_actions.dart';
 import 'package:manga_reading/views/user_account_page_view.dart';
-import 'package:page_transition/page_transition.dart';
 
 class UserListBlock extends StatefulWidget {
   final String id;

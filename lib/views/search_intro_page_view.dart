@@ -56,7 +56,7 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
+        padding: const EdgeInsets.only(top: 0, left: 10, right: 10),
         child: SingleChildScrollView(
           child: !isLoading
               ? Column(
@@ -65,8 +65,8 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                   children: [
                     Text(
                       'Popular'.toUpperCase(),
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                       ),
@@ -88,8 +88,8 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                     ),
                     Text(
                       'Hottest'.toUpperCase(),
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                       ),

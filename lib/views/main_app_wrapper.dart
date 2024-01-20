@@ -28,16 +28,16 @@ class _MainWrapperState extends State<MainWrapper> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         leadingWidth: 180,
-        leading: const Row(
+        leading: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 10, top: 10),
+              padding: const EdgeInsets.only(left: 10, top: 10),
               child: Text(
                 'EXPLORE',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
                   letterSpacing: 0,
@@ -54,16 +54,16 @@ class _MainWrapperState extends State<MainWrapper> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         leadingWidth: 180,
-        leading: const Row(
+        leading: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 10, top: 10),
+              padding: const EdgeInsets.only(left: 10, top: 10),
               child: Text(
                 'SEARCH',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
                   letterSpacing: 0,
@@ -77,7 +77,7 @@ class _MainWrapperState extends State<MainWrapper> {
             padding: const EdgeInsets.only(right: 10, top: 10),
             child: ClipOval(
               child: Material(
-                color: Colors.white, // Button color
+                color: Theme.of(context).primaryColor, // Button color
                 child: InkWell(
                   splashColor: Colors.grey, // Splash color
                   onTap: () {
@@ -89,12 +89,12 @@ class _MainWrapperState extends State<MainWrapper> {
                       ),
                     );
                   },
-                  child: const SizedBox(
+                  child: SizedBox(
                     width: 43,
                     height: 43,
                     child: Icon(
                       Icons.search,
-                      color: Colors.black,
+                      color: Theme.of(context).secondaryHeaderColor,
                       size: 33,
                     ),
                   ),
@@ -112,16 +112,16 @@ class _MainWrapperState extends State<MainWrapper> {
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         leadingWidth: 180,
-        leading: const Row(
+        leading: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(left: 10, top: 10),
+              padding: const EdgeInsets.only(left: 10, top: 10),
               child: Text(
                 'ACCOUNT',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
                   letterSpacing: 0,
@@ -158,23 +158,29 @@ class _MainWrapperState extends State<MainWrapper> {
         },
         height: 60,
         backgroundColor: Colors.transparent,
-        buttonBackgroundColor: Colors.white,
+        buttonBackgroundColor: Theme.of(context).bottomAppBarTheme.color!,
         color: const Color(0xFF252525),
         items: [
           Icon(
             Icons.list,
             size: 35,
-            color: _currentPageIndex == 0 ? Colors.black : Colors.grey,
+            color: _currentPageIndex == 0
+                ? Theme.of(context).bottomAppBarTheme.shadowColor!
+                : Colors.grey,
           ),
           Icon(
             Icons.search,
             size: 35,
-            color: _currentPageIndex == 1 ? Colors.black : Colors.grey,
+            color: _currentPageIndex == 1
+                ? Theme.of(context).bottomAppBarTheme.shadowColor!
+                : Colors.grey,
           ),
           Icon(
             Icons.person,
             size: 35,
-            color: _currentPageIndex == 2 ? Colors.black : Colors.grey,
+            color: _currentPageIndex == 2
+                ? Theme.of(context).bottomAppBarTheme.shadowColor!
+                : Colors.grey,
           ),
         ],
       ),

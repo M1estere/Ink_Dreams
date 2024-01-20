@@ -59,16 +59,16 @@ class _FindFriendViewState extends State<FindFriendView> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_back_ios,
                   size: 35,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               Text(
                 'add friend'.toUpperCase(),
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
                   letterSpacing: 0,
@@ -79,11 +79,8 @@ class _FindFriendViewState extends State<FindFriendView> {
         ),
       ),
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
-          decoration: const BoxDecoration(
-            color: Color(0xFF121212),
-          ),
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 10,

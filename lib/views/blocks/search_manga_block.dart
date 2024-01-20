@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:manga_reading/views/manga_page_view.dart';
-import 'package:page_transition/page_transition.dart';
 
 class SearchMangaBlock extends StatelessWidget {
   final String title;
@@ -67,8 +66,8 @@ class SearchMangaBlock extends StatelessWidget {
                   Text(
                     title,
                     maxLines: 1,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
                       overflow: TextOverflow.ellipsis,
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
