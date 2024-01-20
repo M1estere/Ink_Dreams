@@ -109,10 +109,15 @@ class _ExploreView extends State<ExploreView> {
                       child: PageView.builder(
                         onPageChanged: (value) {
                           if (mounted) {
-                            setState(() {
-                              currentTitle = mangaBooks[value].title!;
-                              currentAuthor = mangaBooks[value].author!;
-                            });
+                            Future.delayed(
+                              Duration(milliseconds: 350),
+                              () {
+                                setState(() {
+                                  currentTitle = mangaBooks[value].title!;
+                                  currentAuthor = mangaBooks[value].author!;
+                                });
+                              },
+                            );
                           }
                         },
                         padEnds: false,
