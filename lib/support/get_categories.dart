@@ -12,7 +12,11 @@ Future<List<Category>> getCategories() async {
     List data = snapshot.value as List;
     for (var i = 0; i < data.length; i++) {
       CategoryBlockT block = CategoryBlockT.fromJson(data[i] as Map);
-      Category category = Category(name: block.name, link: block.link);
+      Category category = Category(
+        name: block.name,
+        link: block.link,
+        desc: block.desc,
+      );
 
       result.add(category);
     }

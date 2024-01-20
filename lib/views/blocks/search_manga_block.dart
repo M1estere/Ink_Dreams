@@ -20,9 +20,8 @@ class SearchMangaBlock extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          PageTransition(
-            type: PageTransitionType.rightToLeftWithFade,
-            child: MangaPageView(title: title),
+          MaterialPageRoute(
+            builder: (context) => MangaPageView(title: title),
           ),
         );
       },

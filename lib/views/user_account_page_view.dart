@@ -190,10 +190,8 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                   onTap: () {
                                     Navigator.push(
                                       context,
-                                      PageTransition(
-                                        type: PageTransitionType
-                                            .rightToLeftWithFade,
-                                        child: UserSectionView(
+                                      MaterialPageRoute(
+                                        builder: (context) => UserSectionView(
                                           id: widget.id,
                                           userName: pageUser.nickname,
                                           sectionName: 'reading',
@@ -255,10 +253,8 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                   onTap: () {
                                     Navigator.push(
                                       context,
-                                      PageTransition(
-                                        type: PageTransitionType
-                                            .rightToLeftWithFade,
-                                        child: UserSectionView(
+                                      MaterialPageRoute(
+                                        builder: (context) => UserSectionView(
                                           id: widget.id,
                                           userName: pageUser.nickname,
                                           sectionName: 'favourites',
@@ -320,10 +316,8 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                   onTap: () {
                                     Navigator.push(
                                       context,
-                                      PageTransition(
-                                        type: PageTransitionType
-                                            .rightToLeftWithFade,
-                                        child: UserSectionView(
+                                      MaterialPageRoute(
+                                        builder: (context) => UserSectionView(
                                           id: widget.id,
                                           userName: pageUser.nickname,
                                           sectionName: 'planned',

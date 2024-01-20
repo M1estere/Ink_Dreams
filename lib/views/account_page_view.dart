@@ -140,10 +140,9 @@ class _AccountPageViewState extends State<AccountPageView> {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    PageTransition(
-                                      type: PageTransitionType
-                                          .rightToLeftWithFade,
-                                      child: const UserFriendsView(),
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const UserFriendsView(),
                                     ),
                                   ).then((value) => refresh());
                                 },
@@ -201,10 +200,8 @@ class _AccountPageViewState extends State<AccountPageView> {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    PageTransition(
-                                      type: PageTransitionType
-                                          .rightToLeftWithFade,
-                                      child: UserSectionView(
+                                    MaterialPageRoute(
+                                      builder: (context) => UserSectionView(
                                         id: currentUser!.id,
                                         userName: pageUser.nickname,
                                         sectionName: 'reading',
@@ -266,10 +263,8 @@ class _AccountPageViewState extends State<AccountPageView> {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    PageTransition(
-                                      type: PageTransitionType
-                                          .rightToLeftWithFade,
-                                      child: UserSectionView(
+                                    MaterialPageRoute(
+                                      builder: (context) => UserSectionView(
                                         id: currentUser!.id,
                                         userName: pageUser.nickname,
                                         sectionName: 'favourites',
@@ -331,10 +326,8 @@ class _AccountPageViewState extends State<AccountPageView> {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    PageTransition(
-                                      type: PageTransitionType
-                                          .rightToLeftWithFade,
-                                      child: UserSectionView(
+                                    MaterialPageRoute(
+                                      builder: (context) => UserSectionView(
                                         id: currentUser!.id,
                                         userName: pageUser.nickname,
                                         sectionName: 'planned',
@@ -395,10 +388,8 @@ class _AccountPageViewState extends State<AccountPageView> {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    PageTransition(
-                                      type: PageTransitionType
-                                          .rightToLeftWithFade,
-                                      child: UserSectionView(
+                                    MaterialPageRoute(
+                                      builder: (context) => UserSectionView(
                                         id: currentUser!.id,
                                         userName: pageUser.nickname,
                                         sectionName: 'finished',

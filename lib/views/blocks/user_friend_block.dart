@@ -26,9 +26,8 @@ class UserFriendBlock extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          PageTransition(
-            type: PageTransitionType.rightToLeftWithFade,
-            child: UserAccountPageView(id: id),
+          MaterialPageRoute(
+            builder: (context) => UserAccountPageView(id: id),
           ),
         );
       },

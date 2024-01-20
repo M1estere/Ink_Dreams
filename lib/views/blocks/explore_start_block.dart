@@ -25,9 +25,8 @@ class _ExploreStartBlockState extends State<ExploreStartBlock> {
       onTap: () {
         Navigator.push(
           context,
-          PageTransition(
-            type: PageTransitionType.rightToLeftWithFade,
-            child: MangaPageView(title: widget.title),
+          MaterialPageRoute(
+            builder: (context) => MangaPageView(title: widget.title),
           ),
         );
       },

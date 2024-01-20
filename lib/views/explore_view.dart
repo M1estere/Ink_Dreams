@@ -10,19 +10,30 @@ import 'package:manga_reading/views/support/fetching_circle.dart';
 class Category {
   String? name;
   String? link;
+  String? desc;
 
-  Category({this.name, this.link});
+  Category({
+    this.name,
+    this.link,
+    this.desc,
+  });
 }
 
 class CategoryBlockT {
   String? name;
   String? link;
+  String? desc;
 
-  CategoryBlockT({this.name, this.link});
+  CategoryBlockT({
+    this.name,
+    this.link,
+    this.desc,
+  });
 
   CategoryBlockT.fromJson(Map<dynamic, dynamic> json) {
     name = json['name'];
     link = json['image_link'];
+    desc = json['description'];
   }
 }
 
@@ -117,6 +128,12 @@ class _ExploreView extends State<ExploreView> {
                                   .position.hasContentDimensions) {
                                 factor = 1 -
                                     (_mangaPagesController.page! - index).abs();
+                              } else {
+                                if (index == 0) {
+                                  factor = 1;
+                                } else {
+                                  factor = 0;
+                                }
                               }
 
                               return ExploreStartBlock(
@@ -173,6 +190,7 @@ class _ExploreView extends State<ExploreView> {
                 return CategoryBlock(
                   image: categories[index].link!,
                   title: categories[index].name!,
+                  desc: categories[index].desc!,
                 );
               },
               scrollDirection: Axis.vertical,

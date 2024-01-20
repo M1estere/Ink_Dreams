@@ -1,9 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:manga_reading/support/classes/author_block.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/support/get_search_intro_page.dart';
-import 'package:manga_reading/views/blocks/search_author_block.dart';
 import 'package:manga_reading/views/blocks/search_manga_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
 
@@ -19,7 +17,6 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
 
   List<MangaBook> popularManga = [];
   List<MangaBook> hottestManga = [];
-  List<AuthorBlock> authors = [];
 
   @override
   void initState() {
@@ -32,14 +29,8 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
             popularManga = value.sublist(0, (value.length / 2).round());
             hottestManga =
                 value.sublist((value.length / 2).round(), value.length);
-            getRandomAuthor(1).then((value) {
-              if (mounted) {
-                setState(() {
-                  authors = value;
-                  isLoading = false;
-                });
-              }
-            });
+
+            isLoading = false;
           });
         }
       },
@@ -57,14 +48,8 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                 popularManga = value.sublist(0, (value.length / 2).round());
                 hottestManga =
                     value.sublist((value.length / 2).round(), value.length);
-                getRandomAuthor(1).then((value) {
-                  if (mounted) {
-                    setState(() {
-                      authors = value;
-                      isLoading = false;
-                    });
-                  }
-                });
+
+                isLoading = false;
               });
             }
           },
@@ -111,6 +96,7 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
+                      margin: EdgeInsets.only(bottom: 20),
                       height: 360,
                       child: ListView.builder(
                         itemCount: hottestManga.length,
@@ -125,29 +111,7 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                       ),
                     ),
                     const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Best Authors'.toUpperCase(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      height: 250,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: authors.length,
-                        itemBuilder: (context, index) {
-                          return SearchAuthorBlock(
-                            author: authors[index].name!,
-                            image: authors[index].image!,
-                          );
-                        },
-                      ),
+                      height: 20,
                     ),
                   ],
                 )

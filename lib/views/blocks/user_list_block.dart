@@ -64,9 +64,8 @@ class _UserListBlockState extends State<UserListBlock> {
       onTap: () {
         Navigator.push(
           context,
-          PageTransition(
-            type: PageTransitionType.rightToLeftWithFade,
-            child: UserAccountPageView(id: widget.id),
+          MaterialPageRoute(
+            builder: (context) => UserAccountPageView(id: widget.id),
           ),
         );
       },
