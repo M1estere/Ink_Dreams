@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:manga_reading/support/auth_provider.dart';
 import 'package:manga_reading/views/account_page_view.dart';
 import 'package:manga_reading/views/explore_view.dart';
 import 'package:manga_reading/views/search_intro_page_view.dart';
 import 'package:manga_reading/views/search_results_view.dart';
+import 'package:manga_reading/views/settings_page_view.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -81,13 +83,13 @@ class _MainWrapperState extends State<MainWrapper> {
                     );
                   },
                   child: SizedBox(
-                    width: 43,
-                    height: 43,
+                    width: 37,
+                    height: 37,
                     child: Icon(
                       Icons.search,
                       color:
                           Theme.of(context).appBarTheme.actionsIconTheme!.color,
-                      size: 33,
+                      size: 30,
                     ),
                   ),
                 ),
@@ -116,6 +118,40 @@ class _MainWrapperState extends State<MainWrapper> {
             ),
           ],
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10, top: 10),
+            child: ClipOval(
+              child: Material(
+                color: Theme.of(context)
+                    .appBarTheme
+                    .foregroundColor, // Button color
+                child: InkWell(
+                  splashColor: Colors.grey, // Splash color
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeftWithFade,
+                        child: SettingsPageView(),
+                      ),
+                    );
+                  },
+                  child: SizedBox(
+                    width: 37,
+                    height: 37,
+                    child: Icon(
+                      Icons.settings,
+                      color:
+                          Theme.of(context).appBarTheme.actionsIconTheme!.color,
+                      size: 30,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     ];
 

@@ -30,6 +30,7 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
     nickname: '',
     registerDate: Timestamp.fromDate(DateTime.now()),
     friends: 0,
+    imagePath: '',
   );
   bool isLoading = true;
 

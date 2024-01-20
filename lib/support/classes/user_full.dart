@@ -6,6 +6,7 @@ class UserFull {
   final String nickname;
   final Timestamp registerDate;
   final int friends;
+  final String imagePath;
 
   const UserFull({
     required this.id,
@@ -13,5 +14,6 @@ class UserFull {
     required this.nickname,
     required this.registerDate,
     required this.friends,
+    required this.imagePath,
   });
 }

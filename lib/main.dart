@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:manga_reading/firebase_options.dart';
 import 'package:manga_reading/support/auth_provider.dart';
 import 'package:manga_reading/views/auth_page_view.dart';
+import 'package:manga_reading/views/crop_page_view.dart';
 import 'package:manga_reading/views/main_app_wrapper.dart';
 
 void main() async {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Manga Reader',
+      title: 'Ink Dreams',
       theme: ThemeData(
         primaryColor: Colors.black,
         secondaryHeaderColor: Colors.white,

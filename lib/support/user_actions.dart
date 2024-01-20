@@ -5,6 +5,15 @@ import 'package:manga_reading/support/auth_provider.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/support/classes/manga_book_timed.dart';
 
+Future setUserImage(String path) async {
+  await FirebaseFirestore.instance.collection('users').doc(currentUser!.id).set(
+    {'image': path},
+    SetOptions(
+      merge: true,
+    ),
+  );
+}
+
 // manga interaction
 Future addRating(String title, int rating) async {
   bool add = true;

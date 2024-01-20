@@ -94,6 +94,7 @@ Future<UserFull> getFullUserInfo(String id) async {
   String email = '';
   Timestamp regDate = Timestamp.fromDate(DateTime.now());
   int friendsAmount = 0;
+  String imagePath = '';
   QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('users')
       .where('id', isEqualTo: id)
@@ -114,6 +115,9 @@ Future<UserFull> getFullUserInfo(String id) async {
       if (data.containsKey('friends')) {
         friendsAmount = data['friends'].length;
       }
+      if (data.containsKey('image')) {
+        imagePath = data['image'];
+      }
     }
   }
 
@@ -123,6 +127,7 @@ Future<UserFull> getFullUserInfo(String id) async {
     nickname: nickname,
     registerDate: regDate,
     friends: friendsAmount,
+    imagePath: imagePath,
   );
 
   return result;
