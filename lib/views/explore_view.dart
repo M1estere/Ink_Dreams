@@ -1,41 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:manga_reading/support/classes/category_block.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
 import 'package:manga_reading/support/get_manga.dart';
 import 'package:manga_reading/support/get_search_intro_page.dart';
 import 'package:manga_reading/views/blocks/category_block.dart';
 import 'package:manga_reading/views/blocks/explore_start_block.dart';
 import 'package:manga_reading/views/support/fetching_circle.dart';
-
-class Category {
-  String? name;
-  String? link;
-  String? desc;
-
-  Category({
-    this.name,
-    this.link,
-    this.desc,
-  });
-}
-
-class CategoryBlockT {
-  String? name;
-  String? link;
-  String? desc;
-
-  CategoryBlockT({
-    this.name,
-    this.link,
-    this.desc,
-  });
-
-  CategoryBlockT.fromJson(Map<dynamic, dynamic> json) {
-    name = json['name'];
-    link = json['image_link'];
-    desc = json['description'];
-  }
-}
 
 class ExploreView extends StatefulWidget {
   const ExploreView({super.key});
@@ -45,11 +16,11 @@ class ExploreView extends StatefulWidget {
 }
 
 class _ExploreView extends State<ExploreView> {
-  bool isLoading = true;
-  List<MangaBook> mangaBooks = [];
+  List<MangaBook> _mangaBooks = [];
+  bool _isLoading = true;
 
-  String currentTitle = '';
-  String currentAuthor = '';
+  String _currentTitle = '';
+  String _currentAuthor = '';
 
   final PageController _mangaPagesController =
       PageController(viewportFraction: .95);
@@ -79,12 +50,12 @@ class _ExploreView extends State<ExploreView> {
     getRandomManga(3).then((value) {
       if (mounted) {
         setState(() {
-          isLoading = false;
+          _isLoading = false;
 
-          mangaBooks = value;
+          _mangaBooks = value;
 
-          currentTitle = mangaBooks[0].title!;
-          currentAuthor = mangaBooks[0].author!;
+          _currentTitle = _mangaBooks[0].title!;
+          _currentAuthor = _mangaBooks[0].author!;
         });
       }
     });
@@ -96,7 +67,7 @@ class _ExploreView extends State<ExploreView> {
       index: _currentSectionIndex,
       children: [
         // main section
-        !isLoading
+        !_isLoading
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,11 +81,11 @@ class _ExploreView extends State<ExploreView> {
                         onPageChanged: (value) {
                           if (mounted) {
                             Future.delayed(
-                              Duration(milliseconds: 350),
+                              const Duration(milliseconds: 350),
                               () {
                                 setState(() {
-                                  currentTitle = mangaBooks[value].title!;
-                                  currentAuthor = mangaBooks[value].author!;
+                                  _currentTitle = _mangaBooks[value].title!;
+                                  _currentAuthor = _mangaBooks[value].author!;
                                 });
                               },
                             );
@@ -142,9 +113,9 @@ class _ExploreView extends State<ExploreView> {
                               }
 
                               return ExploreStartBlock(
-                                title: mangaBooks[index].title!,
+                                title: _mangaBooks[index].title!,
                                 factor: factor,
-                                image: mangaBooks[index].image!,
+                                image: _mangaBooks[index].image!,
                               );
                             },
                           );
@@ -160,7 +131,7 @@ class _ExploreView extends State<ExploreView> {
                     children: [
                       FittedBox(
                         child: Text(
-                          currentTitle,
+                          _currentTitle,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
@@ -172,7 +143,7 @@ class _ExploreView extends State<ExploreView> {
                       ),
                       FittedBox(
                         child: Text(
-                          currentAuthor,
+                          _currentAuthor,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.grey[600],

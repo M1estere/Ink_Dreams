@@ -1,6 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:manga_reading/support/classes/category_block.dart';
 import 'package:manga_reading/support/classes/manga_book.dart';
-import 'package:manga_reading/views/explore_view.dart';
 
 Future<List<MangaBook>> getMangaByAuthor(String authorName) async {
   List<MangaBook> result = [];

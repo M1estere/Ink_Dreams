@@ -14,8 +14,8 @@ class _PersonalizePageViewState extends State<PersonalizePageView> {
       appBar: AppBar(
         toolbarHeight: 55,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
         leadingWidth: MediaQuery.of(context).size.width * .6,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),

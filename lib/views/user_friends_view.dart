@@ -17,8 +17,8 @@ class UserFriendsView extends StatefulWidget {
 }
 
 class _UserFriendsViewState extends State<UserFriendsView> {
-  List<FriendUser> friends = [];
-  bool isLoading = true;
+  List<FriendUser> _friends = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -27,8 +27,8 @@ class _UserFriendsViewState extends State<UserFriendsView> {
     getFriends().then((value) {
       if (mounted) {
         setState(() {
-          isLoading = false;
-          friends = value;
+          _isLoading = false;
+          _friends = value;
         });
       }
     });
@@ -37,14 +37,14 @@ class _UserFriendsViewState extends State<UserFriendsView> {
   refresh() {
     if (mounted) {
       setState(() {
-        isLoading = true;
+        _isLoading = true;
       });
 
       getFriends().then((value) {
         if (mounted) {
           setState(() {
-            isLoading = false;
-            friends = value;
+            _isLoading = false;
+            _friends = value;
           });
         }
       });
@@ -75,8 +75,8 @@ class _UserFriendsViewState extends State<UserFriendsView> {
         ],
         toolbarHeight: 55,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
         leadingWidth: MediaQuery.of(context).size.width * .75,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),
@@ -118,22 +118,22 @@ class _UserFriendsViewState extends State<UserFriendsView> {
             child: Column(
               children: [
                 Expanded(
-                  child: !isLoading
-                      ? friends.isNotEmpty
+                  child: !_isLoading
+                      ? _friends.isNotEmpty
                           ? Container(
                               padding: const EdgeInsets.symmetric(vertical: 20),
                               margin: const EdgeInsets.only(bottom: 20),
                               child: ListView.builder(
-                                itemCount: friends.length,
+                                itemCount: _friends.length,
                                 itemBuilder: (context, index) {
                                   return UserFriendBlock(
-                                    id: friends[index].id,
-                                    addDate: friends[index].addDate,
+                                    id: _friends[index].id,
+                                    addDate: _friends[index].addDate,
                                     finished:
-                                        friends[index].finishedManga.length,
-                                    nickname: friends[index].nickname,
-                                    regDate: friends[index].regDate,
-                                    imagePath: friends[index].image,
+                                        _friends[index].finishedManga.length,
+                                    nickname: _friends[index].nickname,
+                                    regDate: _friends[index].regDate,
+                                    imagePath: _friends[index].image,
                                   );
                                 },
                                 scrollDirection: Axis.vertical,

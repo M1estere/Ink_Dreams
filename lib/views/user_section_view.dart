@@ -23,8 +23,8 @@ class UserSectionView extends StatefulWidget {
 }
 
 class _UserSectionViewState extends State<UserSectionView> {
-  List mangaBooks = [];
-  bool isLoading = true;
+  List _mangaBooks = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -34,8 +34,8 @@ class _UserSectionViewState extends State<UserSectionView> {
       getFriendManga(widget.id, widget.sectionName).then((value) {
         if (mounted) {
           setState(() {
-            mangaBooks = value;
-            isLoading = false;
+            _mangaBooks = value;
+            _isLoading = false;
           });
         }
       });
@@ -43,8 +43,8 @@ class _UserSectionViewState extends State<UserSectionView> {
       getMangaByUserSection(widget.id, widget.sectionName).then((value) {
         if (mounted) {
           setState(() {
-            mangaBooks = value;
-            isLoading = false;
+            _mangaBooks = value;
+            _isLoading = false;
           });
         }
       });
@@ -54,15 +54,15 @@ class _UserSectionViewState extends State<UserSectionView> {
   refresh() {
     if (mounted) {
       setState(() {
-        isLoading = true;
+        _isLoading = true;
       });
 
       if (widget.sectionName.contains('finished')) {
         getFriendManga(widget.id, widget.sectionName).then((value) {
           if (mounted) {
             setState(() {
-              mangaBooks = value;
-              isLoading = false;
+              _mangaBooks = value;
+              _isLoading = false;
             });
           }
         });
@@ -70,8 +70,8 @@ class _UserSectionViewState extends State<UserSectionView> {
         getMangaByUserSection(widget.id, widget.sectionName).then((value) {
           if (mounted) {
             setState(() {
-              mangaBooks = value;
-              isLoading = false;
+              _mangaBooks = value;
+              _isLoading = false;
             });
           }
         });
@@ -86,8 +86,8 @@ class _UserSectionViewState extends State<UserSectionView> {
       appBar: AppBar(
         toolbarHeight: 55,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
         leadingWidth: MediaQuery.of(context).size.width * .9,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),
@@ -131,8 +131,8 @@ class _UserSectionViewState extends State<UserSectionView> {
               horizontal: 10,
               vertical: 10,
             ),
-            child: !isLoading
-                ? mangaBooks.isNotEmpty
+            child: !_isLoading
+                ? _mangaBooks.isNotEmpty
                     ? Column(
                         children: [
                           Expanded(
@@ -140,30 +140,33 @@ class _UserSectionViewState extends State<UserSectionView> {
                               padding: const EdgeInsets.symmetric(vertical: 20),
                               margin: const EdgeInsets.only(bottom: 20),
                               child: ListView.builder(
-                                itemCount: mangaBooks.length,
+                                itemCount: _mangaBooks.length,
                                 itemBuilder: (context, index) {
                                   return !widget.sectionName
                                           .contains('finished')
                                       ? UserSectionBlock(
-                                          title: mangaBooks[index].title!,
-                                          desc: mangaBooks[index].desc!,
-                                          addDate: mangaBooks[index].addTime!,
-                                          chapters: mangaBooks[index].chapters!,
-                                          status: mangaBooks[index].status!,
-                                          author: mangaBooks[index].author!,
+                                          title: _mangaBooks[index].title!,
+                                          desc: _mangaBooks[index].desc!,
+                                          addDate: _mangaBooks[index].addTime!,
+                                          chapters:
+                                              _mangaBooks[index].chapters!,
+                                          status: _mangaBooks[index].status!,
+                                          author: _mangaBooks[index].author!,
                                           updateFunc: refresh,
-                                          image: mangaBooks[index].image!,
+                                          image: _mangaBooks[index].image!,
                                         )
                                       : RatedMangaBlock(
                                           finishDate:
-                                              mangaBooks[index].addTime!,
-                                          title: mangaBooks[index].title!,
-                                          chapters: mangaBooks[index].chapters!,
-                                          status: mangaBooks[index].status!,
-                                          author: mangaBooks[index].author!,
-                                          image: mangaBooks[index].image!,
-                                          userRate: mangaBooks[index].userRate!,
-                                          desc: mangaBooks[index].desc!,
+                                              _mangaBooks[index].addTime!,
+                                          title: _mangaBooks[index].title!,
+                                          chapters:
+                                              _mangaBooks[index].chapters!,
+                                          status: _mangaBooks[index].status!,
+                                          author: _mangaBooks[index].author!,
+                                          image: _mangaBooks[index].image!,
+                                          userRate:
+                                              _mangaBooks[index].userRate!,
+                                          desc: _mangaBooks[index].desc!,
                                           updateFunc: refresh,
                                         );
                                 },

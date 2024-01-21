@@ -22,9 +22,9 @@ class UserAccountPageView extends StatefulWidget {
 }
 
 class _UserAccountPageViewState extends State<UserAccountPageView> {
-  List<RatedMangaBook> mangaBooks = [];
+  List<RatedMangaBook> _mangaBooks = [];
 
-  UserFull pageUser = UserFull(
+  UserFull _pageUser = UserFull(
     id: '',
     email: '',
     nickname: '',
@@ -32,7 +32,8 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
     friends: 0,
     imagePath: '',
   );
-  bool isLoading = true;
+
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -41,14 +42,14 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
     getFullUserInfo(widget.id).then((value) {
       if (mounted) {
         setState(() {
-          pageUser = value;
+          _pageUser = value;
         });
 
         getFriendManga(widget.id, 'finished').then((value) {
           if (mounted) {
             setState(() {
-              mangaBooks = value;
-              isLoading = false;
+              _mangaBooks = value;
+              _isLoading = false;
             });
           }
         });
@@ -59,14 +60,14 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
   refresh() {
     if (mounted) {
       setState(() {
-        isLoading = true;
+        _isLoading = true;
       });
 
       getFullUserInfo(widget.id).then((value) {
         if (mounted) {
           setState(() {
-            pageUser = value;
-            isLoading = false;
+            _pageUser = value;
+            _isLoading = false;
           });
         }
       });
@@ -80,8 +81,8 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
       appBar: AppBar(
         toolbarHeight: 55,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
         leadingWidth: MediaQuery.of(context).size.width * .7,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),
@@ -100,7 +101,7 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                 ),
               ),
               Text(
-                pageUser.nickname.toUpperCase(),
+                _pageUser.nickname.toUpperCase(),
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
@@ -126,12 +127,12 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                 colors: [
                   Colors.pink.withOpacity(.5),
                   const Color(0xFFE67FA1).withOpacity(.5),
-                  Theme.of(context).secondaryHeaderColor,
-                  Theme.of(context).secondaryHeaderColor,
+                  Theme.of(context).scaffoldBackgroundColor,
+                  Theme.of(context).scaffoldBackgroundColor,
                 ],
               ),
             ),
-            child: !isLoading
+            child: !_isLoading
                 ? Padding(
                     padding:
                         const EdgeInsets.only(left: 10, right: 10, top: 15),
@@ -142,19 +143,38 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                           height: MediaQuery.of(context).size.height * .29,
                           child: Column(
                             children: [
-                              const CircleAvatar(
+                              CircleAvatar(
                                 radius: 70,
                                 backgroundColor: Colors.white,
                                 child: CircleAvatar(
                                   radius: 60,
                                   backgroundColor: Colors.red,
+                                  backgroundImage: Image.network(
+                                    _pageUser.imagePath,
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      } else {
+                                        return const Center(
+                                          child: SizedBox(
+                                            width: 30,
+                                            height: 30,
+                                            child: CircularProgressIndicator(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  ).image,
                                 ),
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
                               Text(
-                                pageUser.nickname,
+                                _pageUser.nickname,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 25,
@@ -171,8 +191,8 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                     color: Colors.red,
                                   ),
                                   Text(
-                                    DateFormat('dd/MM/yyyy')
-                                        .format(pageUser.registerDate.toDate()),
+                                    DateFormat('dd/MM/yyyy').format(
+                                        _pageUser.registerDate.toDate()),
                                     style: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 18,
@@ -206,7 +226,7 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                         MaterialPageRoute(
                                           builder: (context) => UserSectionView(
                                             id: widget.id,
-                                            userName: pageUser.nickname,
+                                            userName: _pageUser.nickname,
                                             sectionName: 'reading',
                                           ),
                                         ),
@@ -241,7 +261,7 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                                   style: TextStyle(
                                                     color: Colors.grey,
                                                     fontSize: 25,
-                                                    fontWeight: FontWeight.w500,
+                                                    fontWeight: FontWeight.w400,
                                                     letterSpacing: 2,
                                                   ),
                                                 )
@@ -269,7 +289,7 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                         MaterialPageRoute(
                                           builder: (context) => UserSectionView(
                                             id: widget.id,
-                                            userName: pageUser.nickname,
+                                            userName: _pageUser.nickname,
                                             sectionName: 'favourites',
                                           ),
                                         ),
@@ -304,7 +324,7 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                                   style: TextStyle(
                                                     color: Colors.grey,
                                                     fontSize: 25,
-                                                    fontWeight: FontWeight.w500,
+                                                    fontWeight: FontWeight.w400,
                                                     letterSpacing: 2,
                                                   ),
                                                 )
@@ -332,7 +352,7 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                         MaterialPageRoute(
                                           builder: (context) => UserSectionView(
                                             id: widget.id,
-                                            userName: pageUser.nickname,
+                                            userName: _pageUser.nickname,
                                             sectionName: 'planned',
                                           ),
                                         ),
@@ -367,7 +387,7 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                                   style: TextStyle(
                                                     color: Colors.grey,
                                                     fontSize: 25,
-                                                    fontWeight: FontWeight.w500,
+                                                    fontWeight: FontWeight.w400,
                                                     letterSpacing: 2,
                                                   ),
                                                 )
@@ -388,7 +408,7 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * .4,
-                          child: mangaBooks.isNotEmpty
+                          child: _mangaBooks.isNotEmpty
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -408,19 +428,19 @@ class _UserAccountPageViewState extends State<UserAccountPageView> {
                                         itemBuilder: (context, index) {
                                           return RatedMangaBlock(
                                             finishDate:
-                                                mangaBooks[index].addTime!,
-                                            title: mangaBooks[index].title!,
+                                                _mangaBooks[index].addTime!,
+                                            title: _mangaBooks[index].title!,
                                             chapters:
-                                                mangaBooks[index].chapters!,
-                                            status: mangaBooks[index].status!,
-                                            author: mangaBooks[index].author!,
-                                            image: mangaBooks[index].image!,
+                                                _mangaBooks[index].chapters!,
+                                            status: _mangaBooks[index].status!,
+                                            author: _mangaBooks[index].author!,
+                                            image: _mangaBooks[index].image!,
                                             userRate:
-                                                mangaBooks[index].userRate!,
-                                            desc: mangaBooks[index].desc!,
+                                                _mangaBooks[index].userRate!,
+                                            desc: _mangaBooks[index].desc!,
                                           );
                                         },
-                                        itemCount: mangaBooks.length,
+                                        itemCount: _mangaBooks.length,
                                       ),
                                     ),
                                   ],

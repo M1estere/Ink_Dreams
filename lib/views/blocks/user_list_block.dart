@@ -25,8 +25,8 @@ class UserListBlock extends StatefulWidget {
 }
 
 class _UserListBlockState extends State<UserListBlock> {
-  bool isInFriendList = false;
-  bool isLoading = true;
+  bool _isInFriendList = false;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -35,8 +35,8 @@ class _UserListBlockState extends State<UserListBlock> {
     idIsFriend(widget.id).then((value) {
       if (mounted) {
         setState(() {
-          isLoading = false;
-          isInFriendList = value;
+          _isLoading = false;
+          _isInFriendList = value;
         });
       }
     });
@@ -45,14 +45,14 @@ class _UserListBlockState extends State<UserListBlock> {
   refresh() {
     if (mounted) {
       setState(() {
-        isLoading = true;
+        _isLoading = true;
       });
 
       idIsFriend(widget.id).then((value) {
         if (mounted) {
           setState(() {
-            isLoading = false;
-            isInFriendList = value;
+            _isLoading = false;
+            _isInFriendList = value;
           });
         }
       });
@@ -205,7 +205,7 @@ class _UserListBlockState extends State<UserListBlock> {
                       ),
                     ],
                   ),
-                  !isLoading
+                  !_isLoading
                       ? IconButton(
                           onPressed: () {
                             addToFriends(widget.id).then((value) {
@@ -217,7 +217,7 @@ class _UserListBlockState extends State<UserListBlock> {
                             });
                           },
                           icon: Icon(
-                            !isInFriendList ? Icons.add : Icons.check,
+                            !_isInFriendList ? Icons.add : Icons.check,
                             size: 50,
                             color: Theme.of(context).primaryColor,
                           ),

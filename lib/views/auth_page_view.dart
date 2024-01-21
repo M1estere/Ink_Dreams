@@ -11,37 +11,38 @@ class AuthPageView extends StatefulWidget {
 }
 
 class _AuthPageViewState extends State<AuthPageView> {
-  TextEditingController registerNickname = TextEditingController();
-  TextEditingController registerEmail = TextEditingController();
-  TextEditingController registerPassword = TextEditingController();
-  TextEditingController registerConfirmPassword = TextEditingController();
+  final TextEditingController _registerNickname = TextEditingController();
+  final TextEditingController _registerEmail = TextEditingController();
+  final TextEditingController _registerPassword = TextEditingController();
+  final TextEditingController _registerConfirmPassword =
+      TextEditingController();
 
-  TextEditingController loginEmail = TextEditingController();
-  TextEditingController loginPassword = TextEditingController();
+  final TextEditingController _loginEmail = TextEditingController();
+  final TextEditingController _loginPassword = TextEditingController();
 
-  PageController pageController = PageController();
-  bool signInOpened = true;
+  final PageController _pageController = PageController();
+  bool _signInOpened = true;
 
-  bool regPasswordVisible = false;
-  bool logPasswordVisible = false;
+  bool _regPasswordVisible = false;
+  bool _logPasswordVisible = false;
 
-  String regErrorText = '';
-  bool hasRegError = false;
+  String _regErrorText = '';
+  bool _hasRegError = false;
 
-  String logErrorText = '';
-  bool hasLogError = false;
+  String _logErrorText = '';
+  bool _hasLogError = false;
 
   @override
   void dispose() {
     super.dispose();
 
-    registerNickname.dispose();
-    registerEmail.dispose();
-    registerPassword.dispose();
-    registerConfirmPassword.dispose();
+    _registerNickname.dispose();
+    _registerEmail.dispose();
+    _registerPassword.dispose();
+    _registerConfirmPassword.dispose();
 
-    loginEmail.dispose();
-    loginPassword.dispose();
+    _loginEmail.dispose();
+    _loginPassword.dispose();
   }
 
   @override
@@ -80,8 +81,8 @@ class _AuthPageViewState extends State<AuthPageView> {
                     onTap: () {
                       if (mounted) {
                         setState(() {
-                          signInOpened = true;
-                          pageController.animateToPage(
+                          _signInOpened = true;
+                          _pageController.animateToPage(
                             0,
                             curve: Curves.decelerate,
                             duration: const Duration(milliseconds: 300),
@@ -95,18 +96,18 @@ class _AuthPageViewState extends State<AuthPageView> {
                           bottom: BorderSide(
                             width: 2,
                             color:
-                                signInOpened ? Colors.red : Colors.transparent,
+                                _signInOpened ? Colors.red : Colors.transparent,
                           ),
                         ),
                       ),
                       child: Text(
                         'SIGN IN',
                         style: TextStyle(
-                          color: signInOpened
+                          color: _signInOpened
                               ? Theme.of(context).primaryColor
                               : Colors.grey,
                           fontWeight: FontWeight.w500,
-                          fontSize: signInOpened ? 22 : 20,
+                          fontSize: _signInOpened ? 22 : 20,
                           letterSpacing: 0,
                         ),
                       ),
@@ -119,8 +120,8 @@ class _AuthPageViewState extends State<AuthPageView> {
                     onTap: () {
                       if (mounted) {
                         setState(() {
-                          signInOpened = false;
-                          pageController.animateToPage(
+                          _signInOpened = false;
+                          _pageController.animateToPage(
                             1,
                             curve: Curves.decelerate,
                             duration: const Duration(milliseconds: 300),
@@ -133,19 +134,20 @@ class _AuthPageViewState extends State<AuthPageView> {
                         border: Border(
                           bottom: BorderSide(
                             width: 2,
-                            color:
-                                !signInOpened ? Colors.red : Colors.transparent,
+                            color: !_signInOpened
+                                ? Colors.red
+                                : Colors.transparent,
                           ),
                         ),
                       ),
                       child: Text(
                         'SIGN UP',
                         style: TextStyle(
-                          color: !signInOpened
+                          color: !_signInOpened
                               ? Theme.of(context).primaryColor
                               : Colors.grey,
                           fontWeight: FontWeight.w500,
-                          fontSize: signInOpened ? 22 : 20,
+                          fontSize: _signInOpened ? 22 : 20,
                           letterSpacing: 0,
                         ),
                       ),
@@ -163,11 +165,11 @@ class _AuthPageViewState extends State<AuthPageView> {
                 onPageChanged: (value) {
                   if (mounted) {
                     setState(() {
-                      signInOpened = value == 1 ? false : true;
+                      _signInOpened = value == 1 ? false : true;
                     });
                   }
                 },
-                controller: pageController,
+                controller: _pageController,
                 pageSnapping: true,
                 scrollDirection: Axis.horizontal,
                 children: [
@@ -201,7 +203,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: loginEmail,
+                              controller: _loginEmail,
                               textAlignVertical: TextAlignVertical.center,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
@@ -266,7 +268,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: loginPassword,
+                              controller: _loginPassword,
                               textAlignVertical: TextAlignVertical.center,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
@@ -274,7 +276,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 fontWeight: FontWeight.w400,
                                 letterSpacing: .5,
                               ),
-                              obscureText: logPasswordVisible ? false : true,
+                              obscureText: _logPasswordVisible ? false : true,
                               enableSuggestions: false,
                               autocorrect: false,
                               decoration: InputDecoration(
@@ -306,7 +308,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                                     .hintStyle,
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    logPasswordVisible
+                                    _logPasswordVisible
                                         ? Icons.visibility
                                         : Icons.visibility_off,
                                     color: Colors.grey,
@@ -315,8 +317,8 @@ class _AuthPageViewState extends State<AuthPageView> {
                                   onPressed: () {
                                     if (mounted) {
                                       setState(() {
-                                        logPasswordVisible =
-                                            !logPasswordVisible;
+                                        _logPasswordVisible =
+                                            !_logPasswordVisible;
                                       });
                                     }
                                   },
@@ -335,20 +337,20 @@ class _AuthPageViewState extends State<AuthPageView> {
                             splashColor: Colors.red.withOpacity(.6),
                             borderRadius: BorderRadius.circular(20),
                             onTap: () {
-                              if (loginEmail.text.trim().isEmpty ||
-                                  loginPassword.text.trim().isEmpty) {
+                              if (_loginEmail.text.trim().isEmpty ||
+                                  _loginPassword.text.trim().isEmpty) {
                                 if (mounted) {
                                   setState(() {
-                                    hasLogError = true;
-                                    logErrorText = 'Fill all fields';
+                                    _hasLogError = true;
+                                    _logErrorText = 'Fill all fields';
                                   });
                                 }
                                 return;
                               }
 
                               signIn(
-                                loginEmail.text.trim(),
-                                loginPassword.text.trim(),
+                                _loginEmail.text.trim(),
+                                _loginPassword.text.trim(),
                               ).then(
                                 (value) {
                                   if (mounted) {
@@ -365,26 +367,27 @@ class _AuthPageViewState extends State<AuthPageView> {
                                         break;
                                       case 1:
                                         setState(() {
-                                          hasLogError = true;
-                                          logErrorText = 'User not found';
+                                          _hasLogError = true;
+                                          _logErrorText = 'User not found';
                                         });
                                         break;
                                       case 2:
                                         setState(() {
-                                          hasLogError = true;
-                                          logErrorText = 'Wrong password';
+                                          _hasLogError = true;
+                                          _logErrorText = 'Wrong password';
                                         });
                                         break;
                                       case 3:
                                         setState(() {
-                                          hasLogError = true;
-                                          logErrorText = 'Invalid email';
+                                          _hasLogError = true;
+                                          _logErrorText = 'Invalid email';
                                         });
                                         break;
                                       case 4:
                                         setState(() {
-                                          hasLogError = true;
-                                          logErrorText = 'Something went wrong';
+                                          _hasLogError = true;
+                                          _logErrorText =
+                                              'Something went wrong';
                                         });
                                         break;
                                     }
@@ -409,14 +412,14 @@ class _AuthPageViewState extends State<AuthPageView> {
                             ),
                           ),
                         ),
-                        hasLogError
+                        _hasLogError
                             ? Column(
                                 children: [
                                   const SizedBox(
                                     height: 20,
                                   ),
                                   Text(
-                                    logErrorText,
+                                    _logErrorText,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w400,
                                       color: Colors.red,
@@ -460,7 +463,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: registerNickname,
+                              controller: _registerNickname,
                               textAlignVertical: TextAlignVertical.center,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
@@ -525,7 +528,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: registerEmail,
+                              controller: _registerEmail,
                               textAlignVertical: TextAlignVertical.center,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
@@ -590,7 +593,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: registerPassword,
+                              controller: _registerPassword,
                               textAlignVertical: TextAlignVertical.center,
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
@@ -598,7 +601,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                                 fontWeight: FontWeight.w400,
                                 letterSpacing: .5,
                               ),
-                              obscureText: regPasswordVisible ? false : true,
+                              obscureText: _regPasswordVisible ? false : true,
                               enableSuggestions: false,
                               autocorrect: false,
                               decoration: InputDecoration(
@@ -630,7 +633,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                                     .hintStyle,
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    regPasswordVisible
+                                    _regPasswordVisible
                                         ? Icons.visibility
                                         : Icons.visibility_off,
                                     color: Colors.grey,
@@ -638,8 +641,8 @@ class _AuthPageViewState extends State<AuthPageView> {
                                   onPressed: () {
                                     if (mounted) {
                                       setState(() {
-                                        regPasswordVisible =
-                                            !regPasswordVisible;
+                                        _regPasswordVisible =
+                                            !_regPasswordVisible;
                                       });
                                     }
                                   },
@@ -674,7 +677,7 @@ class _AuthPageViewState extends State<AuthPageView> {
                           child: SizedBox(
                             height: 60,
                             child: TextField(
-                              controller: registerConfirmPassword,
+                              controller: _registerConfirmPassword,
                               obscureText: true,
                               enableSuggestions: false,
                               autocorrect: false,
@@ -726,34 +729,36 @@ class _AuthPageViewState extends State<AuthPageView> {
                             splashColor: Colors.red.withOpacity(.6),
                             borderRadius: BorderRadius.circular(20),
                             onTap: () {
-                              if (registerPassword.text.trim() !=
-                                  registerConfirmPassword.text.trim()) {
+                              if (_registerPassword.text.trim() !=
+                                  _registerConfirmPassword.text.trim()) {
                                 if (mounted) {
                                   setState(() {
-                                    hasRegError = true;
-                                    regErrorText = 'Passwords mismatch';
+                                    _hasRegError = true;
+                                    _regErrorText = 'Passwords mismatch';
                                   });
                                 }
                                 return;
                               }
 
-                              if (registerEmail.text.trim().isEmpty ||
-                                  registerPassword.text.trim().isEmpty ||
-                                  registerConfirmPassword.text.trim().isEmpty ||
-                                  registerNickname.text.trim().isEmpty) {
+                              if (_registerEmail.text.trim().isEmpty ||
+                                  _registerPassword.text.trim().isEmpty ||
+                                  _registerConfirmPassword.text
+                                      .trim()
+                                      .isEmpty ||
+                                  _registerNickname.text.trim().isEmpty) {
                                 if (mounted) {
                                   setState(() {
-                                    hasRegError = true;
-                                    regErrorText = 'Fill all fields';
+                                    _hasRegError = true;
+                                    _regErrorText = 'Fill all fields';
                                   });
                                 }
                                 return;
                               }
 
                               registerUser(
-                                registerEmail.text.trim(),
-                                registerPassword.text.trim(),
-                                registerNickname.text.trim(),
+                                _registerEmail.text.trim(),
+                                _registerPassword.text.trim(),
+                                _registerNickname.text.trim(),
                               ).then(
                                 (value) {
                                   if (mounted) {
@@ -770,26 +775,27 @@ class _AuthPageViewState extends State<AuthPageView> {
                                         break;
                                       case 1:
                                         setState(() {
-                                          hasRegError = true;
-                                          regErrorText = 'Weak password';
+                                          _hasRegError = true;
+                                          _regErrorText = 'Weak password';
                                         });
                                         break;
                                       case 2:
                                         setState(() {
-                                          hasRegError = true;
-                                          regErrorText = 'Email is in use';
+                                          _hasRegError = true;
+                                          _regErrorText = 'Email is in use';
                                         });
                                         break;
                                       case 3:
                                         setState(() {
-                                          hasRegError = true;
-                                          regErrorText = 'Invalid email';
+                                          _hasRegError = true;
+                                          _regErrorText = 'Invalid email';
                                         });
                                         break;
                                       default:
                                         setState(() {
-                                          hasRegError = true;
-                                          regErrorText = 'Something went wrong';
+                                          _hasRegError = true;
+                                          _regErrorText =
+                                              'Something went wrong';
                                         });
                                         break;
                                     }
@@ -814,14 +820,14 @@ class _AuthPageViewState extends State<AuthPageView> {
                             ),
                           ),
                         ),
-                        hasRegError
+                        _hasRegError
                             ? Column(
                                 children: [
                                   const SizedBox(
                                     height: 20,
                                   ),
                                   Text(
-                                    regErrorText,
+                                    _regErrorText,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w400,
                                       color: Colors.red,

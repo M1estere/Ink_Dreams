@@ -18,7 +18,7 @@ class AccountPageView extends StatefulWidget {
 }
 
 class _AccountPageViewState extends State<AccountPageView> {
-  UserFull pageUser = UserFull(
+  UserFull _pageUser = UserFull(
     id: '',
     email: '',
     nickname: '',
@@ -26,7 +26,7 @@ class _AccountPageViewState extends State<AccountPageView> {
     friends: 0,
     imagePath: '',
   );
-  bool isLoading = true;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -35,8 +35,8 @@ class _AccountPageViewState extends State<AccountPageView> {
     getFullUserInfo(currentUser!.id).then((value) {
       if (mounted) {
         setState(() {
-          pageUser = value;
-          isLoading = false;
+          _pageUser = value;
+          _isLoading = false;
         });
       }
     });
@@ -45,14 +45,14 @@ class _AccountPageViewState extends State<AccountPageView> {
   refresh() {
     if (mounted) {
       setState(() {
-        isLoading = true;
+        _isLoading = true;
       });
 
       getFullUserInfo(currentUser!.id).then((value) {
         if (mounted) {
           setState(() {
-            pageUser = value;
-            isLoading = false;
+            _pageUser = value;
+            _isLoading = false;
           });
         }
       });
@@ -70,7 +70,7 @@ class _AccountPageViewState extends State<AccountPageView> {
           padding: EdgeInsets.zero,
           physics: const AlwaysScrollableScrollPhysics(),
           child: Container(
-            height: MediaQuery.of(context).size.height * .8,
+            height: MediaQuery.of(context).size.height * .85,
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(1),
             ),
@@ -91,7 +91,7 @@ class _AccountPageViewState extends State<AccountPageView> {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-                child: !isLoading
+                child: !_isLoading
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -106,7 +106,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                     radius: 60,
                                     backgroundColor: Colors.red,
                                     backgroundImage: Image.network(
-                                      pageUser.imagePath,
+                                      _pageUser.imagePath,
                                       loadingBuilder:
                                           (context, child, loadingProgress) {
                                         if (loadingProgress == null) {
@@ -130,7 +130,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                   height: 10,
                                 ),
                                 Text(
-                                  pageUser.nickname,
+                                  _pageUser.nickname,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 25,
@@ -148,7 +148,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                     ),
                                     Text(
                                       DateFormat('dd/MM/yyyy').format(
-                                          pageUser.registerDate.toDate()),
+                                          _pageUser.registerDate.toDate()),
                                       style: const TextStyle(
                                         color: Colors.grey,
                                         fontSize: 18,
@@ -210,15 +210,15 @@ class _AccountPageViewState extends State<AccountPageView> {
                                                     MainAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    '${pageUser.friends} Friends',
+                                                    '${_pageUser.friends} Friends',
                                                     style: const TextStyle(
                                                       color: Colors.grey,
                                                       fontSize: 25,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                          FontWeight.w400,
                                                       letterSpacing: 2,
                                                     ),
-                                                  )
+                                                  ),
                                                 ],
                                               ),
                                             ],
@@ -244,7 +244,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                             builder: (context) =>
                                                 UserSectionView(
                                               id: currentUser!.id,
-                                              userName: pageUser.nickname,
+                                              userName: _pageUser.nickname,
                                               sectionName: 'reading',
                                             ),
                                           ),
@@ -280,7 +280,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                                       color: Colors.grey,
                                                       fontSize: 25,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                          FontWeight.w400,
                                                       letterSpacing: 2,
                                                     ),
                                                   )
@@ -309,7 +309,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                             builder: (context) =>
                                                 UserSectionView(
                                               id: currentUser!.id,
-                                              userName: pageUser.nickname,
+                                              userName: _pageUser.nickname,
                                               sectionName: 'favourites',
                                             ),
                                           ),
@@ -345,7 +345,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                                       color: Colors.grey,
                                                       fontSize: 25,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                          FontWeight.w400,
                                                       letterSpacing: 2,
                                                     ),
                                                   )
@@ -374,7 +374,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                             builder: (context) =>
                                                 UserSectionView(
                                               id: currentUser!.id,
-                                              userName: pageUser.nickname,
+                                              userName: _pageUser.nickname,
                                               sectionName: 'planned',
                                             ),
                                           ),
@@ -410,7 +410,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                                       color: Colors.grey,
                                                       fontSize: 25,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                          FontWeight.w400,
                                                       letterSpacing: 2,
                                                     ),
                                                   )
@@ -438,7 +438,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                             builder: (context) =>
                                                 UserSectionView(
                                               id: currentUser!.id,
-                                              userName: pageUser.nickname,
+                                              userName: _pageUser.nickname,
                                               sectionName: 'finished',
                                             ),
                                           ),
@@ -474,7 +474,7 @@ class _AccountPageViewState extends State<AccountPageView> {
                                                       color: Colors.grey,
                                                       fontSize: 25,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                          FontWeight.w400,
                                                       letterSpacing: 2,
                                                     ),
                                                   )

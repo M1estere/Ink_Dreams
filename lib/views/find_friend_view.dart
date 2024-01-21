@@ -13,10 +13,10 @@ class FindFriendView extends StatefulWidget {
 }
 
 class _FindFriendViewState extends State<FindFriendView> {
-  TextEditingController searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
-  List<AppUser> users = [];
-  bool isLoading = true;
+  List<AppUser> _users = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -25,8 +25,8 @@ class _FindFriendViewState extends State<FindFriendView> {
     getAllUsers().then((value) {
       if (mounted) {
         setState(() {
-          isLoading = false;
-          users = value;
+          _isLoading = false;
+          _users = value;
         });
       }
     });
@@ -36,7 +36,7 @@ class _FindFriendViewState extends State<FindFriendView> {
   void dispose() {
     super.dispose();
 
-    searchController.dispose();
+    _searchController.dispose();
   }
 
   @override
@@ -46,8 +46,8 @@ class _FindFriendViewState extends State<FindFriendView> {
       appBar: AppBar(
         toolbarHeight: 55,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
         leadingWidth: MediaQuery.of(context).size.width * .6,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),
@@ -106,7 +106,7 @@ class _FindFriendViewState extends State<FindFriendView> {
                   child: SizedBox(
                     height: 65,
                     child: TextField(
-                      controller: searchController,
+                      controller: _searchController,
                       textAlignVertical: TextAlignVertical.center,
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
@@ -140,12 +140,12 @@ class _FindFriendViewState extends State<FindFriendView> {
                       ),
                       onChanged: (value) {
                         getUsersBySearch(
-                                searchController.text.trim().toLowerCase())
+                                _searchController.text.trim().toLowerCase())
                             .then((value) {
                           if (mounted) {
                             setState(() {
-                              users.clear();
-                              users = value;
+                              _users.clear();
+                              _users = value;
                             });
                           }
                         });
@@ -154,20 +154,21 @@ class _FindFriendViewState extends State<FindFriendView> {
                   ),
                 ),
                 Expanded(
-                  child: !isLoading
-                      ? users.isNotEmpty
+                  child: !_isLoading
+                      ? _users.isNotEmpty
                           ? Container(
                               padding: const EdgeInsets.symmetric(vertical: 20),
                               margin: const EdgeInsets.only(bottom: 20),
                               child: ListView.builder(
-                                itemCount: users.length,
+                                itemCount: _users.length,
                                 itemBuilder: (context, index) {
                                   return UserListBlock(
-                                    id: users[index].id,
-                                    finished: users[index].finishedManga.length,
-                                    nickname: users[index].nickname,
-                                    regDate: users[index].regDate,
-                                    imagePath: users[index].image,
+                                    id: _users[index].id,
+                                    finished:
+                                        _users[index].finishedManga.length,
+                                    nickname: _users[index].nickname,
+                                    regDate: _users[index].regDate,
+                                    imagePath: _users[index].image,
                                   );
                                 },
                                 scrollDirection: Axis.vertical,

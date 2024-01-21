@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppTheme extends ChangeNotifier {
   static final _instance = AppTheme._();
@@ -136,7 +137,10 @@ class AppTheme extends ChangeNotifier {
         useMaterial3: true,
       );
 
-  enableTheme(String name, BuildContext context) {
+  enableTheme(String name, BuildContext context) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('theme', name);
+
     switch (name) {
       case 'dark':
         _themeMode = ThemeMode.dark;

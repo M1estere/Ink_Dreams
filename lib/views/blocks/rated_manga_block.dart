@@ -96,7 +96,7 @@ class RatedMangaBlock extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * .485,
+                    width: MediaQuery.of(context).size.width * .48,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,7 +155,7 @@ class RatedMangaBlock extends StatelessWidget {
                                   ),
                                   Container(
                                     width:
-                                        MediaQuery.of(context).size.width * .24,
+                                        MediaQuery.of(context).size.width * .23,
                                     padding: const EdgeInsets.only(left: 7),
                                     child: FittedBox(
                                       child: Text(

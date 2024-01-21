@@ -13,10 +13,10 @@ class SearchIntroPageView extends StatefulWidget {
 }
 
 class _SearchIntroPageViewState extends State<SearchIntroPageView> {
-  bool isLoading = true;
+  bool _isLoading = true;
 
-  List<MangaBook> popularManga = [];
-  List<MangaBook> hottestManga = [];
+  List<MangaBook> _popularManga = [];
+  List<MangaBook> _hottestManga = [];
 
   @override
   void initState() {
@@ -26,11 +26,11 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
       (value) {
         if (mounted) {
           setState(() {
-            popularManga = value.sublist(0, (value.length / 2).round());
-            hottestManga =
+            _popularManga = value.sublist(0, (value.length / 2).round());
+            _hottestManga =
                 value.sublist((value.length / 2).round(), value.length);
 
-            isLoading = false;
+            _isLoading = false;
           });
         }
       },
@@ -45,11 +45,11 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
           (value) {
             if (mounted) {
               setState(() {
-                popularManga = value.sublist(0, (value.length / 2).round());
-                hottestManga =
+                _popularManga = value.sublist(0, (value.length / 2).round());
+                _hottestManga =
                     value.sublist((value.length / 2).round(), value.length);
 
-                isLoading = false;
+                _isLoading = false;
               });
             }
           },
@@ -58,7 +58,7 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
       child: Padding(
         padding: const EdgeInsets.only(top: 0, left: 10, right: 10),
         child: SingleChildScrollView(
-          child: !isLoading
+          child: !_isLoading
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -77,13 +77,13 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                       child: ListView.builder(
                         itemBuilder: (context, index) {
                           return SearchMangaBlock(
-                            title: popularManga[index].title!,
-                            image: popularManga[index].image!,
-                            releaseYear: popularManga[index].year!,
+                            title: _popularManga[index].title!,
+                            image: _popularManga[index].image!,
+                            releaseYear: _popularManga[index].year!,
                           );
                         },
                         scrollDirection: Axis.horizontal,
-                        itemCount: popularManga.length,
+                        itemCount: _popularManga.length,
                       ),
                     ),
                     Text(
@@ -99,13 +99,13 @@ class _SearchIntroPageViewState extends State<SearchIntroPageView> {
                       margin: const EdgeInsets.only(bottom: 20),
                       height: 360,
                       child: ListView.builder(
-                        itemCount: hottestManga.length,
+                        itemCount: _hottestManga.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return SearchMangaBlock(
-                            title: hottestManga[index].title!,
-                            image: hottestManga[index].image!,
-                            releaseYear: hottestManga[index].year!,
+                            title: _hottestManga[index].title!,
+                            image: _hottestManga[index].image!,
+                            releaseYear: _hottestManga[index].year!,
                           );
                         },
                       ),

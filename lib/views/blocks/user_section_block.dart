@@ -54,7 +54,7 @@ class UserSectionBlock extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => MangaPageView(title: title),
               ),
-            );
+            ).then((value) => updateFunc());
           },
           child: Padding(
             padding: const EdgeInsets.only(

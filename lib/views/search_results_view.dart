@@ -12,16 +12,16 @@ class SearchResultsView extends StatefulWidget {
 }
 
 class _SearchResultsViewState extends State<SearchResultsView> {
-  TextEditingController searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
-  List<MangaBook> searchResults = [];
-  bool canDisplay = false;
+  List<MangaBook> _searchResults = [];
+  bool _canDisplay = false;
 
   @override
   void dispose() {
     super.dispose();
 
-    searchController.dispose();
+    _searchController.dispose();
   }
 
   @override
@@ -30,8 +30,8 @@ class _SearchResultsViewState extends State<SearchResultsView> {
       appBar: AppBar(
         toolbarHeight: 55,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
         leadingWidth: MediaQuery.of(context).size.width * .4,
         leading: Container(
           padding: const EdgeInsets.only(left: 10, top: 10),
@@ -76,7 +76,7 @@ class _SearchResultsViewState extends State<SearchResultsView> {
                 child: SizedBox(
                   height: 65,
                   child: TextField(
-                    controller: searchController,
+                    controller: _searchController,
                     textAlignVertical: TextAlignVertical.center,
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
@@ -110,14 +110,14 @@ class _SearchResultsViewState extends State<SearchResultsView> {
                         if (value.isEmpty) {
                           if (mounted) {
                             setState(() {
-                              canDisplay = false;
+                              _canDisplay = false;
                             });
                           }
                         } else {
                           if (mounted) {
                             setState(() {
-                              searchResults = res;
-                              canDisplay = true;
+                              _searchResults = res;
+                              _canDisplay = true;
                             });
                           }
                         }
@@ -129,9 +129,9 @@ class _SearchResultsViewState extends State<SearchResultsView> {
               const SizedBox(
                 height: 20,
               ),
-              canDisplay
-                  ? (searchResults.isNotEmpty &&
-                          searchController.text.isNotEmpty)
+              _canDisplay
+                  ? (_searchResults.isNotEmpty &&
+                          _searchController.text.isNotEmpty)
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -149,19 +149,19 @@ class _SearchResultsViewState extends State<SearchResultsView> {
                             SizedBox(
                               height: MediaQuery.of(context).size.height * .7,
                               child: ListView.builder(
-                                itemCount: searchResults.length,
+                                itemCount: _searchResults.length,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (context, index) {
                                   return FullMangaBlock(
-                                    title: searchResults[index].title!,
-                                    chapters: searchResults[index].chapters!,
-                                    status: searchResults[index].status!,
-                                    author: searchResults[index].author!,
-                                    image: searchResults[index].image!,
-                                    desc: searchResults[index].desc!,
-                                    rates: searchResults[index].rates!,
-                                    ratings: searchResults[index].ratings!,
-                                    releaseYear: searchResults[index].year!,
+                                    title: _searchResults[index].title!,
+                                    chapters: _searchResults[index].chapters!,
+                                    status: _searchResults[index].status!,
+                                    author: _searchResults[index].author!,
+                                    image: _searchResults[index].image!,
+                                    desc: _searchResults[index].desc!,
+                                    rates: _searchResults[index].rates!,
+                                    ratings: _searchResults[index].ratings!,
+                                    releaseYear: _searchResults[index].year!,
                                   );
                                 },
                               ),

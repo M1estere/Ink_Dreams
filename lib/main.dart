@@ -6,12 +6,16 @@ import 'package:manga_reading/support/app_theme.dart';
 import 'package:manga_reading/support/auth_provider.dart';
 import 'package:manga_reading/views/auth_page_view.dart';
 import 'package:manga_reading/views/main_app_wrapper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+late SharedPreferences prefs;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  prefs = await SharedPreferences.getInstance();
+
   runApp(
     const MyApp(),
   );
@@ -37,6 +41,22 @@ class _MyAppState extends State<MyApp> {
         DeviceOrientation.portraitUp,
       ],
     );
+
+    if (prefs.getString('theme') != null) {
+      switch (prefs.getString('theme')) {
+        case 'dark':
+          AppTheme().enableTheme('dark', context);
+          break;
+        case 'light':
+          AppTheme().enableTheme('light', context);
+          break;
+        case 'system':
+          AppTheme().enableTheme('system', context);
+          break;
+      }
+    } else {
+      AppTheme().enableTheme('system', context);
+    }
   }
 
   @override

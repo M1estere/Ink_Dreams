@@ -33,12 +33,8 @@ class ReaderView extends StatefulWidget {
 }
 
 class _ReaderViewState extends State<ReaderView> {
-  bool hasNext = true;
-  bool hasPrev = true;
-
-  bool isLoading = true;
-
-  double percentage = 0;
+  bool _hasNext = true;
+  bool _hasPrev = true;
 
   @override
   void initState() {
@@ -56,15 +52,15 @@ class _ReaderViewState extends State<ReaderView> {
   void recheck() {
     if (mounted) {
       setState(() {
-        hasNext = true;
-        hasPrev = true;
+        _hasNext = true;
+        _hasPrev = true;
 
         if (widget.index >= widget.chapters!.length - 1) {
-          hasNext = false;
+          _hasNext = false;
         }
 
         if (widget.index <= 0) {
-          hasPrev = false;
+          _hasPrev = false;
         }
       });
     }
@@ -76,8 +72,8 @@ class _ReaderViewState extends State<ReaderView> {
       appBar: AppBar(
         toolbarHeight: 55,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
         leadingWidth: MediaQuery.of(context).size.width * .8,
         leading: Container(
           width: double.infinity,
@@ -115,7 +111,7 @@ class _ReaderViewState extends State<ReaderView> {
           ),
         ),
         actions: [
-          hasPrev
+          _hasPrev
               ? IconButton(
                   visualDensity: const VisualDensity(
                     horizontal: -4.0,
@@ -146,7 +142,7 @@ class _ReaderViewState extends State<ReaderView> {
               : const SizedBox(
                   width: 25,
                 ),
-          hasNext
+          _hasNext
               ? IconButton(
                   visualDensity:
                       const VisualDensity(horizontal: -4.0, vertical: -4.0),

@@ -1,18 +1,17 @@
 import 'dart:ui';
 
+import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:manga_reading/extensions/string_extension.dart';
 import 'package:manga_reading/views/category_page_view.dart';
 import 'package:flip_card/flip_card.dart';
 
-class CategoryBlock extends StatelessWidget {
+class CategoryBlock extends StatefulWidget {
   final String image;
   final String title;
   final String desc;
 
-  final GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
-
-  CategoryBlock({
+  const CategoryBlock({
     super.key,
     required this.image,
     required this.title,
@@ -20,11 +19,18 @@ class CategoryBlock extends StatelessWidget {
   });
 
   @override
+  State<CategoryBlock> createState() => _CategoryBlockState();
+}
+
+class _CategoryBlockState extends State<CategoryBlock> {
+  final _controller = FlipCardController();
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 200,
       child: FlipCard(
-        key: cardKey,
+        controller: _controller,
         flipOnTouch: false,
         direction: FlipDirection.HORIZONTAL,
         side: CardSide.FRONT,
@@ -45,7 +51,7 @@ class CategoryBlock extends StatelessWidget {
                     ),
                     child: Image.network(
                       fit: BoxFit.cover,
-                      image,
+                      widget.image,
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) {
                           return child;
@@ -84,7 +90,7 @@ class CategoryBlock extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            title.capitalize(),
+                            widget.title.capitalize(),
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 22,
@@ -95,7 +101,7 @@ class CategoryBlock extends StatelessWidget {
                           ),
                           IconButton(
                             onPressed: () {
-                              cardKey.currentState!.toggleCard();
+                              _controller.toggleCard();
                             },
                             icon: const Icon(
                               Icons.description,
@@ -107,7 +113,7 @@ class CategoryBlock extends StatelessWidget {
                       ),
                       Text(
                         overflow: TextOverflow.ellipsis,
-                        '\t\t$desc',
+                        '\t\t${widget.desc}',
                         style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 13,
@@ -127,7 +133,8 @@ class CategoryBlock extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CategoryPageView(categoryTitle: title),
+                builder: (context) =>
+                    CategoryPageView(categoryTitle: widget.title),
               ),
             );
           },
@@ -141,7 +148,7 @@ class CategoryBlock extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
                     fit: BoxFit.cover,
-                    image,
+                    widget.image,
                     loadingBuilder: (context, child, loadingProgress) {
                       if (loadingProgress == null) {
                         return child;
@@ -166,7 +173,7 @@ class CategoryBlock extends StatelessWidget {
                     padding: const EdgeInsets.all(10.0),
                     child: IconButton(
                       onPressed: () {
-                        cardKey.currentState!.toggleCard();
+                        _controller.toggleCard();
                       },
                       icon: const Icon(
                         Icons.description,
@@ -190,7 +197,7 @@ class CategoryBlock extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          title.capitalize(),
+                          widget.title.capitalize(),
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 22,

@@ -13,8 +13,8 @@ class CategoryPageView extends StatefulWidget {
 }
 
 class _CategoryPageViewState extends State<CategoryPageView> {
-  List<MangaBook> mangaBooks = [];
-  bool isLoading = true;
+  List<MangaBook> _mangaBooks = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -25,8 +25,8 @@ class _CategoryPageViewState extends State<CategoryPageView> {
         if (mounted) {
           setState(
             () {
-              mangaBooks = value;
-              isLoading = false;
+              _mangaBooks = value;
+              _isLoading = false;
             },
           );
         }
@@ -42,8 +42,8 @@ class _CategoryPageViewState extends State<CategoryPageView> {
       appBar: AppBar(
         toolbarHeight: 55,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
         leadingWidth: MediaQuery.of(context).size.width * .8,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),
@@ -84,20 +84,20 @@ class _CategoryPageViewState extends State<CategoryPageView> {
                 SizedBox(
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height * .88,
-                  child: !isLoading
+                  child: !_isLoading
                       ? ListView.builder(
-                          itemCount: mangaBooks.length,
+                          itemCount: _mangaBooks.length,
                           itemBuilder: (context, index) {
                             return FullMangaBlock(
-                              title: mangaBooks[index].title!,
-                              chapters: mangaBooks[index].chapters!,
-                              status: mangaBooks[index].status!,
-                              author: mangaBooks[index].author!,
-                              image: mangaBooks[index].image!,
-                              rates: mangaBooks[index].rates!,
-                              ratings: mangaBooks[index].ratings!,
-                              desc: mangaBooks[index].desc!,
-                              releaseYear: mangaBooks[index].year!,
+                              title: _mangaBooks[index].title!,
+                              chapters: _mangaBooks[index].chapters!,
+                              status: _mangaBooks[index].status!,
+                              author: _mangaBooks[index].author!,
+                              image: _mangaBooks[index].image!,
+                              rates: _mangaBooks[index].rates!,
+                              ratings: _mangaBooks[index].ratings!,
+                              desc: _mangaBooks[index].desc!,
+                              releaseYear: _mangaBooks[index].year!,
                             );
                           },
                           scrollDirection: Axis.vertical,

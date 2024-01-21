@@ -20,9 +20,9 @@ class CropPageView extends StatefulWidget {
 }
 
 class _CropPageViewState extends State<CropPageView> {
-  bool canSave = true;
+  final CustomImageCropController _controller = CustomImageCropController();
 
-  CustomImageCropController controller = CustomImageCropController();
+  bool _canSave = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +30,8 @@ class _CropPageViewState extends State<CropPageView> {
       appBar: AppBar(
         toolbarHeight: 55,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
         leadingWidth: MediaQuery.of(context).size.width * .4,
         leading: Container(
           padding: const EdgeInsets.only(left: 10, top: 10),
@@ -53,15 +53,15 @@ class _CropPageViewState extends State<CropPageView> {
           ),
         ),
         actions: [
-          canSave
+          _canSave
               ? TextButton(
                   onPressed: () async {
-                    if (canSave == true) {
+                    if (_canSave == true) {
                       setState(() {
-                        canSave = false;
+                        _canSave = false;
                       });
 
-                      final image = await controller.onCropImage();
+                      final image = await _controller.onCropImage();
                       if (image != null) {
                         Navigator.of(context).pop();
 
@@ -94,7 +94,7 @@ class _CropPageViewState extends State<CropPageView> {
           Expanded(
             child: CustomImageCrop(
               image: FileImage(widget.imageFile),
-              cropController: controller,
+              cropController: _controller,
             ),
           ),
           Container(
@@ -110,7 +110,7 @@ class _CropPageViewState extends State<CropPageView> {
                     size: 30,
                     color: Colors.grey,
                   ),
-                  onPressed: controller.reset,
+                  onPressed: _controller.reset,
                 ),
                 Row(
                   children: [
@@ -120,7 +120,7 @@ class _CropPageViewState extends State<CropPageView> {
                         size: 30,
                         color: Colors.grey,
                       ),
-                      onPressed: () => controller.addTransition(
+                      onPressed: () => _controller.addTransition(
                         CropImageData(scale: 1.33),
                       ),
                     ),
@@ -130,7 +130,7 @@ class _CropPageViewState extends State<CropPageView> {
                         size: 30,
                         color: Colors.grey,
                       ),
-                      onPressed: () => controller.addTransition(
+                      onPressed: () => _controller.addTransition(
                         CropImageData(scale: 0.75),
                       ),
                     ),
@@ -144,7 +144,7 @@ class _CropPageViewState extends State<CropPageView> {
                         size: 30,
                         color: Colors.grey,
                       ),
-                      onPressed: () => controller.addTransition(
+                      onPressed: () => _controller.addTransition(
                         CropImageData(angle: -3.14 / 4),
                       ),
                     ),
@@ -154,7 +154,7 @@ class _CropPageViewState extends State<CropPageView> {
                         size: 30,
                         color: Colors.grey,
                       ),
-                      onPressed: () => controller.addTransition(
+                      onPressed: () => _controller.addTransition(
                         CropImageData(angle: 3.14 / 4),
                       ),
                     ),

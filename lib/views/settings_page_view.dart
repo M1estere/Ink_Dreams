@@ -20,8 +20,8 @@ class SettingsPageView extends StatefulWidget {
 }
 
 class _SettingsPageViewState extends State<SettingsPageView> {
-  TextEditingController nicknameController = TextEditingController();
-  UserFull pageUser = UserFull(
+  final TextEditingController _nicknameController = TextEditingController();
+  UserFull _pageUser = UserFull(
     id: '',
     email: '',
     nickname: '',
@@ -29,12 +29,12 @@ class _SettingsPageViewState extends State<SettingsPageView> {
     friends: 0,
     imagePath: '',
   );
-  bool mainLoading = true;
 
-  bool isLoading = false;
+  bool _mainLoading = true;
+  bool _isLoading = false;
 
   Future<bool> _pickImageFromGallery() async {
-    isLoading = true;
+    _isLoading = true;
 
     final returnedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -48,7 +48,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
               ),
             ),
           )
-          .then((value) => isLoading = false);
+          .then((value) => _isLoading = false);
     } else {
       return false;
     }
@@ -84,7 +84,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
           ),
           content: GestureDetector(
             onTap: () {
-              if (!isLoading) {
+              if (!_isLoading) {
                 _pickImageFromGallery();
                 Navigator.of(context).pop();
               }
@@ -132,7 +132,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                     borderRadius: BorderRadius.circular(15),
                     splashColor: const Color.fromARGB(255, 34, 34, 34),
                     onTap: () {
-                      if (!isLoading) {
+                      if (!_isLoading) {
                         Navigator.of(context).pop();
                       }
                     },
@@ -180,7 +180,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
             ),
             content: GestureDetector(
               onTap: () {
-                if (!isLoading) {}
+                if (!_isLoading) {}
               },
               child: SizedBox(
                 height: 85,
@@ -193,7 +193,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                         fontWeight: FontWeight.w400,
                         letterSpacing: .5,
                       ),
-                      controller: nicknameController,
+                      controller: _nicknameController,
                       decoration: InputDecoration(
                         border: const UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -245,16 +245,16 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                       borderRadius: BorderRadius.circular(15),
                       splashColor: const Color.fromARGB(255, 34, 34, 34),
                       onTap: () {
-                        if (!isLoading) {
-                          if (nicknameController.text.trim().isEmpty ||
-                              nicknameController.text.trim().length < 2) {
+                        if (!_isLoading) {
+                          if (_nicknameController.text.trim().isEmpty ||
+                              _nicknameController.text.trim().length < 2) {
                             if (mounted) {
                               setState(() {
                                 _hasError = true;
                               });
                             }
                           } else {
-                            updateNickname(nicknameController.text.trim());
+                            updateNickname(_nicknameController.text.trim());
                             Navigator.of(context).pop();
 
                             if (mounted) {
@@ -297,12 +297,12 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                       borderRadius: BorderRadius.circular(15),
                       splashColor: const Color.fromARGB(255, 34, 34, 34),
                       onTap: () {
-                        if (!isLoading) {
+                        if (!_isLoading) {
                           Navigator.of(context).pop();
                           if (mounted) {
                             setState(() {
                               _hasError = false;
-                              nicknameController.text = pageUser.nickname;
+                              _nicknameController.text = _pageUser.nickname;
                             });
                           }
                         }
@@ -352,7 +352,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
           ),
           content: GestureDetector(
             onTap: () {
-              if (!isLoading) {}
+              if (!_isLoading) {}
             },
             child: SizedBox(
               height: 140,
@@ -462,9 +462,9 @@ class _SettingsPageViewState extends State<SettingsPageView> {
     getFullUserInfo(currentUser!.id).then((value) {
       if (mounted) {
         setState(() {
-          pageUser = value;
-          nicknameController.text = pageUser.nickname;
-          mainLoading = false;
+          _pageUser = value;
+          _nicknameController.text = _pageUser.nickname;
+          _mainLoading = false;
         });
       }
     });
@@ -476,8 +476,8 @@ class _SettingsPageViewState extends State<SettingsPageView> {
       appBar: AppBar(
         toolbarHeight: 55,
         elevation: 0,
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        surfaceTintColor: Theme.of(context).appBarTheme.backgroundColor,
         leadingWidth: MediaQuery.of(context).size.width * .6,
         leading: Container(
           padding: const EdgeInsets.only(left: 10),
@@ -511,7 +511,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
       body: SizedBox(
         height: MediaQuery.of(context).size.height * .95,
         child: SingleChildScrollView(
-          child: !mainLoading
+          child: !_mainLoading
               ? Column(
                   children: [
                     Padding(
@@ -639,7 +639,7 @@ class _SettingsPageViewState extends State<SettingsPageView> {
                                         ),
                                       ),
                                       Text(
-                                        pageUser.nickname,
+                                        _pageUser.nickname,
                                         style: const TextStyle(
                                           color: Colors.grey,
                                           fontSize: 14,
