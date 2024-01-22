@@ -147,7 +147,7 @@ Future addToFinished(String title, int rating) async {
     } else {
       finishedTitles.add({
         'name': title.capitalizeEveryWord(),
-        'add_time': DateTime.now().add(const Duration(hours: 3)),
+        'add_time': DateTime.now(),
         'rating': rating,
       });
     }
@@ -162,7 +162,7 @@ Future addToFinished(String title, int rating) async {
     List res = [
       {
         'name': title.capitalizeEveryWord(),
-        'add_time': DateTime.now().add(const Duration(hours: 3)),
+        'add_time': DateTime.now(),
         'rating': rating,
       }
     ];
@@ -210,9 +210,7 @@ Future addToSection(String sectionName, String title) async {
       resultTitles.add(
         {
           'name': title.capitalizeEveryWord(),
-          'add_time': DateTime.now().add(
-            const Duration(hours: 3),
-          ),
+          'add_time': DateTime.now(),
           'rating': 0,
         },
       );
@@ -220,9 +218,7 @@ Future addToSection(String sectionName, String title) async {
       resultTitles.add(
         {
           'name': title.capitalizeEveryWord(),
-          'add_time': DateTime.now().add(
-            const Duration(hours: 3),
-          ),
+          'add_time': DateTime.now(),
         },
       );
     }
@@ -261,9 +257,7 @@ Future addToReadingSection(String lastChapter, String title) async {
   resultTitles.add(
     {
       'name': title.capitalizeEveryWord(),
-      'add_time': DateTime.now().add(
-        const Duration(hours: 3),
-      ),
+      'add_time': DateTime.now(),
       'last': lastChapter,
     },
   );
@@ -461,9 +455,7 @@ Future addToFriends(String id) async {
     resultFriends.add(
       {
         'id': id,
-        'add_time': DateTime.now().add(
-          const Duration(hours: 3),
-        ),
+        'add_time': DateTime.now(),
       },
     );
   }
