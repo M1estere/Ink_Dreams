@@ -7,6 +7,7 @@ class UserFriendBlock extends StatelessWidget {
   final String id;
   final String nickname;
   final int finished;
+  final int favourites;
   final Timestamp regDate;
   final Timestamp addDate;
   final String imagePath;
@@ -19,6 +20,7 @@ class UserFriendBlock extends StatelessWidget {
     required this.regDate,
     required this.addDate,
     required this.imagePath,
+    required this.favourites,
   });
 
   @override
@@ -208,7 +210,7 @@ class UserFriendBlock extends StatelessWidget {
                                   width: 5,
                                 ),
                                 Text(
-                                  '$finished',
+                                  '$favourites',
                                   style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 17,

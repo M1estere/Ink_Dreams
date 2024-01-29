@@ -127,6 +127,7 @@ Future<FriendUser> _getFriend(String id, Timestamp addDate) async {
   Timestamp regDate = Timestamp.fromDate(DateTime.now());
   List finished = [];
   String image = '';
+  int favourites = 0;
   QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('users')
       .where('id', isEqualTo: id)
@@ -147,6 +148,9 @@ Future<FriendUser> _getFriend(String id, Timestamp addDate) async {
       if (data.containsKey('image')) {
         image = data['image'];
       }
+      if (data.containsKey('favourites')) {
+        favourites = data['favourites'].length;
+      }
     }
   }
 
@@ -157,6 +161,7 @@ Future<FriendUser> _getFriend(String id, Timestamp addDate) async {
     addDate: addDate,
     finishedManga: finished,
     image: image,
+    favouriteManga: favourites,
   );
 
   return result;

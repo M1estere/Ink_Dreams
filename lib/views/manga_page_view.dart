@@ -387,7 +387,7 @@ class _MangaPageViewState extends State<MangaPageView> {
           ? const FetchingCircle()
           : !_nullState
               ? SlidingUpPanel(
-                  maxHeight: MediaQuery.of(context).size.height * .8,
+                  maxHeight: MediaQuery.of(context).size.height * .85,
                   minHeight: 200,
                   color: Colors.transparent,
                   backdropOpacity: 0,

@@ -6,6 +6,7 @@ class FriendUser {
   Timestamp regDate;
   Timestamp addDate;
   List finishedManga;
+  int favouriteManga;
   String image;
 
   FriendUser({
@@ -15,5 +16,6 @@ class FriendUser {
     required this.regDate,
     required this.addDate,
     required this.image,
+    required this.favouriteManga,
   });
 }

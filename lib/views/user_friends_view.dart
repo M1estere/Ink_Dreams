@@ -134,6 +134,7 @@ class _UserFriendsViewState extends State<UserFriendsView> {
                                     nickname: _friends[index].nickname,
                                     regDate: _friends[index].regDate,
                                     imagePath: _friends[index].image,
+                                    favourites: _friends[index].favouriteManga,
                                   );
                                 },
                                 scrollDirection: Axis.vertical,

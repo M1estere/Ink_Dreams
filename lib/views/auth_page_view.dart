@@ -48,27 +48,11 @@ class _AuthPageViewState extends State<AuthPageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .3,
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * .23,
-                width: MediaQuery.of(context).size.height * .23,
-                child: const Image(
-                  image: AssetImage(
-                    'assets/images/icon-no-bg.png',
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .03,
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
