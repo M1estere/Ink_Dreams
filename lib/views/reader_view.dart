@@ -191,23 +191,21 @@ class _ReaderViewState extends State<ReaderView> {
                 },
                 snapshot.data!.path,
                 documentBuilder: (context, pdfDocument, pageCount) =>
-                    LayoutBuilder(
-                  builder: (context, constraints) => InteractiveViewer(
-                    minScale: 1,
-                    panEnabled: false,
-                    boundaryMargin: const EdgeInsets.all(0),
-                    maxScale: 10,
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: pageCount,
-                      itemBuilder: (context, index) => Container(
-                        margin: const EdgeInsets.all(5),
-                        padding: const EdgeInsets.all(5),
-                        color: Colors.black12,
-                        child: PdfPageView(
-                          pdfDocument: pdfDocument,
-                          pageNumber: index + 1,
-                        ),
+                    InteractiveViewer(
+                  panEnabled: true,
+                  panAxis: PanAxis.free,
+                  minScale: 1,
+                  maxScale: 10,
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: pageCount,
+                    itemBuilder: (context, index) => Container(
+                      margin: const EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
+                      color: Colors.black12,
+                      child: PdfPageView(
+                        pdfDocument: pdfDocument,
+                        pageNumber: index + 1,
                       ),
                     ),
                   ),
